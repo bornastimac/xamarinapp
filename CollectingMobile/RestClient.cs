@@ -9,13 +9,15 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using Android.Util;
+using System.Json;
 
 namespace CollectingMobile
 {
     class RestClient         
     {
         public static string sUrl = "https://jimsrv.no-ip.info/LabTest/_invoke/Login";
-        public static string json = "{\"username\":\"eugens\",\"password\":\"1R#EugenS\",\"createPersistentCookie\":true}";
+        public static string json = "{\"username\":\"euens\",\"password\":\"1R#EugenS\",\"createPersistentCookie\":true}";
 
         public static void GetResponse() {
 
@@ -27,13 +29,15 @@ namespace CollectingMobile
             request.ContentType = "application/json";
             request.ContentLength = data.Length;
             request.Expect = "application/json";
-
+            
             request.GetRequestStream().Write(data, 0, data.Length);
 
             System.Net.HttpWebResponse response = request.GetResponse() as System.Net.HttpWebResponse;
             var reader = new System.IO.StreamReader(response.GetResponseStream());
             string content = reader.ReadToEnd();
-            Toast.MakeText(Application.Context, content, ToastLength.Long).Show();
+            JsonValue jsonIdk =  JsonValue.Parse(content);
+            
+            Toast.MakeText(Application.Context, jsonIdk["d"].ToString(), ToastLength.Long).Show();
 
         }
     }

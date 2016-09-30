@@ -12,33 +12,42 @@ using Android.Widget;
 using Android.Util;
 using System.Json;
 
+//{"username":"eugens1","password":"eugens1123%","createPersistentCookie":true}
+//{"username":"eugens","password":"1R#EugenS","createPersistentCookie":true}
+
 namespace CollectingMobile
 {
-    class RestClient         
+    class RestClient
     {
+        //TODO: 2 activitya 1. login  2. empty
         public static string sUrl = "https://jimsrv.no-ip.info/LabTest/_invoke/Login";
-        public static string json = "{\"username\":\"euens\",\"password\":\"1R#EugenS\",\"createPersistentCookie\":true}";
-
-        public static void GetResponse() {
-
+        public static string jsonLogin = "{\"username\":\"eugens1\",\"password\":\"eugens1123%\",\"createPersistentCookie\":true}";
+        public static bool IsLoginOk(string username, string password)
+        {
+            //   string json = "{\"username\":\"" + username + "\",\"password\":\"" + password + "\",\"createPersistentCookie\":true}";
+            string json = "{\"username\":\"" + username + "\",\"password\":\"" + password + "\",\"createPersistentCookie\":true}";
             ASCIIEncoding encoder = new ASCIIEncoding();
-            byte[] data = encoder.GetBytes(json); // a json object, or xml, whatever...
+            byte[] data = encoder.GetBytes(jsonLogin); // a json object, or xml, whatever...
 
             System.Net.HttpWebRequest request = System.Net.WebRequest.Create(sUrl) as System.Net.HttpWebRequest;
             request.Method = "POST";
             request.ContentType = "application/json";
             request.ContentLength = data.Length;
             request.Expect = "application/json";
-            
+
             request.GetRequestStream().Write(data, 0, data.Length);
 
             System.Net.HttpWebResponse response = request.GetResponse() as System.Net.HttpWebResponse;
             var reader = new System.IO.StreamReader(response.GetResponseStream());
             string content = reader.ReadToEnd();
-            JsonValue jsonIdk =  JsonValue.Parse(content);
-            
-            Toast.MakeText(Application.Context, jsonIdk["d"].ToString(), ToastLength.Long).Show();
+            var jsonIdk = JsonValue.Parse(content);
+            return jsonIdk["d"];
+
 
         }
+
+
     }
 }
+
+

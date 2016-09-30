@@ -22,11 +22,21 @@ namespace CollectingMobile
             base.OnCreate(bundle);
             
             SetContentView(Resource.Layout.Main);
-            Button button = FindViewById<Button>(Resource.Id.MyButton);
-
-            button.Click += delegate
+            Button btnLogin = FindViewById<Button>(Resource.Id.MyButton);
+            EditText etUsername = FindViewById<EditText>(Resource.Id.username);
+            EditText etPassword = FindViewById<EditText>(Resource.Id.password);
+            btnLogin.Click += delegate
             {
-                RestClient.GetResponse();
+                if(RestClient.IsLoginOk(etUsername.Text,etPassword.Text))
+                {
+                    
+                    StartActivity(typeof(Activity2));
+                }
+                else
+                {
+                    etUsername.Text = "";
+                    etPassword.Text = "";
+                }
             };
 
 

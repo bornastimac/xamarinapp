@@ -21,13 +21,13 @@ namespace CollectingMobile
     {
         //TODO: 2 activitya 1. login  2. empty
         public static string sUrl = "https://jimsrv.no-ip.info/LabTest/_invoke/Login";
-        public static string jsonLogin = "{\"username\":\"eugens1\",\"password\":\"eugens1123%\",\"createPersistentCookie\":true}";
+        //public static string jsonLogin = "{\"username\":\"eugens1\",\"password\":\"eugens1123%\",\"createPersistentCookie\":true}";
         public static bool IsLoginOk(string username, string password)
         {
             //   string json = "{\"username\":\"" + username + "\",\"password\":\"" + password + "\",\"createPersistentCookie\":true}";
             string json = "{\"username\":\"" + username + "\",\"password\":\"" + password + "\",\"createPersistentCookie\":true}";
             ASCIIEncoding encoder = new ASCIIEncoding();
-            byte[] data = encoder.GetBytes(jsonLogin); // a json object, or xml, whatever...
+            byte[] data = encoder.GetBytes(json); // a json object, or xml, whatever...
 
             System.Net.HttpWebRequest request = System.Net.WebRequest.Create(sUrl) as System.Net.HttpWebRequest;
             request.Method = "POST";
@@ -39,7 +39,7 @@ namespace CollectingMobile
 
             System.Net.HttpWebResponse response = request.GetResponse() as System.Net.HttpWebResponse;
             var reader = new System.IO.StreamReader(response.GetResponseStream());
-            string content = reader.ReadToEnd();
+            string content = reader.ReadToEnd(); //string representation
             var jsonIdk = JsonValue.Parse(content);
             return jsonIdk["d"];
 

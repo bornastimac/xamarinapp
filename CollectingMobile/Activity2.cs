@@ -12,14 +12,14 @@ using Android.Widget;
 
 namespace CollectingMobile
 {
-    [Activity(Label = "Activity2")]
+    [Activity(Label = "List of Orders")]
     public class Activity2 : Activity
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.layout2);
-            // Label uspjesan login
+            
         }
     }
 }

@@ -34,6 +34,7 @@ namespace CollectingMobile
                 }
                 else
                 {
+                    Toast.MakeText(this, "Incorrect Credentials", ToastLength.Long).Show();
                     etUsername.Text = "";
                     etPassword.Text = "";
                 }

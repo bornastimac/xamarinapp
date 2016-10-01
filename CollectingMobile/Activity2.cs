@@ -12,8 +12,8 @@ using Android.Widget;
 
 namespace CollectingMobile
 {
-    [Activity(Label = "List of Orders")]
-    public class Activity2 : Activity
+    [Activity(Label = "List of Orders", ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
+    public class SpecimenRequestsActivity : Activity
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {

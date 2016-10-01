@@ -11,11 +11,12 @@ using System.IO;
 using System.Json;
 using System.Threading.Tasks;
 using System.Text;
+using System.Threading;
 
 namespace CollectingMobile
 {
-    [Activity(Label = "CollectingMobile", MainLauncher = true, Icon = "@drawable/icon")]
-    public class MainActivity : Activity
+    [Activity(Label = "CollectingMobile", MainLauncher = true, Icon = "@drawable/icon",ScreenOrientation =Android.Content.PM.ScreenOrientation.Portrait)]
+    public class LoginActivity : Activity
     {
         protected override void OnCreate(Bundle bundle)
         {
@@ -25,19 +26,31 @@ namespace CollectingMobile
             Button btnLogin = FindViewById<Button>(Resource.Id.MyButton);
             EditText etUsername = FindViewById<EditText>(Resource.Id.username);
             EditText etPassword = FindViewById<EditText>(Resource.Id.password);
+            
+
             btnLogin.Click += delegate
             {
-                if(RestClient.IsLoginOk(etUsername.Text,etPassword.Text))
+                var progressDialog = ProgressDialog.Show(this, "Please wait..", "Authenticating...", true);
+
+                new Thread(new ThreadStart(delegate
                 {
-                    
-                    StartActivity(typeof(Activity2));
-                }
-                else
-                {
-                    Toast.MakeText(this, "Incorrect Credentials", ToastLength.Long).Show();
-                    etUsername.Text = "";
-                    etPassword.Text = "";
-                }
+                    if (RestClient.IsLoginOk(etUsername.Text, etPassword.Text))
+                    {
+
+                        StartActivity(typeof(SpecimenRequestsActivity));
+                    }
+                    else
+                    {
+                        RunOnUiThread(() => etUsername.Text = "");
+                        RunOnUiThread(() => etPassword.Text = "");
+                        RunOnUiThread(() => Toast.MakeText(ApplicationContext, "Incorrect Credentials", ToastLength.Long).Show());
+                    }
+                    RunOnUiThread(() => progressDialog.Hide());
+
+                })).Start();
+
+                
+
             };
 
 

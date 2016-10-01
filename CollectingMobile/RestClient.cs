@@ -24,6 +24,7 @@ namespace CollectingMobile
         //public static string jsonLogin = "{\"username\":\"eugens1\",\"password\":\"eugens1123%\",\"createPersistentCookie\":true}";
         public static bool IsLoginOk(string username, string password)
         {
+
             //   string json = "{\"username\":\"" + username + "\",\"password\":\"" + password + "\",\"createPersistentCookie\":true}";
             string json = "{\"username\":\"" + username + "\",\"password\":\"" + password + "\",\"createPersistentCookie\":true}";
             ASCIIEncoding encoder = new ASCIIEncoding();

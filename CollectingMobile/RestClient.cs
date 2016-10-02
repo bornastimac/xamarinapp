@@ -11,6 +11,8 @@ using Android.Views;
 using Android.Widget;
 using Android.Util;
 using System.Json;
+using System.Threading;
+using System.Threading.Tasks;
 
 //{"username":"eugens1","password":"eugens1123%","createPersistentCookie":true}
 //{"username":"eugens","password":"1R#EugenS","createPersistentCookie":true}
@@ -21,14 +23,13 @@ namespace CollectingMobile
     {
         //TODO: 2 activitya 1. login  2. empty
         public static string sUrl = "https://jimsrv.no-ip.info/LabTest/_invoke/Login";
-        //public static string jsonLogin = "{\"username\":\"eugens1\",\"password\":\"eugens1123%\",\"createPersistentCookie\":true}";
+        public static string jsonLogin = "{\"username\":\"eugens1\",\"password\":\"eugens1123%\",\"createPersistentCookie\":true}";
         public static bool IsLoginOk(string username, string password)
         {
-
-            //   string json = "{\"username\":\"" + username + "\",\"password\":\"" + password + "\",\"createPersistentCookie\":true}";
+            
             string json = "{\"username\":\"" + username + "\",\"password\":\"" + password + "\",\"createPersistentCookie\":true}";
             ASCIIEncoding encoder = new ASCIIEncoding();
-            byte[] data = encoder.GetBytes(json); // a json object, or xml, whatever...
+            byte[] data = encoder.GetBytes(jsonLogin); // a json object, or xml, whatever...
 
             System.Net.HttpWebRequest request = System.Net.WebRequest.Create(sUrl) as System.Net.HttpWebRequest;
             request.Method = "POST";
@@ -43,11 +44,11 @@ namespace CollectingMobile
             string content = reader.ReadToEnd(); //string representation
             var jsonIdk = JsonValue.Parse(content);
             return jsonIdk["d"];
-
-
         }
-
-
+        public static string[] GetDataFromServer() {
+            
+            return new string[] { "Lorem", "Ipsum", "Sit", "Dolorem", "dafiq", "12345" };
+        }
     }
 }
 

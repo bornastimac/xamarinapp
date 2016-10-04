@@ -12,7 +12,8 @@ using System.Json;
 using System.Threading.Tasks;
 using System.Text;
 using System.Threading;
-
+//TODO: 1. User se autorizira online i spremaju mu se podaci
+//TODO: 2. Ako nema net, logira se pomoću tih podataka
 namespace CollectingMobile
 {
     [Activity(Label = "CollectingMobile", MainLauncher = true, Icon = "@drawable/icon",ScreenOrientation =Android.Content.PM.ScreenOrientation.Portrait)]
@@ -22,7 +23,7 @@ namespace CollectingMobile
         {
             base.OnCreate(bundle);
             
-            SetContentView(Resource.Layout.Main);
+            SetContentView(Resource.Layout.Login);
             Button btnLogin = FindViewById<Button>(Resource.Id.MyButton);
             EditText etUsername = FindViewById<EditText>(Resource.Id.username);
             EditText etPassword = FindViewById<EditText>(Resource.Id.password);
@@ -48,8 +49,6 @@ namespace CollectingMobile
                     RunOnUiThread(() => progressDialog.Hide());
 
                 })).Start();
-
-                
 
             };
 

@@ -13,13 +13,15 @@ using System.Threading;
 
 namespace CollectingMobile
 {
-    [Activity(Label = "List of Orders", ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
+    [Activity(Label = "Specimen Request", ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
     public class SpecimenRequestsActivity : ListActivity
     {
         string[] items;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+            //cekanje na server
+
          //   items = new string[] { "Lorem", "Ipsum", "Sit", "Dolorem", "dafuq", "12345" };
           //  new Thread(new ThreadStart(delegate
           //  {
@@ -31,8 +33,8 @@ namespace CollectingMobile
         }
         protected override void OnListItemClick(ListView l, View v, int position, long id)
         {
-            var t = items[position];
-            Toast.MakeText(this, t, ToastLength.Short).Show();
+          //  var t = items[position];
+          //  Toast.MakeText(this, t, ToastLength.Short).Show();
         }
     }
 }

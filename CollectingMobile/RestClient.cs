@@ -29,7 +29,7 @@ namespace CollectingMobile
             
             string json = "{\"username\":\"" + username + "\",\"password\":\"" + password + "\",\"createPersistentCookie\":true}";
             ASCIIEncoding encoder = new ASCIIEncoding();
-            byte[] data = encoder.GetBytes(jsonLogin); // a json object, or xml, whatever...
+            byte[] data = encoder.GetBytes(json); // a json object, or xml, whatever...
 
             System.Net.HttpWebRequest request = System.Net.WebRequest.Create(sUrl) as System.Net.HttpWebRequest;
             request.Method = "POST";
@@ -47,7 +47,7 @@ namespace CollectingMobile
         }
         public static string[] GetDataFromServer() {
             
-            return new string[] { "Lorem", "Ipsum", "Sit", "Dolorem", "dafiq", "12345" };
+            return new string[] { "Nalog 1", "Nalog 2", "Nalog 3", "Nalog 4", "Nalog 5", "Nalog 6" };
         }
     }
 }

@@ -21,12 +21,12 @@ namespace CollectingMobile
 {
     class RestClient
     {
-        //TODO: 2 activitya 1. login  2. empty
+
         public static string sUrl = "https://jimsrv.no-ip.info/LabTest/_invoke/Login";
         public static string jsonLogin = "{\"username\":\"eugens1\",\"password\":\"eugens1123%\",\"createPersistentCookie\":true}";
         public static bool IsLoginOk(string username, string password)
         {
-            
+
             string json = "{\"username\":\"" + username + "\",\"password\":\"" + password + "\",\"createPersistentCookie\":true}";
             ASCIIEncoding encoder = new ASCIIEncoding();
             byte[] data = encoder.GetBytes(json); // a json object, or xml, whatever...
@@ -45,9 +45,9 @@ namespace CollectingMobile
             var jsonIdk = JsonValue.Parse(content);
             return jsonIdk["d"];
         }
-        public static string[] GetDataFromServer() {
-            
-            return new string[] { "Nalog 1", "Nalog 2", "Nalog 3", "Nalog 4", "Nalog 5", "Nalog 6" };
+        public static List<SpecimensRequest> GetDataFromServer()
+        {
+            return SpecimensRequestsFactory.GetMockSpecimensRequestsForUser(ActiveUser.username, new Random().Next(3, 10));
         }
     }
 }

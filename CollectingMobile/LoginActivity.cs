@@ -31,14 +31,15 @@ namespace CollectingMobile
 
             btnLogin.Click += delegate
             {
-                var progressDialog = ProgressDialog.Show(this, "Please wait..", "Authenticating...", true);
+                var progressDialog = ProgressDialog.Show(this, "", "Authenticating...", true);
 
                 new Thread(new ThreadStart(delegate
                 {
-                    if (RestClient.IsLoginOk(etUsername.Text, etPassword.Text))
+                  //  if (RestClient.IsLoginOk(etUsername.Text, etPassword.Text))
+                  if(true)
                     {
-
-                        StartActivity(typeof(SpecimenRequestsActivity));
+                        ActiveUser.username = etUsername.Text;
+                        StartActivity(typeof(ShowSpecimenRequestsActivity));
                     }
                     else
                     {

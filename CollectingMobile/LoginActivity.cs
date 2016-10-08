@@ -16,18 +16,18 @@ using System.Threading;
 //TODO: 2. Ako nema net, logira se pomoću tih podataka
 namespace CollectingMobile
 {
-    [Activity(Label = "CollectingMobile", MainLauncher = true, Icon = "@drawable/icon",ScreenOrientation =Android.Content.PM.ScreenOrientation.Portrait)]
+    [Activity(Label = "CollectingMobile", MainLauncher = true, Icon = "@drawable/icon", ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
     public class LoginActivity : Activity
     {
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
-            
+
             SetContentView(Resource.Layout.Login);
             Button btnLogin = FindViewById<Button>(Resource.Id.MyButton);
             EditText etUsername = FindViewById<EditText>(Resource.Id.username);
             EditText etPassword = FindViewById<EditText>(Resource.Id.password);
-            
+
 
             btnLogin.Click += delegate
             {
@@ -35,11 +35,12 @@ namespace CollectingMobile
 
                 new Thread(new ThreadStart(delegate
                 {
-                  //  if (RestClient.IsLoginOk(etUsername.Text, etPassword.Text))
-                  if(true)
+                    if (RestClient.IsLoginOk(etUsername.Text, etPassword.Text))
+
                     {
                         ActiveUser.username = etUsername.Text;
-                        StartActivity(typeof(ShowSpecimenRequestsActivity));
+                        StartActivity(typeof(ShowSpecimensRequestsActivity));
+                        Finish();
                     }
                     else
                     {

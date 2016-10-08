@@ -14,26 +14,29 @@ using System.Threading;
 namespace CollectingMobile
 {
     [Activity(Label = "Specimen Request", ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
-    public class ShowSpecimenRequestsActivity : ListActivity
+    public class ShowSpecimenRequestsActivity2 :ListActivity
     {
-        List<SpecimensRequest> specimensRequests;
+       // List<SpecimensRequest> specimensRequests;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            specimensRequests = RestClient.GetDataFromServer();
-            
-#region
-            //cekanje na server
+       //     SetContentView(Resource.Layout.SpecimenRequests);
+            var clistAdapter = new CustomListAdapter(this);
+            var requesListView = FindViewById<ListView>(Resource.Id.RequestDetailsListView);
+            requesListView.Adapter = clistAdapter; 
 
-               var items = new string[] { "Lorem", "Ipsum", "Sit", "Dolorem", "dafuq", "12345" };
+            #region
+            //cekanje na server
+            // specimensRequests = RestClient.GetDataFromServer();
+            //  var items = new string[] { "Lorem", "Ipsum", "Sit", "Dolorem", "dafuq", "12345" };
             //  new Thread(new ThreadStart(delegate
             //  {
-          //  items = RestClient.GetDataFromServer();
-               // RunOnUiThread(() => 
-                ListAdapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItem1, items );
+            //  items = RestClient.GetDataFromServer();
+            // RunOnUiThread(() => 
+            //    ListAdapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItem1, items );
 
             //   })).Start();
-#endregion
+            #endregion
         }
         protected override void OnListItemClick(ListView l, View v, int position, long id)
         {

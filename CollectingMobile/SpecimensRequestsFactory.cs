@@ -22,7 +22,7 @@ namespace CollectingMobile
 
             for (int i = 0; i < numberOfSpecimensRequests; i++)
             {
-                mockSpecimensRequests.Add(new SpecimensRequest((++id).ToString(), "description_" + id, username, DateTime.Now, GetMockSpecimens(new Random().Next(1, 6))));
+                mockSpecimensRequests.Add(new SpecimensRequest(++id, "description_" + id, username, DateTime.Now, GetMockSpecimens(new Random().Next(1, 6))));
             }
             return mockSpecimensRequests;
         }

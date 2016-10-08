@@ -14,13 +14,13 @@ namespace CollectingMobile
 {
     class SpecimensRequest
     {
-        public readonly string id;
+        public readonly long id;
         public readonly string description;
         public readonly string usernameAssigned;
         public readonly DateTime created;
         public readonly List<Specimen> specimensRequested;
 
-        public SpecimensRequest(string id, string description, string usernameAssigned, DateTime created, List<Specimen> specimensRequested)
+        public SpecimensRequest(long id, string description, string usernameAssigned, DateTime created, List<Specimen> specimensRequested)
         {
             this.id = id;
             this.description = description;

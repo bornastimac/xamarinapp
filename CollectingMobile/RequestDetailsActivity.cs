@@ -30,7 +30,15 @@ namespace CollectingMobile
 
                 menu.MenuItemClick += (s1, arg1) =>
                 {
-                    Toast.MakeText(this, arg1.Item.TitleFormatted, ToastLength.Short).Show();
+                    if (string.Equals(arg1.Item.TitleFormatted.ToString(), "Logout")) //TODO: FIX THIS ASAP
+                         {
+                        ActiveUser.username = null;
+                        var intent = new Intent(this, typeof(LoginActivity));
+                        intent.SetFlags(ActivityFlags.NewTask);
+                        intent.SetFlags(ActivityFlags.ClearTask);
+                        StartActivity(intent);
+                    }
+                    
                 };
                 menu.Show();
             };
@@ -39,7 +47,7 @@ namespace CollectingMobile
             {
                 base.OnBackPressed();
             };
-            // Create your application here
+           
         }
 
         

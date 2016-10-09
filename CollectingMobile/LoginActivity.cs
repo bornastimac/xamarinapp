@@ -12,6 +12,7 @@ using System.Json;
 using System.Threading.Tasks;
 using System.Text;
 using System.Threading;
+using Android.Net;
 //TODO: 1. User se autorizira online i spremaju mu se podaci
 //TODO: 2. Ako nema net, logira se pomoću tih podataka
 namespace CollectingMobile
@@ -27,35 +28,46 @@ namespace CollectingMobile
             Button btnLogin = FindViewById<Button>(Resource.Id.MyButton);
             EditText etUsername = FindViewById<EditText>(Resource.Id.username);
             EditText etPassword = FindViewById<EditText>(Resource.Id.password);
-
+            
 
             btnLogin.Click += delegate
             {
-                var progressDialog = ProgressDialog.Show(this, "", "Authenticating...", true);
-
-                new Thread(new ThreadStart(delegate
+              
+                
+                if (RestClient.AmIOnline(Application.Context))
                 {
-                    if (RestClient.IsLoginOk(etUsername.Text, etPassword.Text))
+                    var progressDialog = ProgressDialog.Show(this, "", "Authenticating...", true);
 
+                    new Thread(new ThreadStart(delegate
                     {
-                        ActiveUser.username = etUsername.Text;
-                        StartActivity(typeof(ShowSpecimensRequestsActivity));
-                        Finish();
-                    }
-                    else
-                    {
-                        RunOnUiThread(() => etUsername.Text = "");
-                        RunOnUiThread(() => etPassword.Text = "");
-                        RunOnUiThread(() => Toast.MakeText(ApplicationContext, "Incorrect Credentials", ToastLength.Long).Show());
-                    }
-                    RunOnUiThread(() => progressDialog.Hide());
+                        if (RestClient.IsLoginOk(etUsername.Text, etPassword.Text))
 
-                })).Start();
+                        {
+                            ActiveUser.username = etUsername.Text;
+                            StartActivity(typeof(ShowSpecimensRequestsActivity));
+                            Finish();
+                        }
+                        else
+                        {
+                            RunOnUiThread(() => etUsername.Text = "");
+                            RunOnUiThread(() => etPassword.Text = "");
+                            RunOnUiThread(() => Toast.MakeText(ApplicationContext, "Incorrect Credentials", ToastLength.Long).Show());
+                        }
+                        RunOnUiThread(() => progressDialog.Hide());
+
+                    })).Start();
+                }
+
+                else
+                {
+                    Toast.MakeText(this, "Check your network connection", ToastLength.Long).Show();
+                }
 
             };
-
-
         }
+
+        [Android.Runtime.Register("onBackPressed", "()V", "GetOnBackPressedHandler")] //TODO: drugacije rijesiti ovo
+        public override void OnBackPressed() { }
     }
 }
 

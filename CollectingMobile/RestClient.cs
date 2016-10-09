@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+
 using Android.App;
 using Android.Content;
 using Android.OS;
@@ -13,6 +14,9 @@ using Android.Util;
 using System.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Android.App.Usage;
+using Android.Net;
+using System.Net;
 
 //{"username":"eugens1","password":"eugens1123%","createPersistentCookie":true}
 //{"username":"eugens","password":"1R#EugenS","createPersistentCookie":true}
@@ -49,7 +53,28 @@ namespace CollectingMobile
         {
             return SpecimensRequestsFactory.GetMockSpecimensRequestsForUser(ActiveUser.username, new Random().Next(3, 10));
         }
+        public static bool AmIOnline(Context context)
+        {
+
+              ConnectivityManager connectivityManager = (ConnectivityManager)context.GetSystemService(Context.ConnectivityService);
+              NetworkInfo activeConnection = connectivityManager.ActiveNetworkInfo;
+              return (activeConnection != null) && activeConnection.IsConnected;
+            //TODO: check for server reachability
+            //try
+            //{
+            //    HttpWebRequest iNetRequest = (HttpWebRequest)WebRequest.Create(sUrl);
+            //    iNetRequest.Timeout = 5000;
+            //    WebResponse iNetResponse = iNetRequest.GetResponse();
+            //    iNetResponse.Close();
+            //    return true;
+            //}
+            //catch (WebException)
+            //{
+            //    return false;
+            //}
+        }
     }
 }
+
 
 

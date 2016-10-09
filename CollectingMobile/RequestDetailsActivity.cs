@@ -14,8 +14,7 @@ namespace CollectingMobile
 {
     [Activity(Label = "RequestDetailsActivity")]
     public class RequestDetailsActivity : Activity
-    {
-        
+    {      
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -34,9 +33,10 @@ namespace CollectingMobile
                          {
                         ActiveUser.username = null;
                         var intent = new Intent(this, typeof(LoginActivity));
-                        intent.SetFlags(ActivityFlags.NewTask);
+                        intent.SetFlags(ActivityFlags.ExcludeFromRecents);
                         intent.SetFlags(ActivityFlags.ClearTask);
                         StartActivity(intent);
+                        this.Finish();
                     }
                     
                 };

@@ -13,7 +13,7 @@ using Java.Lang;
 
 namespace CollectingMobile
 {
-    public class CustomListAdapter : BaseAdapter
+    public class RequestsListAdapter : BaseAdapter
     {
         List<SpecimensRequest> _requestList;
         Activity _activity;
@@ -26,7 +26,7 @@ namespace CollectingMobile
             }
         }
 
-        public CustomListAdapter(Activity activity)
+        public RequestsListAdapter(Activity activity)
         {
             _activity = activity;
             _requestList = RestClient.GetDataFromServer();

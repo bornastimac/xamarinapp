@@ -60,7 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActiveUser.cs" />
-    <Compile Include="CustomListAdapter.cs" />
+    <Compile Include="RequestsListAdapter.cs" />
     <Compile Include="RequestDetailsActivity.cs" />
     <Compile Include="ShowSpecimensRequestsActivity2.cs" />
     <Compile Include="Specimen.cs" />
@@ -68,6 +68,7 @@
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RestClient.cs" />
+    <Compile Include="SpecimenListActivity.cs" />
     <Compile Include="SpecimensRequest.cs" />
     <Compile Include="SpecimensRequestsFactory.cs" />
   </ItemGroup>
@@ -79,6 +80,9 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\RequestDetails.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\SpecimenList.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
@@ -101,6 +105,12 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\ListItem.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\values\customstyles.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\toolbar.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

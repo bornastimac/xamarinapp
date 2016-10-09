@@ -12,20 +12,29 @@ using Android.Widget;
 
 namespace CollectingMobile
 {
-    [Activity(Label = "ShowSpecimensRequestsActivity2")]
+    [Activity(Label = "Nalozi:")]
     public class ShowSpecimensRequestsActivity : Activity
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.SpecimenRequests);
-            var clistAdapter = new CustomListAdapter(this);
-            var requestListView = FindViewById<ListView>(Resource.Id.RequestsListView);
-            requestListView.Adapter = clistAdapter;
-            requestListView.ItemClick += delegate
+
+            if (RestClient.AmIOnline(this))
             {
-                StartActivity(typeof(RequestDetailsActivity));
-            };
+                var clistAdapter = new RequestsListAdapter(this);
+                var requestListView = FindViewById<ListView>(Resource.Id.RequestsListView);
+                requestListView.Adapter = clistAdapter;
+                requestListView.ItemClick += delegate
+                {
+                    StartActivity(typeof(RequestDetailsActivity));
+                };
+            }
+            else
+            {
+                Toast.MakeText(this, "Check your network connection", ToastLength.Long).Show();
+            }
+
         }
 
        

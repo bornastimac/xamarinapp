@@ -15,7 +15,7 @@ namespace CollectingMobile
 {
     public class RequestsListAdapter : BaseAdapter
     {
-        List<SpecimensRequest> _requestList;
+        List<Request> _requestList;
         Activity _activity;
 
         public override int Count
@@ -39,8 +39,9 @@ namespace CollectingMobile
 
         public override long GetItemId(int position)
         {
-            return _requestList[position].id;
+            return -1;
         }
+
 
         public override View GetView(int position, View convertView, ViewGroup parent)
         {

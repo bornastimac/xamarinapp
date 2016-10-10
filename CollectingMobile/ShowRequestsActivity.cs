@@ -13,7 +13,7 @@ using Android.Widget;
 namespace CollectingMobile
 {
     [Activity(Label = "Nalozi:")]
-    public class ShowSpecimensRequestsActivity : Activity
+    public class ShowRequestsActivity : Activity
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -27,7 +27,7 @@ namespace CollectingMobile
                 requestListView.Adapter = clistAdapter;
                 requestListView.ItemClick += delegate
                 {
-                    StartActivity(typeof(RequestDetailsActivity));
+                    StartActivity(typeof(ShowSpecimensActivity));
                 };
             }
             else

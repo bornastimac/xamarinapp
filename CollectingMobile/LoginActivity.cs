@@ -13,9 +13,7 @@ using System.Threading.Tasks;
 using System.Text;
 using System.Threading;
 using Android.Net;
-//TODO: 1. User se autorizira online i spremaju mu se podaci
-//TODO: 2. Ako nema net, logira se pomoću tih podataka
-//started working on toolbar
+
 namespace CollectingMobile
 {
     [Activity(Label = "CollectingMobile", MainLauncher = true, Icon = "@drawable/icon", ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
@@ -32,9 +30,7 @@ namespace CollectingMobile
             
 
             btnLogin.Click += delegate
-            {
-              
-                
+            {          
                 if (RestClient.AmIOnline(Application.Context))
                 {
                     var progressDialog = ProgressDialog.Show(this, "", "Authenticating...", true);
@@ -45,7 +41,7 @@ namespace CollectingMobile
 
                         {
                             ActiveUser.username = etUsername.Text;
-                            StartActivity(typeof(ShowSpecimensRequestsActivity));
+                            StartActivity(typeof(ShowRequestsActivity));
                             Finish();
                         }
                         else
@@ -67,7 +63,7 @@ namespace CollectingMobile
             };
         }
 
-        [Android.Runtime.Register("onBackPressed", "()V", "GetOnBackPressedHandler")] //TODO: drugacije rijesiti ovo
+        [Android.Runtime.Register("onBackPressed", "()V", "GetOnBackPressedHandler")]
         public override void OnBackPressed() { }
     }
 }

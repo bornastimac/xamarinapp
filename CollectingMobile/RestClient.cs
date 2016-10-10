@@ -17,21 +17,20 @@ using System.Threading.Tasks;
 using Android.App.Usage;
 using Android.Net;
 using System.Net;
-//{"username":"eugens1","password":"eugens1123%","createPersistentCookie":true} promjena
+//{"username":"eugens1","password":"eugens1123%","createPersistentCookie":true}
 
 namespace CollectingMobile
 {
     class RestClient
     {
-
         public static string sUrl = "https://jimsrv.no-ip.info/LabTest/_invoke/Login";
-        public static string jsonLogin = "{\"username\":\"eugens1\",\"password\":\"eugens1123%\",\"createPersistentCookie\":true}";
+
         public static bool IsLoginOk(string username, string password)
         {
 
             string json = "{\"username\":\"" + username + "\",\"password\":\"" + password + "\",\"createPersistentCookie\":true}";
             ASCIIEncoding encoder = new ASCIIEncoding();
-            byte[] data = encoder.GetBytes(json); // a json object, or xml, whatever...
+            byte[] data = encoder.GetBytes(json);
 
             System.Net.HttpWebRequest request = System.Net.WebRequest.Create(sUrl) as System.Net.HttpWebRequest;
             request.Method = "POST";
@@ -43,21 +42,22 @@ namespace CollectingMobile
 
             System.Net.HttpWebResponse response = request.GetResponse() as System.Net.HttpWebResponse;
             var reader = new System.IO.StreamReader(response.GetResponseStream());
-            string content = reader.ReadToEnd(); //string representation
+            string content = reader.ReadToEnd();
             var jsonIdk = JsonValue.Parse(content);
             return jsonIdk["d"];
         }
-        public static List<SpecimensRequest> GetDataFromServer()
+
+        public static List<Request> GetDataFromServer()
         {
-            return SpecimensRequestsFactory.GetMockSpecimensRequestsForUser(ActiveUser.username, new Random().Next(3, 10));
+            return RequestsFactory.GetMockSpecimensRequestsForUser(ActiveUser.username, new Random().Next(3, 10));
         }
+
         public static bool AmIOnline(Context context)
         {
-
               ConnectivityManager connectivityManager = (ConnectivityManager)context.GetSystemService(Context.ConnectivityService);
               NetworkInfo activeConnection = connectivityManager.ActiveNetworkInfo;
               return (activeConnection != null) && activeConnection.IsConnected;
-            //TODO: check for server reachability
+            
             //try
             //{
             //    HttpWebRequest iNetRequest = (HttpWebRequest)WebRequest.Create(sUrl);

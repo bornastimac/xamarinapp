@@ -12,17 +12,17 @@ using Android.Widget;
 
 namespace CollectingMobile
 {
-    class SpecimensRequestsFactory
+    class RequestsFactory
     {
         private static int id = 0;
 
-        public static List<SpecimensRequest> GetMockSpecimensRequestsForUser(string username, int numberOfSpecimensRequests)
+        public static List<Request> GetMockSpecimensRequestsForUser(string username, int numberOfSpecimensRequests)
         {
-            List<SpecimensRequest> mockSpecimensRequests = new List<SpecimensRequest>();
+            List<Request> mockSpecimensRequests = new List<Request>();
 
             for (int i = 0; i < numberOfSpecimensRequests; i++)
             {
-                mockSpecimensRequests.Add(new SpecimensRequest(++id, "description_" + id, username, DateTime.Now, GetMockSpecimens(new Random().Next(1, 6))));
+                mockSpecimensRequests.Add(new Request((++id).ToString(), "description_" + id, username, DateTime.Now, GetMockSpecimens(new Random().Next(1, 6))));
             }
             return mockSpecimensRequests;
         }

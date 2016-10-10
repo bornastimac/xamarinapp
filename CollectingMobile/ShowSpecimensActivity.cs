@@ -13,7 +13,7 @@ using Android.Widget;
 namespace CollectingMobile
 {
     [Activity(Label = "RequestDetailsActivity")]
-    public class RequestDetailsActivity : Activity
+    public class ShowSpecimensActivity : Activity
     {      
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -29,7 +29,7 @@ namespace CollectingMobile
 
                 menu.MenuItemClick += (s1, arg1) =>
                 {
-                    if (string.Equals(arg1.Item.TitleFormatted.ToString(), "Logout")) //TODO: FIX THIS!!
+                    if (string.Equals(arg1.Item.TitleFormatted.ToString(), "Logout"))
                          {
                         ActiveUser.username = null;
                         var intent = new Intent(this, typeof(LoginActivity));

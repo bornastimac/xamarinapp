@@ -61,16 +61,15 @@
   <ItemGroup>
     <Compile Include="ActiveUser.cs" />
     <Compile Include="RequestsListAdapter.cs" />
-    <Compile Include="RequestDetailsActivity.cs" />
-    <Compile Include="ShowSpecimensRequestsActivity2.cs" />
+    <Compile Include="ShowSpecimensActivity.cs" />
+    <Compile Include="ShowRequestsActivity.cs" />
     <Compile Include="Specimen.cs" />
     <Compile Include="LoginActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RestClient.cs" />
-    <Compile Include="SpecimenListActivity.cs" />
-    <Compile Include="SpecimensRequest.cs" />
-    <Compile Include="SpecimensRequestsFactory.cs" />
+    <Compile Include="Request.cs" />
+    <Compile Include="RequestsFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="GettingStarted.Xamarin" />

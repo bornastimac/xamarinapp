@@ -29,7 +29,7 @@ namespace CollectingMobile
 
                 menu.MenuItemClick += (s1, arg1) =>
                 {
-                    if (string.Equals(arg1.Item.TitleFormatted.ToString(), "Logout")) //TODO: FIX THIS ASAP
+                    if (string.Equals(arg1.Item.TitleFormatted.ToString(), "Logout")) //TODO: FIX THIS!!
                          {
                         ActiveUser.username = null;
                         var intent = new Intent(this, typeof(LoginActivity));

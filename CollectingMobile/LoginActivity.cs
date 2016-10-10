@@ -15,6 +15,7 @@ using System.Threading;
 using Android.Net;
 //TODO: 1. User se autorizira online i spremaju mu se podaci
 //TODO: 2. Ako nema net, logira se pomoću tih podataka
+//started working on toolbar
 namespace CollectingMobile
 {
     [Activity(Label = "CollectingMobile", MainLauncher = true, Icon = "@drawable/icon", ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]

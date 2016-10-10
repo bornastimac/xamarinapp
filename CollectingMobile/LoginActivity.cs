@@ -24,7 +24,8 @@ namespace CollectingMobile
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.Login);
 
-            Init();           
+            Init();
+            SetToolbar();
         }
 
         private void Init()
@@ -71,6 +72,12 @@ namespace CollectingMobile
             };
         }
 
+        private void SetToolbar()
+        {
+            var toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
+            SetActionBar(toolbar);
+            ActionBar.Title = "Collecting Mobile";
+        }
 
         [Android.Runtime.Register("onBackPressed", "()V", "GetOnBackPressedHandler")]
         public override void OnBackPressed() { }

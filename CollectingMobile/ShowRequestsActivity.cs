@@ -20,6 +20,20 @@ namespace CollectingMobile
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.Requests);
 
+            LoadRequests();
+            SetToolbar();
+
+        }
+
+        private void SetToolbar()
+        {
+            var toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
+            SetActionBar(toolbar);
+            ActionBar.Title = "Nalozi";
+        }
+
+        private void LoadRequests()
+        {
             if (RestClient.AmIOnline(this))
             {
                 var clistAdapter = new RequestsListAdapter(this);
@@ -36,11 +50,22 @@ namespace CollectingMobile
             {
                 Toast.MakeText(this, "Check your network connection", ToastLength.Long).Show();
             }
-
         }
 
-       
-             [Android.Runtime.Register("onBackPressed", "()V", "GetOnBackPressedHandler")]
+        public override bool OnCreateOptionsMenu(IMenu menu)
+        {
+            MenuInflater.Inflate(Resource.Menu.menu, menu);
+            return base.OnCreateOptionsMenu(menu);
+        }
+
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            Toast.MakeText(this, "Action selected: " + item.TitleFormatted,
+                ToastLength.Short).Show();
+            return base.OnOptionsItemSelected(item);
+        }
+
+        [Android.Runtime.Register("onBackPressed", "()V", "GetOnBackPressedHandler")]
         public override void OnBackPressed() { }
         
     }

@@ -19,7 +19,6 @@ using Android.Net;
 using System.Net;
 
 //{"username":"eugens1","password":"eugens1123%","createPersistentCookie":true}
-//{"username":"eugens","password":"1R#EugenS","createPersistentCookie":true}
 
 namespace CollectingMobile
 {

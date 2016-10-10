@@ -22,15 +22,24 @@ namespace CollectingMobile
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
-
             SetContentView(Resource.Layout.Login);
+
+            Init();           
+        }
+
+        private void Init()
+        {
             Button btnLogin = FindViewById<Button>(Resource.Id.MyButton);
             EditText etUsername = FindViewById<EditText>(Resource.Id.username);
             EditText etPassword = FindViewById<EditText>(Resource.Id.password);
-            
+
+        #if DEBUG
+            etUsername.Text = "eugens1";
+            etPassword.Text = "eugens1123%";
+        #endif
 
             btnLogin.Click += delegate
-            {          
+            {
                 if (RestClient.AmIOnline(Application.Context))
                 {
                     var progressDialog = ProgressDialog.Show(this, "", "Authenticating...", true);
@@ -59,9 +68,9 @@ namespace CollectingMobile
                 {
                     Toast.MakeText(this, "Check your network connection", ToastLength.Long).Show();
                 }
-
             };
         }
+
 
         [Android.Runtime.Register("onBackPressed", "()V", "GetOnBackPressedHandler")]
         public override void OnBackPressed() { }

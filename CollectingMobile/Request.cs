@@ -18,7 +18,7 @@ namespace CollectingMobile
         public readonly string description;
         public readonly string usernameAssigned;
         public readonly DateTime created;
-        public readonly List<Specimen> specimensRequested;
+        public readonly List<Specimen> specimens;
 
         public Request(string id, string description, string usernameAssigned, DateTime created, List<Specimen> specimensRequested)
         {
@@ -26,8 +26,8 @@ namespace CollectingMobile
             this.description = description;
             this.usernameAssigned = usernameAssigned;
             this.created = created;
-            this.specimensRequested = specimensRequested;
-            
+            this.specimens = specimensRequested;           
         }
+
     }
 }

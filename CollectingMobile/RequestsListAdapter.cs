@@ -29,7 +29,7 @@ namespace CollectingMobile
         public RequestsListAdapter(Activity activity)
         {
             _activity = activity;
-            _requestList = RestClient.GetDataFromServer();
+            _requestList = ActiveRequests.Requests;
         }
 
         public override Java.Lang.Object GetItem(int position)
@@ -45,13 +45,13 @@ namespace CollectingMobile
 
         public override View GetView(int position, View convertView, ViewGroup parent)
         {
-            var view = convertView ?? _activity.LayoutInflater.Inflate(Resource.Layout.ListItem, parent, false);
+            var view = convertView ?? _activity.LayoutInflater.Inflate(Resource.Layout.RequestListItem, parent, false);
             var requestId = view.FindViewById<TextView>(Resource.Id.requestId);
             var requestDescription = view.FindViewById<TextView>(Resource.Id.requestDescription);
             var requestDate = view.FindViewById<TextView>(Resource.Id.requestDate);
             requestId.Text = _requestList[position].id.ToString();
             requestDescription.Text = _requestList[position].description;
-            requestDate.Text = _requestList[position].created.ToLocalTime().ToString() ;
+            requestDate.Text = _requestList[position].created.ToShortDateString();
             return view;
         }
     }

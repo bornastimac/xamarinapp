@@ -15,6 +15,7 @@ namespace CollectingMobile
     class RequestsFactory
     {
         private static int id = 0;
+        private static Random rnd = new Random();
 
         public static List<Request> GetMockSpecimensRequestsForUser(string username, int numberOfSpecimensRequests)
         {
@@ -22,7 +23,7 @@ namespace CollectingMobile
 
             for (int i = 0; i < numberOfSpecimensRequests; i++)
             {
-                mockSpecimensRequests.Add(new Request((++id).ToString(), "description_" + id, username, DateTime.Now, GetMockSpecimens(new Random().Next(1, 6))));
+                mockSpecimensRequests.Add(new Request((++id).ToString(), "description_" + id, username, DateTime.Now, GetMockSpecimens(rnd.Next(1, 6))));
             }
             return mockSpecimensRequests;
         }

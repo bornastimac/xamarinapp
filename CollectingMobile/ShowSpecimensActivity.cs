@@ -13,41 +13,20 @@ using Android.Widget;
 namespace CollectingMobile
 {
     [Activity(Label = "RequestDetailsActivity")]
-    public class ShowSpecimensActivity : Activity
+    public class ShowSpecimensActivity : ListActivity
     {      
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            SetContentView(Resource.Layout.RequestDetails);
-            Button btnBack = FindViewById<Button>(Resource.Id.Back);
-            Button btnMenu = FindViewById<Button>(Resource.Id.Menu);
 
-            btnMenu.Click += (s, arg) =>
+            List<string> specimenNames = new List<string>();
+            string requestId = Intent.GetStringExtra("SelectedRequestId") ?? "Intent data not available";
+            foreach (Specimen specimen in ActiveRequests.GetSpecimensForRequest(requestId))
             {
-                PopupMenu menu = new PopupMenu(this, btnMenu);
-                menu.Inflate(Resource.Menu.menu);
+                specimenNames.Add(specimen.description);
+            }
+            ListAdapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItem1, specimenNames);
 
-                menu.MenuItemClick += (s1, arg1) =>
-                {
-                    if (string.Equals(arg1.Item.TitleFormatted.ToString(), "Logout"))
-                         {
-                        ActiveUser.username = null;
-                        var intent = new Intent(this, typeof(LoginActivity));
-                        intent.SetFlags(ActivityFlags.ExcludeFromRecents);
-                        intent.SetFlags(ActivityFlags.ClearTask);
-                        StartActivity(intent);
-                        this.Finish();
-                    }
-                    
-                };
-                menu.Show();
-            };
-
-            btnBack.Click += delegate
-            {
-                base.OnBackPressed();
-            };
-           
         }
 
         

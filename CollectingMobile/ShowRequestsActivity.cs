@@ -12,22 +12,24 @@ using Android.Widget;
 
 namespace CollectingMobile
 {
-    [Activity(Label = "Nalozi:")]
+    [Activity(Label = "Nalozi")]
     public class ShowRequestsActivity : Activity
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            SetContentView(Resource.Layout.SpecimenRequests);
+            SetContentView(Resource.Layout.Requests);
 
             if (RestClient.AmIOnline(this))
             {
                 var clistAdapter = new RequestsListAdapter(this);
                 var requestListView = FindViewById<ListView>(Resource.Id.RequestsListView);
                 requestListView.Adapter = clistAdapter;
-                requestListView.ItemClick += delegate
+                requestListView.ItemClick += delegate (object sender, AdapterView.ItemClickEventArgs e)
                 {
-                    StartActivity(typeof(ShowSpecimensActivity));
+                    Intent showSpecimensActivity = new Intent(this, typeof(ShowSpecimensActivity));
+                    showSpecimensActivity.PutExtra("SelectedRequestId", ActiveRequests.GetRequestFromPosition(e.Position).id);
+                    StartActivity(showSpecimensActivity);
                 };
             }
             else

@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 using Android.App.Usage;
 using Android.Net;
 using System.Net;
-//{"username":"eugens1","password":"eugens1123%","createPersistentCookie":true}
+//{"username":"eugens1","password":"eugens1123%","createPersistentCookie":true} 
 
 namespace CollectingMobile
 {

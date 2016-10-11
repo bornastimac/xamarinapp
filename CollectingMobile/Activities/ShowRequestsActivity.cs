@@ -82,11 +82,5 @@ namespace CollectingMobile
         [Android.Runtime.Register("onBackPressed", "()V", "GetOnBackPressedHandler")]
         public override void OnBackPressed() { }
 
-        [Android.Runtime.Register("onDestroy", "()V", "GetOnDestroyHandler")]
-        protected override void OnDestroy()
-        {
-            Console.WriteLine("Req OnDestroy");
-            base.OnDestroy();
-        }
     }
 }

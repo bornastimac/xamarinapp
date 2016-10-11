@@ -29,9 +29,8 @@ namespace CollectingMobile
             }
             else
                 SetContentView(Resource.Layout.LoginNoToolbar);
-
-            Init();
-
+						
+            Init();         
         }
 
         private void Init()

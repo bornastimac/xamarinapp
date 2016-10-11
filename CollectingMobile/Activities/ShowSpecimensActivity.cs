@@ -70,12 +70,5 @@ namespace CollectingMobile
             return base.OnOptionsItemSelected(item);
         }
 
-        [Android.Runtime.Register("onDestroy", "()V", "GetOnDestroyHandler")]
-        protected override void OnDestroy()
-        {
-            Console.WriteLine("Spec OnDestroy");
-            base.OnDestroy();
-        }
-
     }
 }

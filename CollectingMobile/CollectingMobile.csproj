@@ -85,6 +85,9 @@
     <AndroidResource Include="Resources\layout\toolbar.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
+    <AndroidResource Include="Resources\layout\RequestsNoToolbar.axml" />
+    <AndroidResource Include="Resources\layout\SpecimensNoToolbar.axml" />
+    <AndroidResource Include="Resources\layout\LoginNoToolbar.axml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Login.axml">

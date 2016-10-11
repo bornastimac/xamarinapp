@@ -74,9 +74,12 @@ namespace CollectingMobile
 
         private void SetToolbar()
         {
-            var toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
-            SetActionBar(toolbar);
-            ActionBar.Title = "Collecting Mobile";
+            if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Lollipop)
+            {
+                Toolbar toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
+                SetActionBar(toolbar);
+                ActionBar.Title = "Collecting Mobile";
+            }
         }
 
         [Android.Runtime.Register("onBackPressed", "()V", "GetOnBackPressedHandler")]

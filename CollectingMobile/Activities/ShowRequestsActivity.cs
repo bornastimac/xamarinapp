@@ -27,9 +27,12 @@ namespace CollectingMobile
 
         private void SetToolbar()
         {
-            var toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
-            SetActionBar(toolbar);
-            ActionBar.Title = "Nalozi";
+            if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Lollipop)
+            {
+                Toolbar toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
+                SetActionBar(toolbar);
+                ActionBar.Title = "Nalozi";
+            }
         }
 
         private void LoadRequests()

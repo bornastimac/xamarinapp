@@ -59,18 +59,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ActiveRequests.cs" />
-    <Compile Include="ActiveUser.cs" />
+    <Compile Include="Model\ActiveRequests.cs" />
+    <Compile Include="Model\ActiveUser.cs" />
     <Compile Include="RequestsListAdapter.cs" />
-    <Compile Include="ShowSpecimensActivity.cs" />
-    <Compile Include="ShowRequestsActivity.cs" />
-    <Compile Include="Specimen.cs" />
-    <Compile Include="LoginActivity.cs" />
+    <Compile Include="Activities\ShowSpecimensActivity.cs" />
+    <Compile Include="Activities\ShowRequestsActivity.cs" />
+    <Compile Include="Model\Specimen.cs" />
+    <Compile Include="Activities\LoginActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RestClient.cs" />
-    <Compile Include="Request.cs" />
-    <Compile Include="RequestsFactory.cs" />
+    <Compile Include="Model\Request.cs" />
+    <Compile Include="Model\RequestsFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="GettingStarted.Xamarin" />

@@ -18,7 +18,7 @@ namespace CollectingMobile
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Lollipop)
+            if (Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop)
             {
                 SetContentView(Resource.Layout.Requests);
                 SetToolbar();
@@ -33,7 +33,7 @@ namespace CollectingMobile
 
         private void SetToolbar()
         {
-            if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Lollipop)
+            if (Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop)
             {
                 Toolbar toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
                 SetActionBar(toolbar);
@@ -79,7 +79,7 @@ namespace CollectingMobile
             return base.OnOptionsItemSelected(item);
         }
 
-        [Android.Runtime.Register("onBackPressed", "()V", "GetOnBackPressedHandler")]
+        [Register("onBackPressed", "()V", "GetOnBackPressedHandler")]
         public override void OnBackPressed() { }
 
     }

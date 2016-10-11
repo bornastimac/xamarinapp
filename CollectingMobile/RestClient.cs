@@ -32,15 +32,16 @@ namespace CollectingMobile
             ASCIIEncoding encoder = new ASCIIEncoding();
             byte[] data = encoder.GetBytes(json);
 
-            System.Net.HttpWebRequest request = System.Net.WebRequest.Create(serverLoginUrl) as System.Net.HttpWebRequest;
+            HttpWebRequest request = WebRequest.Create(serverLoginUrl) as HttpWebRequest;
             request.Method = "POST";
             request.ContentType = "application/json";
             request.ContentLength = data.Length;
             request.Expect = "application/json";
-
+            request.Proxy = null;
             request.GetRequestStream().Write(data, 0, data.Length);
 
-            System.Net.HttpWebResponse response = request.GetResponse() as System.Net.HttpWebResponse;
+            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+
             var reader = new System.IO.StreamReader(response.GetResponseStream());
             string content = reader.ReadToEnd();
             var jsonIdk = JsonValue.Parse(content);
@@ -56,8 +57,15 @@ namespace CollectingMobile
         {
             ConnectivityManager connectivityManager = (ConnectivityManager)context.GetSystemService(Context.ConnectivityService);
             NetworkInfo activeConnection = connectivityManager.ActiveNetworkInfo;
-            return (activeConnection != null) && activeConnection.IsConnected;
-
+            if((activeConnection != null) && activeConnection.IsConnected)
+            {
+                return true;
+            }
+            else
+            {
+                Toast.MakeText(context, "Check your internet connection", ToastLength.Short).Show();
+                return false;
+            }
         }
 
         public static bool IsServerReachable(Context context)
@@ -66,16 +74,14 @@ namespace CollectingMobile
             {
                 HttpWebRequest iNetRequest = (HttpWebRequest)WebRequest.Create(serverLoginUrl);
                 iNetRequest.Timeout = 5000;
+                iNetRequest.Proxy = null;
                 WebResponse iNetResponse = iNetRequest.GetResponse();
                 iNetResponse.Close();
                 return true;
             }
             catch (WebException)
             {
-                if (!AmIOnline(context))
-                    Toast.MakeText(context, "Check your internet connection", ToastLength.Short).Show();
-                else
-                    Toast.MakeText(context, "Server currently unavailable", ToastLength.Short).Show();
+                Toast.MakeText(context, "Cannot communicate with server", ToastLength.Short).Show();
                 return false;
             }
         }

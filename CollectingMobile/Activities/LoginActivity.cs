@@ -22,15 +22,15 @@ namespace CollectingMobile
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
-            if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Lollipop)
+            if (Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop)
             {
                 SetContentView(Resource.Layout.Login);
                 SetToolbar();
             }
             else
                 SetContentView(Resource.Layout.LoginNoToolbar);
-						
-            Init();         
+
+            Init();
         }
 
         private void Init()
@@ -46,35 +46,39 @@ namespace CollectingMobile
 
             btnLogin.Click += delegate
             {
-                if (RestClient.IsServerReachable(Application.Context))
+                var progressDialog = ProgressDialog.Show(this, "", "Authenticating...", true);
+
+                if (RestClient.AmIOnline(Application.Context))
                 {
-
-                    var progressDialog = ProgressDialog.Show(this, "", "Authenticating...", true);
-
                     new Thread(new ThreadStart(delegate
                     {
                         if (RestClient.IsLoginOk(etUsername.Text, etPassword.Text))
-
                         {
                             ActiveUser.Username = etUsername.Text;
                             StartActivity(typeof(ShowRequestsActivity));
                         }
                         else
                         {
-                            RunOnUiThread(() => etUsername.Text = "");
-                            RunOnUiThread(() => etPassword.Text = "");
-                            RunOnUiThread(() => Toast.MakeText(ApplicationContext, "Incorrect Credentials", ToastLength.Long).Show());
+                            if (RestClient.IsServerReachable(Application.Context))
+                            {
+                                RunOnUiThread(() => etUsername.Text = "");
+                                RunOnUiThread(() => etPassword.Text = "");
+                                RunOnUiThread(() => Toast.MakeText(ApplicationContext, "Incorrect Credentials", ToastLength.Long).Show());
+                            }
                         }
                         RunOnUiThread(() => progressDialog.Hide());
-
                     })).Start();
+                }
+                else
+                {
+                    progressDialog.Hide();
                 }
             };
         }
 
         private void SetToolbar()
         {
-            if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Lollipop)
+            if (Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop)
             {
                 Toolbar toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
                 SetActionBar(toolbar);

@@ -31,7 +31,7 @@ namespace CollectingMobile
                 SetContentView(Resource.Layout.LoginNoToolbar);
 
             Init();
-           
+
         }
 
         private void Init()
@@ -40,15 +40,16 @@ namespace CollectingMobile
             EditText etUsername = FindViewById<EditText>(Resource.Id.username);
             EditText etPassword = FindViewById<EditText>(Resource.Id.password);
 
-        #if DEBUG
+#if DEBUG
             etUsername.Text = "eugens1";
             etPassword.Text = "eugens1123%";
-        #endif
+#endif
 
             btnLogin.Click += delegate
             {
-                if (RestClient.AmIOnline(Application.Context))
+                if (RestClient.IsServerReachable(Application.Context))
                 {
+
                     var progressDialog = ProgressDialog.Show(this, "", "Authenticating...", true);
 
                     new Thread(new ThreadStart(delegate
@@ -68,11 +69,6 @@ namespace CollectingMobile
                         RunOnUiThread(() => progressDialog.Hide());
 
                     })).Start();
-                }
-
-                else
-                {
-                    Toast.MakeText(this, "Check your network connection", ToastLength.Long).Show();
                 }
             };
         }

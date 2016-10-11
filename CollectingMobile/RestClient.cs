@@ -23,7 +23,7 @@ namespace CollectingMobile
 {
     class RestClient
     {
-        public static string sUrl = "https://jimsrv.no-ip.info/LabTest/_invoke/Login";
+        public static string serverLoginUrl = "https://jimsrv.no-ip.info/LabTest/_invoke/Login";
 
         public static bool IsLoginOk(string username, string password)
         {
@@ -32,7 +32,7 @@ namespace CollectingMobile
             ASCIIEncoding encoder = new ASCIIEncoding();
             byte[] data = encoder.GetBytes(json);
 
-            System.Net.HttpWebRequest request = System.Net.WebRequest.Create(sUrl) as System.Net.HttpWebRequest;
+            System.Net.HttpWebRequest request = System.Net.WebRequest.Create(serverLoginUrl) as System.Net.HttpWebRequest;
             request.Method = "POST";
             request.ContentType = "application/json";
             request.ContentLength = data.Length;
@@ -54,22 +54,30 @@ namespace CollectingMobile
 
         public static bool AmIOnline(Context context)
         {
-              ConnectivityManager connectivityManager = (ConnectivityManager)context.GetSystemService(Context.ConnectivityService);
-              NetworkInfo activeConnection = connectivityManager.ActiveNetworkInfo;
-              return (activeConnection != null) && activeConnection.IsConnected;
-            
-            //try
-            //{
-            //    HttpWebRequest iNetRequest = (HttpWebRequest)WebRequest.Create(sUrl);
-            //    iNetRequest.Timeout = 5000;
-            //    WebResponse iNetResponse = iNetRequest.GetResponse();
-            //    iNetResponse.Close();
-            //    return true;
-            //}
-            //catch (WebException)
-            //{
-            //    return false;
-            //}
+            ConnectivityManager connectivityManager = (ConnectivityManager)context.GetSystemService(Context.ConnectivityService);
+            NetworkInfo activeConnection = connectivityManager.ActiveNetworkInfo;
+            return (activeConnection != null) && activeConnection.IsConnected;
+
+        }
+
+        public static bool IsServerReachable(Context context)
+        {
+            try
+            {
+                HttpWebRequest iNetRequest = (HttpWebRequest)WebRequest.Create(serverLoginUrl);
+                iNetRequest.Timeout = 5000;
+                WebResponse iNetResponse = iNetRequest.GetResponse();
+                iNetResponse.Close();
+                return true;
+            }
+            catch (WebException)
+            {
+                if (!AmIOnline(context))
+                    Toast.MakeText(context, "Check your internet connection", ToastLength.Short).Show();
+                else
+                    Toast.MakeText(context, "Server currently unavailable", ToastLength.Short).Show();
+                return false;
+            }
         }
     }
 }

@@ -18,10 +18,17 @@ namespace CollectingMobile
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            SetContentView(Resource.Layout.Requests);
+            if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Lollipop)
+            {
+                SetContentView(Resource.Layout.Requests);
+                SetToolbar();
+            }
+            else
+                SetContentView(Resource.Layout.RequestsNoToolbar);
+            
 
             LoadRequests();
-            SetToolbar();
+           
         }
 
         private void SetToolbar()

@@ -22,10 +22,16 @@ namespace CollectingMobile
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
-            SetContentView(Resource.Layout.Login);
+            if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Lollipop)
+            {
+                SetContentView(Resource.Layout.Login);
+                SetToolbar();
+            }
+            else
+                SetContentView(Resource.Layout.LoginNoToolbar);
 
             Init();
-            SetToolbar();
+           
         }
 
         private void Init()

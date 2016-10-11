@@ -14,20 +14,27 @@ namespace CollectingMobile
 {
     [Activity(Label = "Uzorci")]
     public class ShowSpecimensActivity : Activity
-    {      
+    {
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            SetContentView(Resource.Layout.Specimens);
+            if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Lollipop)
+            {
+                SetContentView(Resource.Layout.Specimens);
+                SetToolbar();
+            }
+            else
+
+                SetContentView(Resource.Layout.SpecimensNoToolbar);
 
             LoadSpecimensList();
-            SetToolbar();
+            
         }
 
         private void LoadSpecimensList()
         {
             List<string> specimenNames = new List<string>();
-            string requestId = Intent.GetStringExtra("SelectedRequestId") ?? "Intent data not available";   
+            string requestId = Intent.GetStringExtra("SelectedRequestId") ?? "Intent data not available";
             foreach (Specimen specimen in ActiveRequests.GetSpecimensForRequest(requestId))
             {
                 specimenNames.Add(specimen.description);
@@ -44,9 +51,9 @@ namespace CollectingMobile
                 var toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
                 SetActionBar(toolbar);
                 ActionBar.Title = "Uzorci";
-            }          
+            }
         }
-        
+
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
             MenuInflater.Inflate(Resource.Menu.menu, menu);

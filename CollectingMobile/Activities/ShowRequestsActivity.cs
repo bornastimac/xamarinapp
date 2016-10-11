@@ -36,7 +36,7 @@ namespace CollectingMobile
 
         private void LoadRequests()
         {
-            if (RestClient.AmIOnline(this))
+            if (RestClient.AmIOnline(Application.Context))
             {
                 var clistAdapter = new RequestsListAdapter(this);
                 var requestListView = FindViewById<ListView>(Resource.Id.RequestsListView);
@@ -63,13 +63,23 @@ namespace CollectingMobile
 
         public override bool OnOptionsItemSelected(IMenuItem item)
         {
-            Toast.MakeText(this, "Action selected: " + item.TitleFormatted,
-                ToastLength.Short).Show();
+
+            if(item.TitleFormatted.ToString() == "Logout")
+            {
+                LogoutHandler.LogMeOut(this);
+            }
+
             return base.OnOptionsItemSelected(item);
         }
 
         [Android.Runtime.Register("onBackPressed", "()V", "GetOnBackPressedHandler")]
         public override void OnBackPressed() { }
-        
+
+        [Android.Runtime.Register("onDestroy", "()V", "GetOnDestroyHandler")]
+        protected override void OnDestroy()
+        {
+            Console.WriteLine("Req OnDestroy");
+            base.OnDestroy();
+        }
     }
 }

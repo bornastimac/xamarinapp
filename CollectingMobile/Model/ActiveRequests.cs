@@ -20,13 +20,17 @@ namespace CollectingMobile
         {
             get
             {
+                //lazy init
                 if(requests == null)
                 {
                     requests = RestClient.GetDataFromServer();
                 }
                 return requests;
             }
-            set { }
+            set
+            {
+                requests = value;
+            }
         }
 
         public static Request GetRequestFromPosition(int position)

@@ -52,7 +52,6 @@ namespace CollectingMobile
                         {
                             ActiveUser.username = etUsername.Text;
                             StartActivity(typeof(ShowRequestsActivity));
-                            Finish();
                         }
                         else
                         {
@@ -81,9 +80,6 @@ namespace CollectingMobile
                 ActionBar.Title = "Collecting Mobile";
             }
         }
-
-        [Android.Runtime.Register("onBackPressed", "()V", "GetOnBackPressedHandler")]
-        public override void OnBackPressed() { }
     }
 }
 

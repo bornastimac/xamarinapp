@@ -25,7 +25,7 @@ namespace CollectingMobile
 
         private static void ClearData()
         {
-            ActiveUser.username = null;
+            ActiveUser.Username = null;
             ActiveRequests.Requests = null;
         }
     }

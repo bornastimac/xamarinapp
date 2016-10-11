@@ -57,7 +57,7 @@ namespace CollectingMobile
                         if (RestClient.IsLoginOk(etUsername.Text, etPassword.Text))
 
                         {
-                            ActiveUser.username = etUsername.Text;
+                            ActiveUser.Username = etUsername.Text;
                             StartActivity(typeof(ShowRequestsActivity));
                         }
                         else

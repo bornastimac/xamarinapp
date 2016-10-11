@@ -49,7 +49,7 @@ namespace CollectingMobile
 
         public static List<Request> GetDataFromServer()
         {
-            return RequestsFactory.GetMockSpecimensRequestsForUser(ActiveUser.username, new Random().Next(3, 10));
+            return RequestsFactory.GetMockSpecimensRequestsForUser(ActiveUser.Username, new Random().Next(3, 10));
         }
 
         public static bool AmIOnline(Context context)

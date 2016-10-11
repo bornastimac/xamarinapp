@@ -3,12 +3,10 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
-
-  <include
+    <include
         android:id="@+id/toolbar"
         layout="@layout/toolbar" />
-  
-  <ListView
+    <ListView
         android:id="@+id/RequestsListView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" />

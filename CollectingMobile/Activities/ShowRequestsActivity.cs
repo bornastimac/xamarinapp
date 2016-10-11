@@ -22,7 +22,6 @@ namespace CollectingMobile
 
             LoadRequests();
             SetToolbar();
-
         }
 
         private void SetToolbar()
@@ -42,6 +41,7 @@ namespace CollectingMobile
                 var clistAdapter = new RequestsListAdapter(this);
                 var requestListView = FindViewById<ListView>(Resource.Id.RequestsListView);
                 requestListView.Adapter = clistAdapter;
+
                 requestListView.ItemClick += delegate (object sender, AdapterView.ItemClickEventArgs e)
                 {
                     Intent showSpecimensActivity = new Intent(this, typeof(ShowSpecimensActivity));

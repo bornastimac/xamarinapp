@@ -4,13 +4,13 @@
         android:layout_height="fill_parent"
         android:orientation ="vertical">
   <TextView
-      android:textSize ="30dp"
+      
       android:id="@+id/requestId"
       android:layout_width="50dp"
       android:layout_height="50dp"
       android:layout_margin="5dp" />
   <TextView
-      android:textSize ="20dp"
+      android:textSize ="25dp"
       android:id="@+id/requestDescription"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"

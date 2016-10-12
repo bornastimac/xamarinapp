@@ -3,20 +3,22 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation ="vertical">
+
+  <TextView
+     android:textSize ="25dp"
+     android:id="@+id/requestDescription"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:layout_marginLeft="5dp"
+     android:maxLines ="2"
+     android:ellipsize="end"/>
   <TextView
       
       android:id="@+id/requestId"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginLeft="5dp" />
-  <TextView
-      android:textSize ="25dp"
-      android:id="@+id/requestDescription"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginLeft="5dp"
-      android:maxLines ="2"
-      android:ellipsize="end"/>
+ 
 
   <TextView   
       android:id="@+id/requestDate"

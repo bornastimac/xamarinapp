@@ -87,11 +87,11 @@ namespace CollectingMobile
 			// aapt resource value: 0x7f070009
 			public const int requestDate = 2131165193;
 			
-			// aapt resource value: 0x7f070008
-			public const int requestDescription = 2131165192;
-			
 			// aapt resource value: 0x7f070007
-			public const int requestId = 2131165191;
+			public const int requestDescription = 2131165191;
+			
+			// aapt resource value: 0x7f070008
+			public const int requestId = 2131165192;
 			
 			// aapt resource value: 0x7f070006
 			public const int textView1 = 2131165190;

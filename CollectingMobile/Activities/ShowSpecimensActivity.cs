@@ -12,7 +12,7 @@ using Android.Widget;
 
 namespace CollectingMobile
 {
-    [Activity(Label = "Uzorci")]
+    [Activity]
     public class ShowSpecimensActivity : Activity
     {
         protected override void OnCreate(Bundle savedInstanceState)
@@ -27,15 +27,15 @@ namespace CollectingMobile
 
                 SetContentView(Resource.Layout.SpecimensNoToolbar);
 
-            LoadSpecimensList();
-            
+            LoadSpecimensList();          
         }
 
         private void LoadSpecimensList()
         {
             List<string> specimenNames = new List<string>();
             string requestId = Intent.GetStringExtra("SelectedRequestId") ?? "Intent data not available";
-            foreach (Specimen specimen in ActiveRequests.GetSpecimensForRequest(requestId))
+            
+            foreach (Specimen specimen in ActiveRequests.GetSpecimensForRequest(requestId) ?? new List<Specimen>())
             {
                 specimenNames.Add(specimen.description);
             }

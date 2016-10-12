@@ -17,40 +17,85 @@ using System.Threading.Tasks;
 using Android.App.Usage;
 using Android.Net;
 using System.Net;
-//{"username":"eugens1","password":"eugens1123%","createPersistentCookie":true} 
 
 namespace CollectingMobile
 {
     class RestClient
     {
-        public static string serverLoginUrl = "https://jimsrv.no-ip.info/LabTest/_invoke/Login";
+        //TODO: use shared preferences instead of hardcoded strings
+        public static string serverLoginURL = @"https://jimsrv.no-ip.info/LabTest/_invoke/Login";
+        public static string requestsURL = @"http://jimsrv.no-ip.info/LabTest/ResourceService.ashx?type=samplingrequest&username=";
+        public static string specimensURL = @"http://jimsrv.no-ip.info/LabTest/ResourceService.ashx?type=samplingrequestitems&samplingrequestid=";
 
         public static bool IsLoginOk(string username, string password)
         {
+            string requestJSON = "{\"username\":\"" + username + "\",\"password\":\"" + password + "\",\"createPersistentCookie\":true}";
+            byte[] dataJSON = new ASCIIEncoding().GetBytes(requestJSON);
 
-            string json = "{\"username\":\"" + username + "\",\"password\":\"" + password + "\",\"createPersistentCookie\":true}";
-            ASCIIEncoding encoder = new ASCIIEncoding();
-            byte[] data = encoder.GetBytes(json);
+            HttpWebRequest requestWeb = SetRequestWebJSON(serverLoginURL, dataJSON);
+            HttpWebResponse responseWeb = requestWeb.GetResponse() as HttpWebResponse;
 
-            HttpWebRequest request = WebRequest.Create(serverLoginUrl) as HttpWebRequest;
-            request.Method = "POST";
-            request.ContentType = "application/json";
-            request.ContentLength = data.Length;
-            request.Expect = "application/json";
-            request.Proxy = null;
-            request.GetRequestStream().Write(data, 0, data.Length);
+            string responseContent = new System.IO.StreamReader(responseWeb.GetResponseStream()).ReadToEnd();
+            JsonValue responseJSON = JsonValue.Parse(responseContent);
 
-            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+            return responseJSON["d"];//{d:true} OR {d:false}
+        }
 
-            var reader = new System.IO.StreamReader(response.GetResponseStream());
-            string content = reader.ReadToEnd();
-            var jsonIdk = JsonValue.Parse(content);
-            return jsonIdk["d"];
+        private static HttpWebRequest SetRequestWebJSON(string serverURL, byte[] dataJSON)
+        {
+            HttpWebRequest requestWeb = WebRequest.Create(serverURL) as HttpWebRequest;
+            requestWeb.Method = "POST";
+            requestWeb.ContentType = "application/json";
+            requestWeb.ContentLength = dataJSON.Length;
+            requestWeb.Expect = "application/json";
+            requestWeb.Proxy = null;
+            requestWeb.GetRequestStream().Write(dataJSON, 0, dataJSON.Length);
+
+            return requestWeb;
         }
 
         public static List<Request> GetDataFromServer()
         {
-            return RequestsFactory.GetMockSpecimensRequestsForUser(ActiveUser.Username, new Random().Next(3, 10));
+            List<Request> requests = GetRequests();
+
+            foreach (Request request in requests)
+            {
+                request.specimens = GetSpecimensForRequest(request.id);
+            }
+
+            return requests;           
+        }
+
+        private static List<Request> GetRequests()
+        {
+            string requestsURLForUser = requestsURL + ActiveUser.Username;
+
+            string requestJSON = "";
+            byte[] dataJSON = new ASCIIEncoding().GetBytes(requestJSON);
+
+            HttpWebRequest requestWeb = SetRequestWebJSON(requestsURLForUser, dataJSON);
+            HttpWebResponse responseWeb = requestWeb.GetResponse() as HttpWebResponse;
+
+            string responseContent = new System.IO.StreamReader(responseWeb.GetResponseStream()).ReadToEnd();
+            JsonValue responseJSON = JsonValue.Parse(responseContent);
+
+            return RequestsFactory.GetRequestsFromJSON(responseJSON);
+        }
+
+        private static List<Specimen> GetSpecimensForRequest(string requestID)
+        {
+            string specimensURLForRequest = specimensURL + requestID;
+
+            string requestJSON = "";
+            byte[] dataJSON = new ASCIIEncoding().GetBytes(requestJSON);
+
+            HttpWebRequest requestWeb = SetRequestWebJSON(specimensURLForRequest, dataJSON);
+            HttpWebResponse responseWeb = requestWeb.GetResponse() as HttpWebResponse;
+
+            string responseContent = new System.IO.StreamReader(responseWeb.GetResponseStream()).ReadToEnd();
+            JsonValue responseJSON = JsonValue.Parse(responseContent);
+
+            return RequestsFactory.GetSpecimensFromJSON(responseJSON);
         }
 
         public static bool AmIOnline(Context context)
@@ -72,7 +117,7 @@ namespace CollectingMobile
         {
             try
             {
-                HttpWebRequest iNetRequest = (HttpWebRequest)WebRequest.Create(serverLoginUrl);
+                HttpWebRequest iNetRequest = (HttpWebRequest)WebRequest.Create(serverLoginURL);
                 iNetRequest.Timeout = 5000;
                 iNetRequest.Proxy = null;
                 WebResponse iNetResponse = iNetRequest.GetResponse();

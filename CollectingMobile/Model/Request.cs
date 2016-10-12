@@ -14,14 +14,16 @@ namespace CollectingMobile
 {
     class Request
     {
+        public readonly string code;
         public readonly string id;
         public readonly string description;
         public readonly string usernameAssigned;
         public readonly DateTime created;
-        public readonly List<Specimen> specimens;
+        public List<Specimen> specimens;
 
-        public Request(string id, string description, string usernameAssigned, DateTime created, List<Specimen> specimensRequested)
+        public Request(string code, string id, string description, string usernameAssigned, DateTime created, List<Specimen> specimensRequested)
         {
+            this.code = code;
             this.id = id;
             this.description = description;
             this.usernameAssigned = usernameAssigned;

@@ -13,10 +13,11 @@ using System.Threading.Tasks;
 using System.Text;
 using System.Threading;
 using Android.Net;
+using Android.Content.PM;
 
 namespace CollectingMobile
 {
-    [Activity(Label = "CollectingMobile", MainLauncher = true, Icon = "@drawable/icon", ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
+    [Activity(MainLauncher = true, Icon = "@drawable/icon", ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait, ConfigurationChanges = ConfigChanges.Locale)]
     public class LoginActivity : Activity
     {
         protected override void OnCreate(Bundle bundle)
@@ -46,7 +47,10 @@ namespace CollectingMobile
 
             btnLogin.Click += delegate
             {
-                var progressDialog = ProgressDialog.Show(this, "", "Authenticating...", true);
+
+
+#if !DEBUG
+                ProgressDialog progressDialog = ProgressDialog.Show(this, "", Resources.GetText(Resource.String.Authenticating) , true);
 
                 if (RestClient.AmIOnline(Application.Context))
                 {
@@ -73,6 +77,10 @@ namespace CollectingMobile
                 {
                     progressDialog.Hide();
                 }
+#else
+                ActiveUser.Username = etUsername.Text;
+                StartActivity(typeof(ShowRequestsActivity)); 
+#endif
             };
         }
 

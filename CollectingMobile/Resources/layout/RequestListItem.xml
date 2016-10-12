@@ -11,18 +11,18 @@
      android:layout_height="wrap_content"
      android:layout_marginLeft="5dp"
      android:maxLines ="2"
+     android:lines = "2"
+     android:gravity="center"
      android:ellipsize="end"/>
-  <TextView
-      
+  <TextView   
       android:id="@+id/requestId"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginLeft="5dp" />
- 
-
   <TextView   
       android:id="@+id/requestDate"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginLeft="5dp" />
+  
 </LinearLayout>

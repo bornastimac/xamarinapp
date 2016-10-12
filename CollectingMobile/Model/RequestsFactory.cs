@@ -15,7 +15,7 @@ namespace CollectingMobile
 {
     class RequestsFactory
     {
-        private static int id = 0;
+        private static int idMock = 0;
 
         public static List<Request> GetRequestsFromJSON(JsonValue responseJSON)
         {
@@ -25,14 +25,13 @@ namespace CollectingMobile
             for (int i = 0; i < responseJSON.Count; i++)
             {
                 JsonValue requestJSON = responseJSON[i];
-                
                 requests.Add(new Request(
-                    requestJSON["Code"], 
-                    requestJSON["ID"].ToString(), 
-                    requestJSON["Description"], 
+                    requestJSON["Code"],
+                    requestJSON["ID"].ToString(),
+                    requestJSON["Description"],
                     requestJSON["AssignedTo"],
-                    new DateTime(),//new DateTime(Convert.ToInt64(requestJSON["DateCreated"].ToString().Where(c => Char.IsDigit(c)).ToString())), 
-                    GetSpecimensByID(requestJSON["ID"].ToString())));
+                    new DateTime(1970, 1, 1).AddMilliseconds(Convert.ToInt64(new string(responseJSON[0]["DateCreated"].ToString().Where(c => Char.IsDigit(c)).ToArray()))),   //Unix time to DateTime             
+                    new List<Specimen>()));
             }
             return requests;
         }
@@ -40,7 +39,7 @@ namespace CollectingMobile
         public static List<Specimen> GetSpecimensFromJSON(JsonValue responseJSON)
         {
             List<Specimen> specimens = new List<Specimen>();
-            
+
             for (int i = 0; i < responseJSON.Count; i++)
             {
                 JsonValue specimenJSON = responseJSON[i];
@@ -57,18 +56,9 @@ namespace CollectingMobile
 
             for (int i = 0; i < numberOfRequests; i++)
             {
-                mockRequests.Add(new Request("code" + (++id).ToString(), (++id).ToString(), "description_" + id, username, DateTime.Now, GetMockSpecimens(new Random().Next(1, 6))));
+                mockRequests.Add(new Request("code" + (++idMock).ToString(), (++idMock).ToString(), "description_" + idMock, username, DateTime.Now, GetMockSpecimens(new Random().Next(1, 6))));
             }
             return mockRequests;
-        }
-
-        private static List<Specimen> GetSpecimensByID(string requestID)
-        {
-            List<Specimen> specimens = new List<Specimen>();
-
-
-
-            return specimens;
         }
 
         private static List<Specimen> GetMockSpecimens(int numberOfSpecimens)

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,11 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+=======
+using System.Collections.Generic;
+using System.Linq;
+using Android.Content;
+>>>>>>> serialization/deserialization functionality for requests
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
@@ -16,9 +22,10 @@ namespace CollectingMobile
 {
     class RequestsSerialization
     {
-        public static List<Request> DeserializeAll(ContextWrapper cw)
+
+        public static List<Request> DeserializeAll(ContextWrapper cw, string username)
         {
-            var requestsFilename = "requests_" + ActiveUser.Username;
+            var requestsFilename = "requests_" + username;
 
             if (cw.FileList().Contains(requestsFilename))
             {
@@ -36,21 +43,22 @@ namespace CollectingMobile
                     }
                 }
             }
-            else
+
+            else//requests file for user not found
             {
-                //TODO: create file if it doesnt exist
+                //TODO: create file for if it doesnt exist(first time he logs in)
                 return new List<Request>();
             }
         }
 
-        public static void SerializeAll(ContextWrapper cw)
+        public static void SerializeAll(ContextWrapper cw, List<Request> requests, string username)
         {
             using (MemoryStream ms = new MemoryStream())
             {
                 BinaryFormatter bf = new BinaryFormatter();
-                bf.Serialize(ms, ActiveRequests.Requests);
+                bf.Serialize(ms, requests);
 
-                using(Stream fos = cw.OpenFileOutput("requests_" + ActiveUser.Username, FileCreationMode.Private))
+                using(Stream fos = cw.OpenFileOutput("requests_" + username, FileCreationMode.Private))
                 {
                     fos.Write(ms.ToArray(), 0, ms.ToArray().Length);
                     fos.Close();

@@ -40,7 +40,7 @@ namespace CollectingMobile
         
         public static List<Specimen> GetSpecimensForRequest(string requestId)
         {
-            return requests.Find(x => x.id == requestId).specimens;
+            return requests.Find(x => x.ID == requestId).Specimens;
         }
     }
 }

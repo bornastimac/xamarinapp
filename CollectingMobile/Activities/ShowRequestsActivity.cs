@@ -54,7 +54,7 @@ namespace CollectingMobile
             {
                 Console.WriteLine("click delegate");
                 Intent showSpecimensActivity = new Intent(this, typeof(ShowSpecimensActivity));
-                showSpecimensActivity.PutExtra("SelectedRequestId", ActiveRequests.GetRequestFromPosition(e.Position).id);
+                showSpecimensActivity.PutExtra("SelectedRequestId", ActiveRequests.GetRequestFromPosition(e.Position).ID);
                 StartActivity(showSpecimensActivity);
             };
         }

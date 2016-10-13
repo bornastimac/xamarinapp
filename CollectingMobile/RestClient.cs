@@ -60,7 +60,7 @@ namespace CollectingMobile
 
             foreach (Request request in requests)
             {
-                request.specimens = GetSpecimensForRequest(request.id);
+                request.Specimens = GetSpecimensForRequest(request.ID);
             }
 
             return requests;           

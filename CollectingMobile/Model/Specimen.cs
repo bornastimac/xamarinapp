@@ -14,11 +14,11 @@ namespace CollectingMobile
 {
     class Specimen
     {
-        public readonly string description;
+        public readonly string Description;
 
         public Specimen(string description)
         {
-            this.description = description;
+            this.Description = description;
         }
     }
 }

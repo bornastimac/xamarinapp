@@ -37,7 +37,7 @@ namespace CollectingMobile
             
             foreach (Specimen specimen in ActiveRequests.GetSpecimensForRequest(requestId) ?? new List<Specimen>())
             {
-                specimenNames.Add(specimen.description);
+                specimenNames.Add(specimen.Description);
             }
 
             var specimensListView = FindViewById<ListView>(Resource.Id.SpecimenslistView);

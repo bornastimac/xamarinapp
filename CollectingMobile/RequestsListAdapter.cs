@@ -49,9 +49,9 @@ namespace CollectingMobile
             var requestId = view.FindViewById<TextView>(Resource.Id.requestId);
             var requestDescription = view.FindViewById<TextView>(Resource.Id.requestDescription);
             var requestDate = view.FindViewById<TextView>(Resource.Id.requestDate);
-            requestId.Text = _requestList[position].code;
-            requestDescription.Text = _requestList[position].description;
-            requestDate.Text = _requestList[position].created.ToShortDateString();
+            requestId.Text = _requestList[position].Code;
+            requestDescription.Text = _requestList[position].Description;
+            requestDate.Text = _requestList[position].Created.ToShortDateString();
             return view;
         }
     }

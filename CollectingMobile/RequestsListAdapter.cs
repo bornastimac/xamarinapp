@@ -26,10 +26,12 @@ namespace CollectingMobile
             }
         }
 
-        public RequestsListAdapter(Activity activity)
+        public RequestsListAdapter(Activity activity)//, bool isOnline)
         {
             _activity = activity;
+            //TODO: offline/online logika
             _requestList = ActiveRequests.Requests;
+            //_requestList = RequestsSerialization.DeserializeAll(activity);
         }
 
         public override Java.Lang.Object GetItem(int position)

@@ -62,6 +62,7 @@
     <Compile Include="LogoutHandler.cs" />
     <Compile Include="Model\ActiveRequests.cs" />
     <Compile Include="Model\ActiveUser.cs" />
+    <Compile Include="Model\RequestsSerialization.cs" />
     <Compile Include="RequestsListAdapter.cs" />
     <Compile Include="Activities\ShowSpecimensActivity.cs" />
     <Compile Include="Activities\ShowRequestsActivity.cs" />

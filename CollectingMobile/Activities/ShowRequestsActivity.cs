@@ -10,6 +10,8 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using System.Threading;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace CollectingMobile
 {
@@ -36,6 +38,7 @@ namespace CollectingMobile
             base.OnStart();
             if (FindViewById<ListView>(Resource.Id.RequestsListView).Adapter == null)
                 LoadRequests(FindViewById<ListView>(Resource.Id.RequestsListView));
+
         }
 
         private void SetToolbar()
@@ -52,7 +55,6 @@ namespace CollectingMobile
         {
             FindViewById<ListView>(Resource.Id.RequestsListView).ItemClick += delegate (object sender, AdapterView.ItemClickEventArgs e)
             {
-                Console.WriteLine("click delegate");
                 Intent showSpecimensActivity = new Intent(this, typeof(ShowSpecimensActivity));
                 showSpecimensActivity.PutExtra("SelectedRequestId", ActiveRequests.GetRequestFromPosition(e.Position).ID);
                 StartActivity(showSpecimensActivity);
@@ -92,11 +94,14 @@ namespace CollectingMobile
             {
                 LogoutHandler.LogMeOut(this);
             }
+            if (item.TitleFormatted.ToString() == "SerializeAll")
+            {
+                RequestsSerialization.SerializeAll(this);
+            }
 
             return base.OnOptionsItemSelected(item);
         }
 
-        [Register("onBackPressed", "()V", "GetOnBackPressedHandler")]
         public override void OnBackPressed() { }
 
     }

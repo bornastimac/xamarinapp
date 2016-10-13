@@ -66,17 +66,14 @@ namespace CollectingMobile
 			// aapt resource value: 0x7f07000a
 			public const int RequestsListView = 2131165194;
 			
+			// aapt resource value: 0x7f07000c
+			public const int SerializeAll = 2131165196;
+			
 			// aapt resource value: 0x7f07000b
 			public const int SpecimenslistView = 2131165195;
 			
-			// aapt resource value: 0x7f07000c
-			public const int item1 = 2131165196;
-			
 			// aapt resource value: 0x7f07000d
-			public const int item2 = 2131165197;
-			
-			// aapt resource value: 0x7f07000e
-			public const int logout = 2131165198;
+			public const int logout = 2131165197;
 			
 			// aapt resource value: 0x7f070004
 			public const int password = 2131165188;

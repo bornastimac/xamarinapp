@@ -1,29 +1,19 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
 using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 
 namespace CollectingMobile
 {
     class LogoutHandler
     {
-        public static void LogMeOut(Activity act)
+        public static void LogMeOut(Context context)
         {
-            ClearData();
+            ClearActiveData();
 
-            Intent loginActivity = new Intent(act, typeof(LoginActivity));
+            Intent loginActivity = new Intent(context, typeof(LoginActivity));
             loginActivity.SetFlags(ActivityFlags.ClearTop);
-            act.StartActivity(loginActivity);
+            context.StartActivity(loginActivity);
         }
 
-        private static void ClearData()
+        private static void ClearActiveData()
         {
             ActiveUser.Username = null;
             ActiveRequests.Requests = null;

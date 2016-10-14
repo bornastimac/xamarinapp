@@ -1,12 +1,7 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 
@@ -50,7 +45,7 @@ namespace CollectingMobile
             {
                 var toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
                 SetActionBar(toolbar);
-                ActionBar.Title = "Uzorci";
+                ActionBar.Title = Resources.GetText(Resource.String.Specimens);
             }
         }
 
@@ -62,7 +57,7 @@ namespace CollectingMobile
 
         public override bool OnOptionsItemSelected(IMenuItem item)
         {
-            if (item.TitleFormatted.ToString() == "Logout")
+            if (item.TitleFormatted.ToString() == Resources.GetText(Resource.String.Logout))
             {
                 LogoutHandler.LogMeOut(this);
             }

@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="LoginButton">Login</string>
-    <string name="ApplicationName">CollectingMobile</string>
-    <string name="LoadingRequests">Loading requests...</string>
-    <string name="Authenticating">Authenticating...</string>
-  
+  <string name="Username">Username</string>
+  <string name="Password">Password</string>
+  <string name="Requests">Requests</string>
+  <string name="Specimens">Specimens</string>
+  <string name="Login">Log in</string>
+  <string name="Logout">Log out</string>
+  <string name="CheckNetwork">Check your network connection</string>
+  <string name="ServerProblem">Cannot communicate with server</string>
+  <string name="ApplicationName">CollectingMobile</string>
+  <string name="LoadingRequests">Loading requests...</string>
+  <string name="Authenticating">Authenticating...</string>
+  <string name="Test">Test</string>
 </resources>

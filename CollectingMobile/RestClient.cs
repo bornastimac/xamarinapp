@@ -1,20 +1,8 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-
-
-using Android.App;
 using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
 using Android.Widget;
-using Android.Util;
 using System.Json;
-using System.Threading;
-using System.Threading.Tasks;
-using Android.App.Usage;
 using Android.Net;
 using System.Net;
 
@@ -108,7 +96,7 @@ namespace CollectingMobile
             }
             else
             {
-                Toast.MakeText(context, "Check your internet connection", ToastLength.Short).Show();
+                Toast.MakeText(context, context.Resources.GetText(Resource.String.CheckNetwork), ToastLength.Short).Show();
                 return false;
             }
         }
@@ -126,7 +114,7 @@ namespace CollectingMobile
             }
             catch (WebException)
             {
-                Toast.MakeText(context, "Cannot communicate with server", ToastLength.Short).Show();
+                Toast.MakeText(context, context.Resources.GetText(Resource.String.ServerProblem), ToastLength.Short).Show();
                 return false;
             }
         }

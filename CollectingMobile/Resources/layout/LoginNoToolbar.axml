@@ -38,7 +38,7 @@
         android:id="@+id/MyButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/LoginButton" />
+        android:text="@string/Login" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

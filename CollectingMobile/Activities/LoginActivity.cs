@@ -1,19 +1,8 @@
-﻿using System;
-using Android.App;
-using Android.Content;
-using Android.Runtime;
-using Android.Views;
+﻿using Android.App;
 using Android.Widget;
 using Android.OS;
-using System.Xml.Linq;
-using System.Net;
-using System.IO;
-using System.Json;
-using System.Threading.Tasks;
-using System.Text;
-using System.Threading;
-using Android.Net;
 using Android.Content.PM;
+using System.Threading;
 
 namespace CollectingMobile
 {
@@ -49,7 +38,7 @@ namespace CollectingMobile
             {
 
 
-#if !DEBUG
+//#if !DEBUG
                 ProgressDialog progressDialog = ProgressDialog.Show(this, "", Resources.GetText(Resource.String.Authenticating) , true);
 
                 if (RestClient.AmIOnline(Application.Context))
@@ -77,10 +66,10 @@ namespace CollectingMobile
                 {
                     progressDialog.Hide();
                 }
-#else
-                ActiveUser.Username = etUsername.Text;
-                StartActivity(typeof(ShowRequestsActivity)); 
-#endif
+//#else
+                //ActiveUser.Username = etUsername.Text;
+                //StartActivity(typeof(ShowRequestsActivity)); 
+//#endif
             };
         }
 
@@ -90,7 +79,7 @@ namespace CollectingMobile
             {
                 Toolbar toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
                 SetActionBar(toolbar);
-                ActionBar.Title = "Collecting Mobile";
+                ActionBar.Title = Resources.GetText(Resource.String.ApplicationName);
             }
         }
     }

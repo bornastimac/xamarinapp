@@ -4,8 +4,6 @@ using Android.OS;
 using Android.Views;
 using Android.Widget;
 using System.Threading;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 
 namespace CollectingMobile
 {
@@ -41,7 +39,7 @@ namespace CollectingMobile
             {
                 Toolbar toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
                 SetActionBar(toolbar);
-                ActionBar.Title = "Nalozi";
+                ActionBar.Title = Resources.GetText(Resource.String.Requests);
             }
         }
 
@@ -71,7 +69,7 @@ namespace CollectingMobile
             }
             else
             {
-                RunOnUiThread(() => Toast.MakeText(this, "Check your network connection", ToastLength.Long).Show());
+                RunOnUiThread(() => Toast.MakeText(this, Resources.GetText(Resource.String.CheckNetwork), ToastLength.Long).Show());
             }
         }
 
@@ -84,11 +82,11 @@ namespace CollectingMobile
         public override bool OnOptionsItemSelected(IMenuItem item)
         {
 
-            if (item.TitleFormatted.ToString() == "Logout")
+            if (item.TitleFormatted.ToString() == Resources.GetText(Resource.String.Logout))
             {
                 LogoutHandler.LogMeOut(this);
             }
-            if (item.TitleFormatted.ToString() == "SerializeAll")
+            if (item.TitleFormatted.ToString() == Resources.GetText(Resource.String.Test))
             {
                 RequestsSerialization.SerializeAll(this, ActiveRequests.Requests, ActiveUser.Username);
             }

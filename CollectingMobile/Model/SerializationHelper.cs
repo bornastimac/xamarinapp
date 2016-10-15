@@ -52,7 +52,7 @@ namespace CollectingMobile
             }         
         }
 
-        public static List<User> DeserializeUsers(ContextWrapper cw, string username)
+        public static List<User> DeserializeUsers(ContextWrapper cw)
         {
             var usersFilename = "users";
 
@@ -75,25 +75,24 @@ namespace CollectingMobile
 
             else//users file not found
             {
-                //TODO: create file for if it doesnt exist(first time he logs in)
+                SerializeUsers(cw,new List<User>());
                 return new List<User>();
             }
         }
 
-        public static void SerializeUsers(ContextWrapper cw, List<Request> requests, string username) //THIS IS A WORK IN PROGRESS, DONT USE
+        public static void SerializeUsers(ContextWrapper cw, List<User> users) 
         {
             using (MemoryStream ms = new MemoryStream())
             {
                 BinaryFormatter bf = new BinaryFormatter();
-                bf.Serialize(ms, requests);
+                bf.Serialize(ms, users);
 
-                using (Stream fos = cw.OpenFileOutput("requests_" + username, FileCreationMode.Private))
+                using (Stream fos = cw.OpenFileOutput("users", FileCreationMode.Private))
                 {
-                    fos.Write(ms.ToArray(), 0, ms.ToArray().Length);//append!!
+                    fos.Write(ms.ToArray(), 0, ms.ToArray().Length);
                     fos.Close();
                 }
             }
         }
     }
-    
 }

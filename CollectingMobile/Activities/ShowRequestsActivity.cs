@@ -88,7 +88,7 @@ namespace CollectingMobile
             }
             if (item.TitleFormatted.ToString() == Resources.GetText(Resource.String.Test))
             {
-                RequestsSerialization.SerializeAll(this, ActiveRequests.Requests, ActiveUser.Username);
+                RequestsSerialization.SerializeAll(this, ActiveRequests.Requests, ActiveUser.User.Name);
             }
 
             return base.OnOptionsItemSelected(item);

@@ -2,6 +2,6 @@ namespace CollectingMobile
 {
     public  class ActiveUser
     {
-        public static string Username;      
+        public static User User;
     }
 }

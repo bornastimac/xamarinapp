@@ -56,7 +56,7 @@ namespace CollectingMobile
 
         private static List<Request> GetRequests()
         {
-            string requestsURLForUser = requestsURL + ActiveUser.Username;
+            string requestsURLForUser = requestsURL + ActiveUser.User.Name;
 
             string requestJSON = "";
             byte[] dataJSON = new ASCIIEncoding().GetBytes(requestJSON);

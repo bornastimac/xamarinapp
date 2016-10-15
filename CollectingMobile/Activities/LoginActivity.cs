@@ -36,8 +36,7 @@ namespace CollectingMobile
 
             btnLogin.Click += delegate
             {
-
-
+                
 //#if !DEBUG
                 ProgressDialog progressDialog = ProgressDialog.Show(this, "", Resources.GetText(Resource.String.Authenticating) , true);
 
@@ -47,7 +46,7 @@ namespace CollectingMobile
                     {
                         if (RestClient.IsLoginOk(etUsername.Text, etPassword.Text))
                         {
-                            ActiveUser.Username = etUsername.Text;
+                            ActiveUser.User = new User(etUsername.Text, etPassword.Text);
                             StartActivity(typeof(ShowRequestsActivity));
                         }
                         else

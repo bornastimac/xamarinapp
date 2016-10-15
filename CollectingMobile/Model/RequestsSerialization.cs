@@ -3,12 +3,12 @@ using System.Linq;
 using Android.Content;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization;
 
 namespace CollectingMobile
 {
     class RequestsSerialization
     {
-
         public static List<Request> DeserializeAll(ContextWrapper cw, string username)
         {
             var requestsFilename = "requests_" + username;
@@ -52,7 +52,7 @@ namespace CollectingMobile
             }         
         }
 
-
+        
 
     }
 }

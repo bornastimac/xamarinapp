@@ -32,7 +32,7 @@ namespace CollectingMobile
 
             else//requests file for user not found
             {
-                //TODO: create file for if it doesnt exist(first time he logs in)
+                SerializeRequests(cw, new List<Request>(), username);
                 return new List<Request>();
             }
         }

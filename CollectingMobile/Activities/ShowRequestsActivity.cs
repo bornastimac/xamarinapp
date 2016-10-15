@@ -81,14 +81,16 @@ namespace CollectingMobile
 
         public override bool OnOptionsItemSelected(IMenuItem item)
         {
-
-            if (item.TitleFormatted.ToString() == Resources.GetText(Resource.String.Logout))
+            switch (item.ItemId)
             {
-                LogoutHandler.LogMeOut(this);
-            }
-            if (item.TitleFormatted.ToString() == Resources.GetText(Resource.String.Test))
-            {
-                RequestsSerialization.SerializeAll(this, ActiveRequests.Requests, ActiveUser.User.Name);
+                case Resource.Id.Logout:
+                    LogoutHandler.LogMeOut(this);
+                    break;
+                case Resource.Id.Test:
+                    RequestsSerialization.SerializeAll(this, ActiveRequests.Requests, ActiveUser.User.Name);
+                    break;
+                default:
+                    break;
             }
 
             return base.OnOptionsItemSelected(item);

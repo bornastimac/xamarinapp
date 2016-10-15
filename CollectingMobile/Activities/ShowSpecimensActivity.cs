@@ -57,9 +57,13 @@ namespace CollectingMobile
 
         public override bool OnOptionsItemSelected(IMenuItem item)
         {
-            if (item.TitleFormatted.ToString() == Resources.GetText(Resource.String.Logout))
+            switch (item.ItemId)
             {
-                LogoutHandler.LogMeOut(this);
+                case Resource.Id.Logout:
+                    LogoutHandler.LogMeOut(this);
+                    break;
+                default:
+                    break;
             }
 
             return base.OnOptionsItemSelected(item);

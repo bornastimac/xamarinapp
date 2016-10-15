@@ -24,7 +24,7 @@ namespace CollectingMobile
             _activity = activity;
             //TODO: offline/online logika
             _requestList = ActiveRequests.Requests;
-            //_requestList = RequestsSerialization.DeserializeAll(activity);
+            //_requestList = SerializationHelper.DeserializeRequests(activity);
         }
 
         public override Java.Lang.Object GetItem(int position)

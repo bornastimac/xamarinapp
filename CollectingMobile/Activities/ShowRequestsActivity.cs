@@ -87,7 +87,7 @@ namespace CollectingMobile
                     LogoutHandler.LogMeOut(this);
                     break;
                 case Resource.Id.Test:
-                    RequestsSerialization.SerializeAll(this, ActiveRequests.Requests, ActiveUser.User.Name);
+                    SerializationHelper.SerializeRequests(this, ActiveRequests.Requests, ActiveUser.User.Name);
                     break;
                 default:
                     break;

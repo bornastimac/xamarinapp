@@ -63,6 +63,8 @@ namespace CollectingMobile
                 {
                     var clistAdapter = new RequestsListAdapter(this);
                     RunOnUiThread(() => requestsView.Adapter = clistAdapter);
+                    if(clistAdapter.Count==0)
+                        RunOnUiThread(() => Toast.MakeText(this, "Nema naloga za obradu!", ToastLength.Short));
                     RunOnUiThread(() => progressDialog.Hide());
                 }
             )).Start();

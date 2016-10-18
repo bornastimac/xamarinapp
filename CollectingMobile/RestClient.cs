@@ -13,10 +13,9 @@ namespace CollectingMobile
     {
         //TODO: use shared preferences instead of hardcoded strings
         public static string serverLoginURL = @"https://jimsrv.no-ip.info/LabTest/_invoke/Login";
-        public static string requestsURL = @"http://jimsrv.no-ip.info/LabTest/ResourceService.ashx?type=samplingrequest&username=";
-        public static string specimensURL = @"http://jimsrv.no-ip.info/LabTest/ResourceService.ashx?type=samplingrequestitems&samplingrequestid=";
-
-
+        public static string getRequestsURL = @"http://jimsrv.no-ip.info/LabTest/ResourceService.ashx?type=samplingrequest&username=";
+        public static string getSpecimensURL = @"http://jimsrv.no-ip.info/LabTest/ResourceService.ashx?type=samplingrequestitems&samplingrequestid=";
+        public static string postSpecimensURL = @"http://jimsrv.no-ip.info/LabTest/ResourceService.ashx?type=samplingresults";
 
         public static bool IsLoginOk(string username, string password)
         {
@@ -59,7 +58,7 @@ namespace CollectingMobile
 
         private static List<Request> GetRequestsOnly()
         {
-            string requestsURLForUser = requestsURL + ActiveUser.User.Name;
+            string requestsURLForUser = getRequestsURL + ActiveUser.User.Name;
 
             string requestJSON = "";
             byte[] dataJSON = new ASCIIEncoding().GetBytes(requestJSON);
@@ -75,7 +74,7 @@ namespace CollectingMobile
 
         private static List<Specimen> GetSpecimensForRequest(int requestID)
         {
-            string specimensURLForRequest = specimensURL + requestID;
+            string specimensURLForRequest = getSpecimensURL + requestID;
 
             string requestJSON = "";
             byte[] dataJSON = new ASCIIEncoding().GetBytes(requestJSON);

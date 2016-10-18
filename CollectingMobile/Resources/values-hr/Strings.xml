@@ -4,6 +4,7 @@
   <string name="Password">Lozinka</string>
   <string name="Requests">Nalozi</string>
   <string name="Specimens">Uzorci</string>
+  <string name="SpecimenItems">Uzorak</string>
   <string name="Login">Log in</string>
   <string name="Logout">Log out</string>
   <string name="CheckNetwork">Provjerite jeste li spojeni na internet</string>

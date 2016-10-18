@@ -38,10 +38,10 @@ namespace CollectingMobile
         private void LoadSpecimensList()
         {
             List<string> specimenNames = new List<string>();
-            
+
             foreach (Specimen specimen in ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).Specimens ?? new List<Specimen>())
             {
-                specimenNames.Add(specimen.Description + " | " + specimen.Items.Count);
+                specimenNames.Add(specimen.Description);
             }
 
             var specimensListView = FindViewById<ListView>(Resource.Id.SpecimenslistView);
@@ -53,9 +53,9 @@ namespace CollectingMobile
             if (Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop)
             {
                 Toolbar toolbar = (Toolbar)LayoutInflater.Inflate(Resource.Layout.toolbar, null);
-                FindViewById<LinearLayout>(Resource.Id.RootLoginActivity).AddView(toolbar, 0);
+                FindViewById<LinearLayout>(Resource.Id.RootSpecimensActivity).AddView(toolbar, 0);
                 SetActionBar(toolbar);
-                ActionBar.Title = Resources.GetText(Resource.String.Requests);
+                ActionBar.Title = Resources.GetText(Resource.String.Specimens);
             }
         }
 

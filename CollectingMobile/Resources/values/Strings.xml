@@ -4,6 +4,7 @@
   <string name="Password">Password</string>
   <string name="Requests">Requests</string>
   <string name="Specimens">Specimens</string>
+  <string name="SpecimenItems">SpecimenItems</string>
   <string name="Login">Log in</string>
   <string name="Logout">Log out</string>
   <string name="CheckNetwork">Check your network connection</string>

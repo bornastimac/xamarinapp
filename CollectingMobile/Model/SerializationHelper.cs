@@ -43,12 +43,12 @@ namespace CollectingMobile
                 BinaryFormatter bf = new BinaryFormatter();
                 bf.Serialize(ms, requests);
 
-                using(Stream fos = cw.OpenFileOutput("requests_" + ActiveUser.User.Name, FileCreationMode.Private))
+                using (Stream fos = cw.OpenFileOutput("requests_" + ActiveUser.User.Name, FileCreationMode.Private))
                 {
                     fos.Write(ms.ToArray(), 0, ms.ToArray().Length);
                     fos.Close();
                 }
-            }         
+            }
         }
 
         public static List<User> DeserializeUsers(ContextWrapper cw)
@@ -73,12 +73,12 @@ namespace CollectingMobile
             }
             else//users file not found
             {
-                SerializeUsers(cw,new List<User>());
+                SerializeUsers(cw, new List<User>());
                 return new List<User>();
             }
         }
 
-        public static void SerializeUsers(ContextWrapper cw, List<User> users) 
+        public static void SerializeUsers(ContextWrapper cw, List<User> users)
         {
             using (MemoryStream ms = new MemoryStream())
             {

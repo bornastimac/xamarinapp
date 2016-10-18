@@ -27,10 +27,10 @@ namespace CollectingMobile
         {
             List<string> specimenItemsNames = new List<string>();
 
-            foreach (SpecimenItem specimenItem in ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).GetSpecimenByID(Intent.GetIntExtra("SelectedSpecimenId", -1)).Items ?? new List<SpecimenItem>())
-            {
-                specimenItemsNames.Add(specimenItem.ID.ToString());
-            }
+            //foreach (SpecimenItem specimenItem in ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).GetSpecimenByID(Intent.GetIntExtra("SelectedSpecimenId", -1)).Items ?? new List<SpecimenItem>())
+            //{
+            //    specimenItemsNames.Add(specimenItem.ID.ToString());
+            //}
 
             var specimenItemsListView = FindViewById<ListView>(Resource.Id.SpecimenItemslistView);
             specimenItemsListView.Adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleExpandableListItem1, specimenItemsNames);
@@ -41,9 +41,9 @@ namespace CollectingMobile
             if (Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop)
             {
                 Toolbar toolbar = (Toolbar)LayoutInflater.Inflate(Resource.Layout.toolbar, null);
-                FindViewById<LinearLayout>(Resource.Id.RootLoginActivity).AddView(toolbar, 0);
+                FindViewById<LinearLayout>(Resource.Id.RootSpecimenItemsActivity).AddView(toolbar, 0);
                 SetActionBar(toolbar);
-                ActionBar.Title = Resources.GetText(Resource.String.Requests);
+                ActionBar.Title = Resources.GetText(Resource.String.SpecimenItems);
             }
         }
 

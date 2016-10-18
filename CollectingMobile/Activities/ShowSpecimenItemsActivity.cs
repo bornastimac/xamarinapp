@@ -8,44 +8,32 @@ using Android.Widget;
 namespace CollectingMobile
 {
     [Activity]
-    public class ShowSpecimensActivity : Activity
+    public class ShowSpecimenItemsActivity : Activity
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            SetContentView(Resource.Layout.Specimens);
+            SetContentView(Resource.Layout.SpecimenItems);
 
             if (Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop)
-            {
+            {           
                 SetToolbar();
             }
 
-            InitSpecimensView();
-            LoadSpecimensList();          
+            LoadSpecimenItemsList();          
         }
 
-        private void InitSpecimensView()
+        private void LoadSpecimenItemsList()
         {
-            FindViewById<ListView>(Resource.Id.SpecimenslistView).ItemClick += delegate (object sender, AdapterView.ItemClickEventArgs e)
-            {
-                Intent showSpecimenItemsActivity = new Intent(this, typeof(ShowSpecimenItemsActivity));
-                showSpecimenItemsActivity.PutExtra("SelectedRequestId", ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).ID);
-                showSpecimenItemsActivity.PutExtra("SelectedSpecimenId", ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).Specimens[e.Position].ID);
-                StartActivity(showSpecimenItemsActivity);
-            };
-        }
+            List<string> specimenItemsNames = new List<string>();
 
-        private void LoadSpecimensList()
-        {
-            List<string> specimenNames = new List<string>();
-            
-            foreach (Specimen specimen in ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).Specimens ?? new List<Specimen>())
+            foreach (SpecimenItem specimenItem in ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).GetSpecimenByID(Intent.GetIntExtra("SelectedSpecimenId", -1)).Items ?? new List<SpecimenItem>())
             {
-                specimenNames.Add(specimen.Description + " | " + specimen.Items.Count);
+                specimenItemsNames.Add(specimenItem.ID.ToString());
             }
 
-            var specimensListView = FindViewById<ListView>(Resource.Id.SpecimenslistView);
-            specimensListView.Adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleExpandableListItem1, specimenNames);
+            var specimenItemsListView = FindViewById<ListView>(Resource.Id.SpecimenItemslistView);
+            specimenItemsListView.Adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleExpandableListItem1, specimenItemsNames);
         }
 
         private void SetToolbar()

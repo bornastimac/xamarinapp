@@ -59,10 +59,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Activities\ShowSpecimenItemsActivity.cs" />
     <Compile Include="LogoutHandler.cs" />
     <Compile Include="Model\ActiveRequests.cs" />
     <Compile Include="Model\ActiveUser.cs" />
     <Compile Include="Model\SerializationHelper.cs" />
+    <Compile Include="Model\SpecimenItem.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="RequestsListAdapter.cs" />
     <Compile Include="Activities\ShowSpecimensActivity.cs" />
@@ -92,7 +94,7 @@
     </AndroidResource>
     <AndroidResource Include="Resources\layout\SpecimensNoToolbar.axml" />
     <AndroidResource Include="Resources\layout\LoginNoToolbar.axml" />
-    <AndroidResource Include="Resources\layout\EmptyReqList.axml">
+    <AndroidResource Include="Resources\layout\SpecimenItems.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

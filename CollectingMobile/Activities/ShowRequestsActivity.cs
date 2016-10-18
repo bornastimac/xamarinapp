@@ -1,6 +1,7 @@
 using Android.App;
 using Android.Content;
 using Android.OS;
+using Android.Util;
 using Android.Views;
 using Android.Widget;
 using System.Threading;
@@ -13,44 +14,50 @@ namespace CollectingMobile
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+            SetContentView(Resource.Layout.Requests);
+
             if (Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop)
-            {
-                SetContentView(Resource.Layout.Requests);
+            {              
                 SetToolbar();
             }
-            else
-                SetContentView(Resource.Layout.RequestsNoToolbar);
 
-
-            InitRequestsView();
+            InitRequestsView(FindViewById<ListView>(Resource.Id.RequestsListView));
         }
 
         protected override void OnStart()
         {
             base.OnStart();
-            if (FindViewById<ListView>(Resource.Id.RequestsListView).Adapter == null)
+            if(FindViewById<ListView>(Resource.Id.RequestsListView).Adapter == null)//only happens once at first load. Not in onCreate() so it doesnt block UI thread
+            {
                 LoadRequests(FindViewById<ListView>(Resource.Id.RequestsListView));
-
+            }
+            
         }
 
         private void SetToolbar()
         {
             if (Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop)
-            {
-                Toolbar toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
+            {            
+                Toolbar toolbar = (Toolbar)LayoutInflater.Inflate(Resource.Layout.toolbar, null);
+                FindViewById<LinearLayout>(Resource.Id.RootRequestsActivity).AddView(toolbar, 0);
                 SetActionBar(toolbar);
                 ActionBar.Title = Resources.GetText(Resource.String.Requests);
             }
         }
 
-        private void InitRequestsView()
+        private void InitRequestsView(ListView requestsView)
         {
-            FindViewById<ListView>(Resource.Id.RequestsListView).ItemClick += delegate (object sender, AdapterView.ItemClickEventArgs e)
+            requestsView.ItemClick += delegate (object sender, AdapterView.ItemClickEventArgs e)
             {
-                Intent showSpecimensActivity = new Intent(this, typeof(ShowSpecimensActivity));
-                showSpecimensActivity.PutExtra("SelectedRequestId", ActiveRequests.GetRequestFromPosition(e.Position).ID);
-                StartActivity(showSpecimensActivity);
+                if (requestsView.Adapter.GetType() == typeof(RequestsListAdapter))
+                {
+                    Intent showSpecimensActivity = new Intent(this, typeof(ShowSpecimensActivity));
+                    showSpecimensActivity.PutExtra("SelectedRequestId", ActiveRequests.Requests[e.Position].ID);
+                    StartActivity(showSpecimensActivity);
+                }
             };
+
+            //FindViewById<SwipeRefreshLayout>(Resource.Id.SwipeRefresh)
         }
 
         private void LoadRequests(ListView requestsView)
@@ -61,15 +68,21 @@ namespace CollectingMobile
             {
                 new Thread(new ThreadStart(delegate
                 {
-                    var clistAdapter = new RequestsListAdapter(this);
-                    RunOnUiThread(() => requestsView.Adapter = clistAdapter);
+                    ActiveRequests.Requests = RestClient.GetRequestsFromServer();
+                    SerializationHelper.SerializeRequests(this, ActiveRequests.Requests);
+                    RunOnUiThread(() => requestsView.Adapter = new RequestsListAdapter(this, ActiveRequests.Requests));
                     RunOnUiThread(() => progressDialog.Hide());
-                }
-            )).Start();
+                })).Start();
             }
             else
             {
-                RunOnUiThread(() => Toast.MakeText(this, Resources.GetText(Resource.String.CheckNetwork), ToastLength.Long).Show());
+                //TODO: notify user no internet connection. Maybe icon in toolbar for no internet connection?
+                ActiveRequests.Requests = SerializationHelper.DeserializeRequests(this);
+                new Thread(new ThreadStart(delegate
+                {
+                    RunOnUiThread(() => requestsView.Adapter = new RequestsListAdapter(this, ActiveRequests.Requests));
+                    RunOnUiThread(() => progressDialog.Hide());
+                })).Start();
             }
         }
 
@@ -86,8 +99,8 @@ namespace CollectingMobile
                 case Resource.Id.Logout:
                     LogoutHandler.LogMeOut(this);
                     break;
-                case Resource.Id.Test:
-                    SerializationHelper.SerializeRequests(this, ActiveRequests.Requests, ActiveUser.User.Name);
+                case Resource.Id.RefreshRequests:
+                    LoadRequests(FindViewById<ListView>(Resource.Id.RequestsListView));
                     break;
                 default:
                     break;

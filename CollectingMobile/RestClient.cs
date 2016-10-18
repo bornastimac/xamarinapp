@@ -45,9 +45,9 @@ namespace CollectingMobile
             return requestWeb;
         }
 
-        public static List<Request> GetDataFromServer()
+        public static List<Request> GetRequestsFromServer()
         {
-            List<Request> requests = GetRequests();
+            List<Request> requests = GetRequestsOnly();
 
             foreach (Request request in requests)
             {
@@ -57,7 +57,7 @@ namespace CollectingMobile
             return requests;           
         }
 
-        private static List<Request> GetRequests()
+        private static List<Request> GetRequestsOnly()
         {
             string requestsURLForUser = requestsURL + ActiveUser.User.Name;
 
@@ -73,7 +73,7 @@ namespace CollectingMobile
             return RequestsFactory.GetRequestsFromJSON(responseJSON);
         }
 
-        private static List<Specimen> GetSpecimensForRequest(string requestID)
+        private static List<Specimen> GetSpecimensForRequest(int requestID)
         {
             string specimensURLForRequest = specimensURL + requestID;
 

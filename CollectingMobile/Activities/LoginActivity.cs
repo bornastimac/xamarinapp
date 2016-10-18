@@ -14,13 +14,12 @@ namespace CollectingMobile
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
+            SetContentView(Resource.Layout.Login);
+
             if (Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop)
-            {
-                SetContentView(Resource.Layout.Login);
+            {              
                 SetToolbar();
             }
-            else
-                SetContentView(Resource.Layout.LoginNoToolbar);
 
             Init();
         }
@@ -32,22 +31,18 @@ namespace CollectingMobile
             EditText etPassword = FindViewById<EditText>(Resource.Id.password);
             List<User> listOfUsers = SerializationHelper.DeserializeUsers(this);
 
-#if DEBUG
             etUsername.Text = "eugens1";
             etPassword.Text = "eugens1123%";
-#endif
 
             btnLogin.Click += delegate
             {
 
-                //#if !DEBUG
+#if !DEBUG
                 ProgressDialog progressDialog = ProgressDialog.Show(this, "", Resources.GetText(Resource.String.Authenticating), true);
-                
+
                 if (listOfUsers.Exists(p => (p.Name == etUsername.Text && p.Password == etPassword.Text)))//TODO: user je pronađen u deserijaliziranoj listi?  exists vs any
                 {
-                    
                     ActiveUser.User = new User(listOfUsers.First<User>(p => (p.Name == etUsername.Text && p.Password == etPassword.Text)));
-                    //Authenticate();
                     StartActivity(typeof(ShowRequestsActivity));//prikazuje listu iz deserijaliziranog filea
                 }
                 else
@@ -85,11 +80,12 @@ namespace CollectingMobile
                     {
                         progressDialog.Hide();
                     }
-                    //#else
-                    //ActiveUser.Username = etUsername.Text;
-                    //StartActivity(typeof(ShowRequestsActivity)); 
-                    //#endif
                 }
+# else
+
+                ActiveUser.User = new User(etUsername.Text, etPassword.Text);
+                StartActivity(typeof(ShowRequestsActivity));
+#endif
             };
         }
 
@@ -97,9 +93,10 @@ namespace CollectingMobile
         {
             if (Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop)
             {
-                Toolbar toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
+                Toolbar toolbar = (Toolbar)LayoutInflater.Inflate(Resource.Layout.toolbar, null);
+                FindViewById<LinearLayout>(Resource.Id.RootLoginActivity).AddView(toolbar, 0);
                 SetActionBar(toolbar);
-                ActionBar.Title = Resources.GetText(Resource.String.ApplicationName);
+                ActionBar.Title = Resources.GetText(Resource.String.Requests);
             }
         }
     }

@@ -9,9 +9,9 @@ namespace CollectingMobile
 {
     class SerializationHelper
     {
-        public static List<Request> DeserializeRequests(ContextWrapper cw, string username)
+        public static List<Request> DeserializeRequests(ContextWrapper cw)
         {
-            var requestsFilename = "requests_" + username;
+            string requestsFilename = "requests_" + ActiveUser.User.Name;
 
             if (cw.FileList().Contains(requestsFilename))
             {
@@ -29,22 +29,21 @@ namespace CollectingMobile
                     }
                 }
             }
-
             else//requests file for user not found
             {
-                SerializeRequests(cw, new List<Request>(), username);
+                SerializeRequests(cw, new List<Request>());
                 return new List<Request>();
             }
         }
 
-        public static void SerializeRequests(ContextWrapper cw, List<Request> requests, string username)
+        public static void SerializeRequests(ContextWrapper cw, List<Request> requests)
         {
             using (MemoryStream ms = new MemoryStream())
             {
                 BinaryFormatter bf = new BinaryFormatter();
                 bf.Serialize(ms, requests);
 
-                using(Stream fos = cw.OpenFileOutput("requests_" + username, FileCreationMode.Private))
+                using(Stream fos = cw.OpenFileOutput("requests_" + ActiveUser.User.Name, FileCreationMode.Private))
                 {
                     fos.Write(ms.ToArray(), 0, ms.ToArray().Length);
                     fos.Close();
@@ -54,7 +53,7 @@ namespace CollectingMobile
 
         public static List<User> DeserializeUsers(ContextWrapper cw)
         {
-            var usersFilename = "users";
+            string usersFilename = "users";
 
             if (cw.FileList().Contains(usersFilename))
             {
@@ -72,7 +71,6 @@ namespace CollectingMobile
                     }
                 }
             }
-
             else//users file not found
             {
                 SerializeUsers(cw,new List<User>());

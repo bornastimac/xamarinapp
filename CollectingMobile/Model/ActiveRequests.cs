@@ -10,11 +10,6 @@ namespace CollectingMobile
         {
             get
             {
-                //lazy init
-                if(requests == null)
-                {
-                    requests = RestClient.GetDataFromServer();
-                }
                 return requests;
             }
             set
@@ -23,14 +18,10 @@ namespace CollectingMobile
             }
         }
 
-        public static Request GetRequestFromPosition(int position)
+        public static Request GetRequestByID(int requestId)
         {
-            return requests[position];
+            return requests.Find(x => x.ID == requestId);
         }
         
-        public static List<Specimen> GetSpecimensForRequest(string requestId)
-        {
-            return requests.Find(x => x.ID == requestId).Specimens;
-        }
     }
 }

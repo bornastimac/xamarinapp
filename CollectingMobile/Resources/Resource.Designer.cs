@@ -60,47 +60,50 @@ namespace CollectingMobile
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f07000d
-			public const int Logout = 2131165197;
+			// aapt resource value: 0x7f070000
+			public const int EmptyListView = 2131165184;
 			
-			// aapt resource value: 0x7f070005
-			public const int MyButton = 2131165189;
-			
-			// aapt resource value: 0x7f07000a
-			public const int RequestsListView = 2131165194;
-			
-			// aapt resource value: 0x7f07000b
-			public const int SpecimenslistView = 2131165195;
-			
-			// aapt resource value: 0x7f07000c
-			public const int Test = 2131165196;
-			
-			// aapt resource value: 0x7f070004
-			public const int password = 2131165188;
-			
-			// aapt resource value: 0x7f070003
-			public const int passwordlabel = 2131165187;
-			
-			// aapt resource value: 0x7f070009
-			public const int requestDate = 2131165193;
-			
-			// aapt resource value: 0x7f070007
-			public const int requestDescription = 2131165191;
-			
-			// aapt resource value: 0x7f070008
-			public const int requestId = 2131165192;
+			// aapt resource value: 0x7f07000e
+			public const int Logout = 2131165198;
 			
 			// aapt resource value: 0x7f070006
-			public const int textView1 = 2131165190;
+			public const int MyButton = 2131165190;
 			
-			// aapt resource value: 0x7f070000
-			public const int toolbar = 2131165184;
+			// aapt resource value: 0x7f07000b
+			public const int RequestsListView = 2131165195;
 			
-			// aapt resource value: 0x7f070002
-			public const int username = 2131165186;
+			// aapt resource value: 0x7f07000c
+			public const int SpecimenslistView = 2131165196;
+			
+			// aapt resource value: 0x7f07000d
+			public const int Test = 2131165197;
+			
+			// aapt resource value: 0x7f070005
+			public const int password = 2131165189;
+			
+			// aapt resource value: 0x7f070004
+			public const int passwordlabel = 2131165188;
+			
+			// aapt resource value: 0x7f07000a
+			public const int requestDate = 2131165194;
+			
+			// aapt resource value: 0x7f070008
+			public const int requestDescription = 2131165192;
+			
+			// aapt resource value: 0x7f070009
+			public const int requestId = 2131165193;
+			
+			// aapt resource value: 0x7f070007
+			public const int textView1 = 2131165191;
 			
 			// aapt resource value: 0x7f070001
-			public const int usernamelabel = 2131165185;
+			public const int toolbar = 2131165185;
+			
+			// aapt resource value: 0x7f070003
+			public const int username = 2131165187;
+			
+			// aapt resource value: 0x7f070002
+			public const int usernamelabel = 2131165186;
 			
 			static Id()
 			{
@@ -116,28 +119,31 @@ namespace CollectingMobile
 		{
 			
 			// aapt resource value: 0x7f030000
-			public const int Login = 2130903040;
+			public const int EmptyReqList = 2130903040;
 			
 			// aapt resource value: 0x7f030001
-			public const int LoginNoToolbar = 2130903041;
+			public const int Login = 2130903041;
 			
 			// aapt resource value: 0x7f030002
-			public const int RequestListItem = 2130903042;
+			public const int LoginNoToolbar = 2130903042;
 			
 			// aapt resource value: 0x7f030003
-			public const int Requests = 2130903043;
+			public const int RequestListItem = 2130903043;
 			
 			// aapt resource value: 0x7f030004
-			public const int RequestsNoToolbar = 2130903044;
+			public const int Requests = 2130903044;
 			
 			// aapt resource value: 0x7f030005
-			public const int Specimens = 2130903045;
+			public const int RequestsNoToolbar = 2130903045;
 			
 			// aapt resource value: 0x7f030006
-			public const int SpecimensNoToolbar = 2130903046;
+			public const int Specimens = 2130903046;
 			
 			// aapt resource value: 0x7f030007
-			public const int toolbar = 2130903047;
+			public const int SpecimensNoToolbar = 2130903047;
+			
+			// aapt resource value: 0x7f030008
+			public const int toolbar = 2130903048;
 			
 			static Layout()
 			{

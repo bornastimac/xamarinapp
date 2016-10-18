@@ -62,7 +62,7 @@
     <Compile Include="LogoutHandler.cs" />
     <Compile Include="Model\ActiveRequests.cs" />
     <Compile Include="Model\ActiveUser.cs" />
-    <Compile Include="Model\RequestsSerialization.cs" />
+    <Compile Include="Model\SerializationHelper.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="RequestsListAdapter.cs" />
     <Compile Include="Activities\ShowSpecimensActivity.cs" />
@@ -87,9 +87,14 @@
     <AndroidResource Include="Resources\layout\toolbar.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\RequestsNoToolbar.axml" />
+    <AndroidResource Include="Resources\layout\RequestsNoToolbar.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
     <AndroidResource Include="Resources\layout\SpecimensNoToolbar.axml" />
     <AndroidResource Include="Resources\layout\LoginNoToolbar.axml" />
+    <AndroidResource Include="Resources\layout\EmptyReqList.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Login.axml">

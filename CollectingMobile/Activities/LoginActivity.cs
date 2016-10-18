@@ -3,6 +3,8 @@ using Android.Widget;
 using Android.OS;
 using Android.Content.PM;
 using System.Threading;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CollectingMobile
 {
@@ -28,6 +30,7 @@ namespace CollectingMobile
             Button btnLogin = FindViewById<Button>(Resource.Id.MyButton);
             EditText etUsername = FindViewById<EditText>(Resource.Id.username);
             EditText etPassword = FindViewById<EditText>(Resource.Id.password);
+            List<User> listOfUsers = SerializationHelper.DeserializeUsers(this);
 
 #if DEBUG
             etUsername.Text = "eugens1";
@@ -36,39 +39,57 @@ namespace CollectingMobile
 
             btnLogin.Click += delegate
             {
-                
-//#if !DEBUG
-                ProgressDialog progressDialog = ProgressDialog.Show(this, "", Resources.GetText(Resource.String.Authenticating) , true);
 
-                if (RestClient.AmIOnline(Application.Context))
+                //#if !DEBUG
+                ProgressDialog progressDialog = ProgressDialog.Show(this, "", Resources.GetText(Resource.String.Authenticating), true);
+                
+                if (listOfUsers.Exists(p => (p.Name == etUsername.Text && p.Password == etPassword.Text)))//TODO: user je pronađen u deserijaliziranoj listi?  exists vs any
                 {
-                    new Thread(new ThreadStart(delegate
-                    {
-                        if (RestClient.IsLoginOk(etUsername.Text, etPassword.Text))
-                        {
-                            ActiveUser.User = new User(etUsername.Text, etPassword.Text);
-                            StartActivity(typeof(ShowRequestsActivity));
-                        }
-                        else
-                        {
-                            if (RestClient.IsServerReachable(Application.Context))
-                            {
-                                RunOnUiThread(() => etUsername.Text = "");
-                                RunOnUiThread(() => etPassword.Text = "");
-                                RunOnUiThread(() => Toast.MakeText(ApplicationContext, "Incorrect Credentials", ToastLength.Long).Show());
-                            }
-                        }
-                        RunOnUiThread(() => progressDialog.Hide());
-                    })).Start();
+                    
+                    ActiveUser.User = new User(listOfUsers.First<User>(p => (p.Name == etUsername.Text && p.Password == etPassword.Text)));
+                    //Authenticate();
+                    StartActivity(typeof(ShowRequestsActivity));//prikazuje listu iz deserijaliziranog filea
                 }
                 else
                 {
-                    progressDialog.Hide();
+
+
+                    if (RestClient.AmIOnline(Application.Context))
+                    {
+                        new Thread(new ThreadStart(delegate
+                        {
+
+
+                            if (RestClient.IsLoginOk(etUsername.Text, etPassword.Text))
+                            {
+                                ActiveUser.User = new User(etUsername.Text, etPassword.Text);
+                                listOfUsers.Add(ActiveUser.User);
+                                SerializationHelper.SerializeUsers(this, listOfUsers);
+                                //Authenticate();
+                                StartActivity(typeof(ShowRequestsActivity));
+                            }
+                            else
+                            {
+                                if (RestClient.IsServerReachable(Application.Context))
+                                {
+                                    RunOnUiThread(() => etUsername.Text = "");
+                                    RunOnUiThread(() => etPassword.Text = "");
+                                    RunOnUiThread(() => Toast.MakeText(ApplicationContext, "Incorrect Credentials", ToastLength.Long).Show());
+                                }
+                            }
+                            RunOnUiThread(() => progressDialog.Hide());
+
+                        })).Start();
+                    }
+                    else
+                    {
+                        progressDialog.Hide();
+                    }
+                    //#else
+                    //ActiveUser.Username = etUsername.Text;
+                    //StartActivity(typeof(ShowRequestsActivity)); 
+                    //#endif
                 }
-//#else
-                //ActiveUser.Username = etUsername.Text;
-                //StartActivity(typeof(ShowRequestsActivity)); 
-//#endif
             };
         }
 

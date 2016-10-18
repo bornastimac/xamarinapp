@@ -6,6 +6,7 @@ using System.Json;
 using Android.Net;
 using System.Net;
 
+
 namespace CollectingMobile
 {
     class RestClient
@@ -14,6 +15,8 @@ namespace CollectingMobile
         public static string serverLoginURL = @"https://jimsrv.no-ip.info/LabTest/_invoke/Login";
         public static string requestsURL = @"http://jimsrv.no-ip.info/LabTest/ResourceService.ashx?type=samplingrequest&username=";
         public static string specimensURL = @"http://jimsrv.no-ip.info/LabTest/ResourceService.ashx?type=samplingrequestitems&samplingrequestid=";
+
+
 
         public static bool IsLoginOk(string username, string password)
         {

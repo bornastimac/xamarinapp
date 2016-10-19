@@ -125,9 +125,9 @@ namespace CollectingMobile
 
         public static bool UploadSpecimens(Context context, List<Specimen> specimens)
         {
-            foreach(Specimen spec in specimens)
+            foreach (Specimen spec in specimens)
             {
-                spec.uploaded = true;
+                spec.Uploaded = true;
             }
             return true;
             //string specimensJSON = "[";
@@ -137,7 +137,7 @@ namespace CollectingMobile
             //    specimensJSON += ",";
             //}
             //specimensJSON = specimensJSON.TrimEnd(',');
-            //specimensJSON += "]";          
+            //specimensJSON += "]";
 
             //byte[] dataJSON = new ASCIIEncoding().GetBytes(specimensJSON);
 
@@ -148,6 +148,12 @@ namespace CollectingMobile
             //JsonValue responseJSON = JsonValue.Parse(responseContent);
 
             //return responseJSON["d"];
+        }
+
+        public static bool UploadSpecimen(Context context, Specimen specimen)
+        {
+            specimen.Uploaded = true;           
+            return true;
         }
 
         private static string CreateSpecimenJSON(Context context, Specimen specimen)

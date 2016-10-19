@@ -13,7 +13,7 @@ namespace CollectingMobile
 
         public string Location;
         public string SamplingPosition;
-        public bool uploaded = false;
+        public bool Uploaded = false;
 
         public Specimen(int id, string description, int materialTypeID, int count)
         {

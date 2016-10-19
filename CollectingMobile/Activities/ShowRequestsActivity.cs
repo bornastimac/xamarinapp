@@ -6,6 +6,7 @@ using Android.Util;
 using Android.Views;
 using Android.Widget;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace CollectingMobile
 {
@@ -57,7 +58,34 @@ namespace CollectingMobile
                 }
             };
 
-            //FindViewById<SwipeRefreshLayout>(Resource.Id.SwipeRefresh)
+            requestsView.ItemLongClick += delegate (object sender, AdapterView.ItemLongClickEventArgs e)
+            {
+                if (requestsView.Adapter.GetType() == typeof(RequestsListAdapter))
+                {
+                    PopupMenu menu = new PopupMenu(this, e.View);
+                    menu.Inflate(Resource.Menu.popupRequest);
+                    menu.MenuItemClick += (s, arg) => {
+                        ProgressDialog progressDialog = ProgressDialog.Show(this, "", Resources.GetText(Resource.String.Uploading), true);
+
+                        new Thread(new ThreadStart(delegate
+                        {
+                            if (RestClient.UploadSpecimens(this, ActiveRequests.Requests[e.Position].Specimens))
+                            {
+                                ActiveRequests.Requests.RemoveAt(e.Position);
+                                SerializationHelper.SerializeRequests(this, ActiveRequests.Requests);
+                                RunOnUiThread(() => requestsView.Adapter = new RequestsListAdapter(this, ActiveRequests.Requests));
+                                RunOnUiThread(() => Toast.MakeText(this, Resources.GetText(Resource.String.UploadSuccess), ToastLength.Short).Show());
+                            }
+                            else
+                            {
+                                RunOnUiThread(() => Toast.MakeText(this, Resources.GetText(Resource.String.UploadError), ToastLength.Long).Show());
+                            }
+                            RunOnUiThread(() => progressDialog.Hide());
+                        })).Start();                    
+                    };
+                    menu.Show();
+                }
+            };
         }
 
         private void LoadRequests(ListView requestsView)

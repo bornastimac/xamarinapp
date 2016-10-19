@@ -4,12 +4,20 @@ using Android.Content;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
+using System.Threading;
 
 namespace CollectingMobile
 {
     [Activity]
     public class ShowSpecimensActivity : Activity
     {
+        //protected override void OnStart()
+        //{
+        //    base.OnStart();
+        //    Specimen spec = ActiveRequests.Requests[0].Specimens[0];
+        //    ;
+        //}
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -20,18 +28,44 @@ namespace CollectingMobile
                 SetToolbar();
             }
 
-            InitSpecimensView();
-            LoadSpecimensList();          
+            InitSpecimensView(FindViewById<ListView>(Resource.Id.SpecimenslistView));
+            LoadSpecimensList();
         }
 
-        private void InitSpecimensView()
+        private void InitSpecimensView(ListView specimensView)
         {
-            FindViewById<ListView>(Resource.Id.SpecimenslistView).ItemClick += delegate (object sender, AdapterView.ItemClickEventArgs e)
+            specimensView.ItemClick += delegate (object sender, AdapterView.ItemClickEventArgs e)
             {
-                //Intent showSpecimenItemsActivity = new Intent(this, typeof(ShowSpecimenItemsActivity));
-                //showSpecimenItemsActivity.PutExtra("SelectedRequestId", ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).ID);
-                //showSpecimenItemsActivity.PutExtra("SelectedSpecimenId", ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).Specimens[e.Position].ID);
-                //StartActivity(showSpecimenItemsActivity);
+                Intent specimenInputActivity = new Intent(this, typeof(SpecimenInputActivity));
+                specimenInputActivity.PutExtra("SelectedRequestId", ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).ID);
+                specimenInputActivity.PutExtra("SelectedSpecimenId", ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).Specimens[e.Position].ID);
+                StartActivity(specimenInputActivity);
+            };
+
+            specimensView.ItemLongClick += delegate (object sender, AdapterView.ItemLongClickEventArgs e)
+            {
+                PopupMenu menu = new PopupMenu(this, e.View);
+                menu.Inflate(Resource.Menu.popupRequest);
+                menu.MenuItemClick += (s, arg) =>
+                {
+                    ProgressDialog progressDialog = ProgressDialog.Show(this, "", Resources.GetText(Resource.String.Uploading), true);
+
+                    new Thread(new ThreadStart(delegate
+                    {
+                        if (RestClient.UploadSpecimen(this, ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).Specimens[e.Position]))
+                        {
+                            SerializationHelper.SerializeRequests(this, ActiveRequests.Requests);
+                            RunOnUiThread(() => LoadSpecimensList());
+                            RunOnUiThread(() => Toast.MakeText(this, Resources.GetText(Resource.String.UploadSuccess), ToastLength.Short).Show());
+                        }
+                        else
+                        {
+                            RunOnUiThread(() => Toast.MakeText(this, Resources.GetText(Resource.String.UploadError), ToastLength.Long).Show());
+                        }
+                        RunOnUiThread(() => progressDialog.Hide());
+                    })).Start();
+                };
+                menu.Show();
             };
         }
 
@@ -41,12 +75,14 @@ namespace CollectingMobile
 
             foreach (Specimen specimen in ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).Specimens ?? new List<Specimen>())
             {
-                specimenNames.Add(specimen.ID.ToString());
+                //TODO: remove string uploaded
+                string uploaded =  ((specimen.Uploaded) ? " | UP" : "");
+                specimenNames.Add(specimen.ID.ToString() + uploaded);
             }
 
             var specimensListView = FindViewById<ListView>(Resource.Id.SpecimenslistView);
             specimensListView.Adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItemActivated1, specimenNames);
-            specimensListView.ChoiceMode = ChoiceMode.Multiple;
+            //specimensListView.ChoiceMode = ChoiceMode.Multiple;
         }
 
         private void SetToolbar()

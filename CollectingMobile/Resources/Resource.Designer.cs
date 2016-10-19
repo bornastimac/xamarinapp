@@ -48,10 +48,22 @@ namespace CollectingMobile
 			public const int check = 2130837504;
 			
 			// aapt resource value: 0x7f020001
-			public const int Icon = 2130837505;
+			public const int ic_check_circle_black_24dp = 2130837505;
 			
 			// aapt resource value: 0x7f020002
-			public const int location_icon = 2130837506;
+			public const int ic_check_circle_white_24dp = 2130837506;
+			
+			// aapt resource value: 0x7f020003
+			public const int ic_location_searching_black_24dp = 2130837507;
+			
+			// aapt resource value: 0x7f020004
+			public const int ic_location_searching_white_24dp = 2130837508;
+			
+			// aapt resource value: 0x7f020005
+			public const int Icon = 2130837509;
+			
+			// aapt resource value: 0x7f020006
+			public const int location_icon = 2130837510;
 			
 			static Drawable()
 			{
@@ -66,14 +78,23 @@ namespace CollectingMobile
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f070015
-			public const int Logout = 2131165205;
+			// aapt resource value: 0x7f07000f
+			public const int LocationButton = 2131165199;
+			
+			// aapt resource value: 0x7f07000d
+			public const int LocationText = 2131165197;
+			
+			// aapt resource value: 0x7f070016
+			public const int Logout = 2131165206;
 			
 			// aapt resource value: 0x7f070005
 			public const int MyButton = 2131165189;
 			
-			// aapt resource value: 0x7f070014
-			public const int RefreshRequests = 2131165204;
+			// aapt resource value: 0x7f070017
+			public const int PopupRequest = 2131165207;
+			
+			// aapt resource value: 0x7f070015
+			public const int RefreshRequests = 2131165205;
 			
 			// aapt resource value: 0x7f07000b
 			public const int RequestsListView = 2131165195;
@@ -84,29 +105,26 @@ namespace CollectingMobile
 			// aapt resource value: 0x7f07000a
 			public const int RootRequestsActivity = 2131165194;
 			
-			// aapt resource value: 0x7f07000e
-			public const int RootSpecimenItemsActivity = 2131165198;
-			
-			// aapt resource value: 0x7f070010
-			public const int RootSpecimensActivity = 2131165200;
-			
-			// aapt resource value: 0x7f07000f
-			public const int SpecimenItemslistView = 2131165199;
+			// aapt resource value: 0x7f07000c
+			public const int RootSpecimenInputActivity = 2131165196;
 			
 			// aapt resource value: 0x7f070011
-			public const int SpecimenslistView = 2131165201;
+			public const int RootSpecimensActivity = 2131165201;
 			
-			// aapt resource value: 0x7f070013
-			public const int Test = 2131165203;
+			// aapt resource value: 0x7f07000e
+			public const int SamplingPositionText = 2131165198;
+			
+			// aapt resource value: 0x7f070010
+			public const int SaveButton = 2131165200;
 			
 			// aapt resource value: 0x7f070012
-			public const int Toolbar = 2131165202;
+			public const int SpecimenslistView = 2131165202;
 			
-			// aapt resource value: 0x7f07000c
-			public const int layoutContainer = 2131165196;
+			// aapt resource value: 0x7f070014
+			public const int Test = 2131165204;
 			
-			// aapt resource value: 0x7f07000d
-			public const int locationButton = 2131165197;
+			// aapt resource value: 0x7f070013
+			public const int Toolbar = 2131165203;
 			
 			// aapt resource value: 0x7f070004
 			public const int password = 2131165188;
@@ -158,13 +176,10 @@ namespace CollectingMobile
 			public const int SpecimenInput = 2130903043;
 			
 			// aapt resource value: 0x7f030004
-			public const int SpecimenItems = 2130903044;
+			public const int Specimens = 2130903044;
 			
 			// aapt resource value: 0x7f030005
-			public const int Specimens = 2130903045;
-			
-			// aapt resource value: 0x7f030006
-			public const int toolbar = 2130903046;
+			public const int toolbar = 2130903045;
 			
 			static Layout()
 			{
@@ -182,6 +197,9 @@ namespace CollectingMobile
 			// aapt resource value: 0x7f060000
 			public const int menu = 2131099648;
 			
+			// aapt resource value: 0x7f060001
+			public const int popupRequest = 2131099649;
+			
 			static Menu()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
@@ -195,17 +213,17 @@ namespace CollectingMobile
 		public partial class String
 		{
 			
-			// aapt resource value: 0x7f05000a
-			public const int ApplicationName = 2131034122;
+			// aapt resource value: 0x7f050010
+			public const int ApplicationName = 2131034128;
 			
-			// aapt resource value: 0x7f05000c
-			public const int Authenticating = 2131034124;
+			// aapt resource value: 0x7f050012
+			public const int Authenticating = 2131034130;
 			
-			// aapt resource value: 0x7f050007
-			public const int CheckNetwork = 2131034119;
+			// aapt resource value: 0x7f050008
+			public const int CheckNetwork = 2131034120;
 			
-			// aapt resource value: 0x7f05000b
-			public const int LoadingRequests = 2131034123;
+			// aapt resource value: 0x7f050011
+			public const int LoadingRequests = 2131034129;
 			
 			// aapt resource value: 0x7f050005
 			public const int Login = 2131034117;
@@ -213,8 +231,11 @@ namespace CollectingMobile
 			// aapt resource value: 0x7f050006
 			public const int Logout = 2131034118;
 			
-			// aapt resource value: 0x7f050009
-			public const int OfflineMode = 2131034121;
+			// aapt resource value: 0x7f05000c
+			public const int NoLocationService = 2131034124;
+			
+			// aapt resource value: 0x7f05000a
+			public const int OfflineMode = 2131034122;
 			
 			// aapt resource value: 0x7f050001
 			public const int Password = 2131034113;
@@ -222,17 +243,32 @@ namespace CollectingMobile
 			// aapt resource value: 0x7f050002
 			public const int Requests = 2131034114;
 			
-			// aapt resource value: 0x7f050008
-			public const int ServerProblem = 2131034120;
+			// aapt resource value: 0x7f050007
+			public const int Saved = 2131034119;
+			
+			// aapt resource value: 0x7f05000b
+			public const int SearchingLocation = 2131034123;
+			
+			// aapt resource value: 0x7f050009
+			public const int ServerProblem = 2131034121;
 			
 			// aapt resource value: 0x7f050004
-			public const int SpecimenItems = 2131034116;
+			public const int SpecimenInput = 2131034116;
 			
 			// aapt resource value: 0x7f050003
 			public const int Specimens = 2131034115;
 			
+			// aapt resource value: 0x7f050013
+			public const int Test = 2131034131;
+			
+			// aapt resource value: 0x7f05000f
+			public const int UploadError = 2131034127;
+			
+			// aapt resource value: 0x7f05000e
+			public const int UploadSuccess = 2131034126;
+			
 			// aapt resource value: 0x7f05000d
-			public const int Test = 2131034125;
+			public const int Uploading = 2131034125;
 			
 			// aapt resource value: 0x7f050000
 			public const int Username = 2131034112;

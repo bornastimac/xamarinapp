@@ -1,5 +1,6 @@
 using Android.App;
 using Android.Content;
+using Android.Net;
 using Android.OS;
 using Android.Util;
 using Android.Views;
@@ -17,7 +18,7 @@ namespace CollectingMobile
             SetContentView(Resource.Layout.Requests);
 
             if (Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop)
-            {              
+            {
                 SetToolbar();
             }
 
@@ -27,17 +28,16 @@ namespace CollectingMobile
         protected override void OnStart()
         {
             base.OnStart();
-            if(FindViewById<ListView>(Resource.Id.RequestsListView).Adapter == null)//only happens once at first load. Not in onCreate() so it doesnt block UI thread
+            if (FindViewById<ListView>(Resource.Id.RequestsListView).Adapter == null)//only happens once at first load. Not in onCreate() so it doesnt block UI thread
             {
                 LoadRequests(FindViewById<ListView>(Resource.Id.RequestsListView));
             }
-            
         }
 
         private void SetToolbar()
         {
             if (Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop)
-            {            
+            {
                 Toolbar toolbar = (Toolbar)LayoutInflater.Inflate(Resource.Layout.toolbar, null);
                 FindViewById<LinearLayout>(Resource.Id.RootRequestsActivity).AddView(toolbar, 0);
                 SetActionBar(toolbar);
@@ -64,7 +64,7 @@ namespace CollectingMobile
         {
             ProgressDialog progressDialog = ProgressDialog.Show(this, "", Resources.GetText(Resource.String.LoadingRequests), true);
 
-            if (RestClient.AmIOnline(Application.Context))
+            if (RestClient.AmIOnline((ConnectivityManager)GetSystemService(ConnectivityService)))
             {
                 new Thread(new ThreadStart(delegate
                 {
@@ -76,13 +76,11 @@ namespace CollectingMobile
             }
             else
             {
-                //TODO: notify user no internet connection. Maybe icon in toolbar for no internet connection?
+                //TODO: kontrola toka sa dialozima
+                Toast.MakeText(this, Resources.GetText(Resource.String.CheckNetwork) + "\n" + Resources.GetText(Resource.String.OfflineMode), ToastLength.Long).Show();
                 ActiveRequests.Requests = SerializationHelper.DeserializeRequests(this);
-                new Thread(new ThreadStart(delegate
-                {
-                    RunOnUiThread(() => requestsView.Adapter = new RequestsListAdapter(this, ActiveRequests.Requests));
-                    RunOnUiThread(() => progressDialog.Hide());
-                })).Start();
+                requestsView.Adapter = new RequestsListAdapter(this, ActiveRequests.Requests);
+                progressDialog.Hide();
             }
         }
 
@@ -98,6 +96,9 @@ namespace CollectingMobile
             {
                 case Resource.Id.Logout:
                     LogoutHandler.LogMeOut(this);
+                    break;
+                case Resource.Id.Test:
+                    var b = RestClient.UploadSpecimens(this, ActiveRequests.Requests[1].Specimens);
                     break;
                 case Resource.Id.RefreshRequests:
                     LoadRequests(FindViewById<ListView>(Resource.Id.RequestsListView));

@@ -54,14 +54,11 @@ namespace CollectingMobile
                     {
                         new Thread(new ThreadStart(delegate
                         {
-
-
                             if (RestClient.IsLoginOk(etUsername.Text, etPassword.Text))
                             {
                                 ActiveUser.User = new User(etUsername.Text, etPassword.Text);
                                 listOfUsers.Add(ActiveUser.User);
                                 SerializationHelper.SerializeUsers(this, listOfUsers);
-                                //Authenticate();
                                 StartActivity(typeof(ShowRequestsActivity));
                             }
                             else

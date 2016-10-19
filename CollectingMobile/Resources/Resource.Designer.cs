@@ -195,23 +195,26 @@ namespace CollectingMobile
 		public partial class String
 		{
 			
-			// aapt resource value: 0x7f050009
-			public const int ApplicationName = 2131034121;
+			// aapt resource value: 0x7f05000a
+			public const int ApplicationName = 2131034122;
 			
-			// aapt resource value: 0x7f05000b
-			public const int Authenticating = 2131034123;
+			// aapt resource value: 0x7f05000c
+			public const int Authenticating = 2131034124;
 			
 			// aapt resource value: 0x7f050007
 			public const int CheckNetwork = 2131034119;
 			
-			// aapt resource value: 0x7f05000a
-			public const int LoadingRequests = 2131034122;
+			// aapt resource value: 0x7f05000b
+			public const int LoadingRequests = 2131034123;
 			
 			// aapt resource value: 0x7f050005
 			public const int Login = 2131034117;
 			
 			// aapt resource value: 0x7f050006
 			public const int Logout = 2131034118;
+			
+			// aapt resource value: 0x7f050009
+			public const int OfflineMode = 2131034121;
 			
 			// aapt resource value: 0x7f050001
 			public const int Password = 2131034113;
@@ -228,8 +231,8 @@ namespace CollectingMobile
 			// aapt resource value: 0x7f050003
 			public const int Specimens = 2131034115;
 			
-			// aapt resource value: 0x7f05000c
-			public const int Test = 2131034124;
+			// aapt resource value: 0x7f05000d
+			public const int Test = 2131034125;
 			
 			// aapt resource value: 0x7f050000
 			public const int Username = 2131034112;

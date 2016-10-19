@@ -5,7 +5,9 @@ using Android.Widget;
 using System.Json;
 using Android.Net;
 using System.Net;
-
+using System.IO;
+using System;
+using Android.Util;
 
 namespace CollectingMobile
 {
@@ -53,7 +55,7 @@ namespace CollectingMobile
                 request.Specimens = GetSpecimensForRequest(request.ID);
             }
 
-            return requests;           
+            return requests;
         }
 
         private static List<Request> GetRequestsOnly()
@@ -88,27 +90,27 @@ namespace CollectingMobile
             return RequestsFactory.GetSpecimensFromJSON(responseJSON);
         }
 
-        public static bool AmIOnline(Context context)
+        public static bool AmIOnline(ConnectivityManager cm)
         {
-            ConnectivityManager connectivityManager = (ConnectivityManager)context.GetSystemService(Context.ConnectivityService);
-            NetworkInfo activeConnection = connectivityManager.ActiveNetworkInfo;
-            if((activeConnection != null) && activeConnection.IsConnected)
+            NetworkInfo activeConnection = cm.ActiveNetworkInfo;
+            if ((activeConnection != null) && activeConnection.IsConnected)
             {
                 return true;
             }
             else
             {
-                Toast.MakeText(context, context.Resources.GetText(Resource.String.CheckNetwork), ToastLength.Short).Show();
+                Console.WriteLine();
+                
                 return false;
             }
         }
 
-        public static bool IsServerReachable(Context context)
+        public static bool IsServerReachable()
         {
             try
             {
-                HttpWebRequest iNetRequest = (HttpWebRequest)WebRequest.Create(serverLoginURL);
-                iNetRequest.Timeout = 5000;
+                HttpWebRequest iNetRequest = (HttpWebRequest)WebRequest.Create("https://jimsrv.no-ip.info/LabTest/");
+                iNetRequest.Timeout = 3000;
                 iNetRequest.Proxy = null;
                 WebResponse iNetResponse = iNetRequest.GetResponse();
                 iNetResponse.Close();
@@ -116,9 +118,54 @@ namespace CollectingMobile
             }
             catch (WebException)
             {
-                Toast.MakeText(context, context.Resources.GetText(Resource.String.ServerProblem), ToastLength.Short).Show();
+                Console.WriteLine("Server not reachable");
                 return false;
             }
+        }
+
+        public static bool UploadSpecimens(Context context, List<Specimen> specimens)
+        {
+            foreach(Specimen spec in specimens)
+            {
+                spec.uploaded = true;
+            }
+            return true;
+            //string specimensJSON = "[";
+            //foreach (Specimen s in specimens)
+            //{
+            //    specimensJSON += CreateSpecimenJSON(context, s);
+            //    specimensJSON += ",";
+            //}
+            //specimensJSON = specimensJSON.TrimEnd(',');
+            //specimensJSON += "]";          
+
+            //byte[] dataJSON = new ASCIIEncoding().GetBytes(specimensJSON);
+
+            //HttpWebRequest requestWeb = SetRequestWebJSON(postSpecimensURL, dataJSON);
+            //HttpWebResponse responseWeb = requestWeb.GetResponse() as HttpWebResponse;
+
+            //string responseContent = new System.IO.StreamReader(responseWeb.GetResponseStream()).ReadToEnd();
+            //JsonValue responseJSON = JsonValue.Parse(responseContent);
+
+            //return responseJSON["d"];
+        }
+
+        private static string CreateSpecimenJSON(Context context, Specimen specimen)
+        {
+            string specimenJSONTemplate;
+            using (StreamReader r = new StreamReader(context.Assets.Open("specimenJSONTemplate.json")))
+            {
+                specimenJSONTemplate = r.ReadToEnd();
+            }
+
+            JsonValue specimenJSON = JsonValue.Parse(specimenJSONTemplate);
+            specimenJSON["ID"] = specimen.ID;
+            specimenJSON["Description"] = specimen.Description;
+            specimenJSON["MaterialTypeID"] = specimen.MaterialTypeID;
+            specimenJSON["Location"] = specimen.Location;
+            specimenJSON["SamplingPosition"] = specimen.SamplingPosition;
+
+            return specimenJSON.ToString();
         }
     }
 }

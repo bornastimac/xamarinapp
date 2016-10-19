@@ -18,6 +18,7 @@ namespace CollectingMobile
             for (int i = 0; i < responseJSON.Count; i++)
             {
                 JsonValue requestJSON = responseJSON[i];
+
                 requests.Add(new Request(
                     requestJSON["ID"],
                     requestJSON["Code"],
@@ -38,7 +39,8 @@ namespace CollectingMobile
                 JsonValue specimenJSON = responseJSON[i];
                 specimens.Add(new Specimen(
                     specimenJSON["ID"],
-                    specimenJSON["MaterialTypesName"],
+                    specimenJSON["Description"],
+                    specimenJSON["MaterialTypeID"],
                     specimenJSON["SpecimenCount"]));
             }
 
@@ -62,7 +64,7 @@ namespace CollectingMobile
 
             for (int i = 0; i < numberOfSpecimens; i++)
             {
-                mockSpecimens.Add(new Specimen(++idSpecimenMock, "SpecDescription_" + i, new Random().Next(1, 6)));
+                mockSpecimens.Add(new Specimen(++idSpecimenMock, "SpecDescription_" + i, 1, new Random().Next(1, 6)));
             }
             return mockSpecimens;
         }

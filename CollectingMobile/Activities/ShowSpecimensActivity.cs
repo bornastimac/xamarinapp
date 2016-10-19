@@ -28,10 +28,10 @@ namespace CollectingMobile
         {
             FindViewById<ListView>(Resource.Id.SpecimenslistView).ItemClick += delegate (object sender, AdapterView.ItemClickEventArgs e)
             {
-                Intent showSpecimenItemsActivity = new Intent(this, typeof(ShowSpecimenItemsActivity));
-                showSpecimenItemsActivity.PutExtra("SelectedRequestId", ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).ID);
-                showSpecimenItemsActivity.PutExtra("SelectedSpecimenId", ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).Specimens[e.Position].ID);
-                StartActivity(showSpecimenItemsActivity);
+                //Intent showSpecimenItemsActivity = new Intent(this, typeof(ShowSpecimenItemsActivity));
+                //showSpecimenItemsActivity.PutExtra("SelectedRequestId", ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).ID);
+                //showSpecimenItemsActivity.PutExtra("SelectedSpecimenId", ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).Specimens[e.Position].ID);
+                //StartActivity(showSpecimenItemsActivity);
             };
         }
 
@@ -41,11 +41,12 @@ namespace CollectingMobile
 
             foreach (Specimen specimen in ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).Specimens ?? new List<Specimen>())
             {
-                specimenNames.Add(specimen.Description);
+                specimenNames.Add(specimen.ID.ToString());
             }
 
             var specimensListView = FindViewById<ListView>(Resource.Id.SpecimenslistView);
-            specimensListView.Adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleExpandableListItem1, specimenNames);
+            specimensListView.Adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItemActivated1, specimenNames);
+            specimensListView.ChoiceMode = ChoiceMode.Multiple;
         }
 
         private void SetToolbar()
@@ -71,6 +72,9 @@ namespace CollectingMobile
             {
                 case Resource.Id.Logout:
                     LogoutHandler.LogMeOut(this);
+                    break;
+                case Resource.Id.Test:
+                    var b = RestClient.UploadSpecimens(this, ActiveRequests.Requests[1].Specimens);
                     break;
                 default:
                     break;

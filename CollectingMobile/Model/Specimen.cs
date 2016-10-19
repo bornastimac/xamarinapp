@@ -8,20 +8,19 @@ namespace CollectingMobile
     {
         public readonly int ID;
         public readonly string Description;
+        public readonly int MaterialTypeID;
         public readonly int Count;
-        public readonly List<SpecimenItem> Items;
 
-        public Specimen(int id, string description, int count)
+        public string Location;
+        public string SamplingPosition;
+        public bool uploaded = false;
+
+        public Specimen(int id, string description, int materialTypeID, int count)
         {
             this.ID = id;
             this.Description = description;
+            this.MaterialTypeID = materialTypeID;
             this.Count = count;
-
-            Items = new List<SpecimenItem>();
-            for (int i = 0; i < count; i++)
-            {
-                Items.Add(new SpecimenItem(ID, Description));
-            }
         }
 
     }

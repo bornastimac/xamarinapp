@@ -37,7 +37,7 @@ namespace CollectingMobile
 
             btnLogin.Click += delegate
             {
-                StartActivity(typeof(SpecimenInputActivity));
+                
 #if !DEBUG
                 ProgressDialog progressDialog = ProgressDialog.Show(this, "", Resources.GetText(Resource.String.Authenticating), true);
 

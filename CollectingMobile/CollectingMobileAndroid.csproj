@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activities\ShowSpecimenItemsActivity.cs" />
+    <Compile Include="Activities\SpecimenInputActivity.cs" />
     <Compile Include="LogoutHandler.cs" />
     <Compile Include="Model\ActiveRequests.cs" />
     <Compile Include="Model\ActiveUser.cs" />
@@ -80,6 +81,7 @@
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
+    <AndroidResource Include="Resources\drawable\location_icon.png" />
     <AndroidResource Include="Resources\layout\Requests.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
@@ -90,6 +92,9 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\SpecimenItems.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\SpecimenInput.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
@@ -121,6 +126,9 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values-hr\Strings.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\check.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

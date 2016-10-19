@@ -5,6 +5,7 @@ using Android.Content.PM;
 using System.Threading;
 using System.Collections.Generic;
 using System.Linq;
+using CollectingMobile.Activities;
 
 namespace CollectingMobile
 {
@@ -36,7 +37,7 @@ namespace CollectingMobile
 
             btnLogin.Click += delegate
             {
-
+                StartActivity(typeof(SpecimenInputActivity));
 #if !DEBUG
                 ProgressDialog progressDialog = ProgressDialog.Show(this, "", Resources.GetText(Resource.String.Authenticating), true);
 
@@ -83,8 +84,8 @@ namespace CollectingMobile
                 }
 # else
 
-                ActiveUser.User = new User(etUsername.Text, etPassword.Text);
-                StartActivity(typeof(ShowRequestsActivity));
+       //         ActiveUser.User = new User(etUsername.Text, etPassword.Text);
+        //        StartActivity(typeof(ShowRequestsActivity));
 #endif
             };
         }

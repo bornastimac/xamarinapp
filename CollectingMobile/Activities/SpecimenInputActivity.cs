@@ -44,16 +44,16 @@ namespace CollectingMobile
 
         private void StartLocationSearch()
         {
-            string locationProvider;
-            Criteria locationCriteria = new Criteria();
+            //string locationProvider;
+            //Criteria locationCriteria = new Criteria();
 
-            locationCriteria.Accuracy = Accuracy.Coarse;
-            locationCriteria.PowerRequirement = Power.Medium;
+            //locationCriteria.Accuracy = Accuracy.Coarse;
+            //locationCriteria.PowerRequirement = Power.Medium;
 
             locMan = GetSystemService(LocationService) as LocationManager;
-            locationProvider = locMan.GetBestProvider(locationCriteria, true);
+            //locationProvider = locMan.GetBestProvider(locationCriteria, true);
 
-            if (locMan.IsProviderEnabled(locationProvider))
+            if (locMan.IsProviderEnabled(LocationManager.GpsProvider))
             {
                 locMan.RequestLocationUpdates(LocationManager.GpsProvider, 1000, 1, this);
                 Toast.MakeText(this, Resources.GetText(Resource.String.SearchingLocation), ToastLength.Short).Show();
@@ -105,17 +105,19 @@ namespace CollectingMobile
 
         public void OnProviderDisabled(string provider)
         {
-            throw new NotImplementedException();
+            FindViewById<ImageButton>(Resource.Id.LocationButton).Enabled = true;
+            Toast.MakeText(this, Resources.GetText(Resource.String.NoLocationService), ToastLength.Long).Show();
+
         }
 
         public void OnProviderEnabled(string provider)
         {
-            throw new NotImplementedException();
+            FindViewById<ImageButton>(Resource.Id.LocationButton).Enabled = true;
         }
 
         public void OnStatusChanged(string provider, [GeneratedEnum] Availability status, Bundle extras)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 }

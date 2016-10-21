@@ -41,47 +41,47 @@ namespace CollectingMobile
 
             btnLogin.Click += delegate
             {
-                  StartActivity(typeof(CameraActivity));
+                //  StartActivity(typeof(CameraActivity));
 #if DEBUG
-                //ProgressDialog progressDialog = ProgressDialog.Show(this, "", Resources.GetText(Resource.String.Authenticating), true);
+                ProgressDialog progressDialog = ProgressDialog.Show(this, "", Resources.GetText(Resource.String.Authenticating), true);
 
-                //if (listOfUsers.Exists(p => (p.Name == etUsername.Text && p.Password == etPassword.Text)))
-                //{
-                //    ActiveUser.User = new User(listOfUsers.First(p => (p.Name == etUsername.Text && p.Password == etPassword.Text)));
-                //    StartActivity(typeof(ShowRequestsActivity));
-                //}
-                //else
-                //{
-                //    if (RestClient.AmIOnline((ConnectivityManager)GetSystemService(ConnectivityService)))
-                //    {
-                //        new Thread(new ThreadStart(delegate
-                //        {
-                //            if (RestClient.IsLoginOk(etUsername.Text, etPassword.Text))
-                //            {
-                //                ActiveUser.User = new User(etUsername.Text, etPassword.Text);
-                //                listOfUsers.Add(ActiveUser.User);
-                //                SerializationHelper.SerializeUsers(this, listOfUsers);
-                //                StartActivity(typeof(ShowRequestsActivity));
-                //            }
-                //            else
-                //            {
-                //                if (RestClient.IsServerReachable())
-                //                {
-                //                    RunOnUiThread(() => etUsername.Text = "");
-                //                    RunOnUiThread(() => etPassword.Text = "");
-                //                    RunOnUiThread(() => Toast.MakeText(ApplicationContext, "Incorrect Credentials", ToastLength.Long).Show());
-                //                }
-                //            }
-                //            RunOnUiThread(() => progressDialog.Hide());
+                if (listOfUsers.Exists(p => (p.Name == etUsername.Text && p.Password == etPassword.Text)))
+                {
+                    ActiveUser.User = new User(listOfUsers.First(p => (p.Name == etUsername.Text && p.Password == etPassword.Text)));
+                    StartActivity(typeof(ShowRequestsActivity));
+                }
+                else
+                {
+                    if (RestClient.AmIOnline((ConnectivityManager)GetSystemService(ConnectivityService)))
+                    {
+                        new Thread(new ThreadStart(delegate
+                        {
+                            if (RestClient.IsLoginOk(etUsername.Text, etPassword.Text))
+                            {
+                                ActiveUser.User = new User(etUsername.Text, etPassword.Text);
+                                listOfUsers.Add(ActiveUser.User);
+                                SerializationHelper.SerializeUsers(this, listOfUsers);
+                                StartActivity(typeof(ShowRequestsActivity));
+                            }
+                            else
+                            {
+                                if (RestClient.IsServerReachable())
+                                {
+                                    RunOnUiThread(() => etUsername.Text = "");
+                                    RunOnUiThread(() => etPassword.Text = "");
+                                    RunOnUiThread(() => Toast.MakeText(ApplicationContext, "Incorrect Credentials", ToastLength.Long).Show());
+                                }
+                            }
+                            RunOnUiThread(() => progressDialog.Hide());
 
-                //        })).Start();
-                //    }
-                //    else
-                //    {
-                //        progressDialog.Hide();
-                //        Toast.MakeText(this, Resources.GetText(Resource.String.CheckNetwork), ToastLength.Long).Show();
-                //    }
-                //}
+                        })).Start();
+                    }
+                    else
+                    {
+                        progressDialog.Hide();
+                        Toast.MakeText(this, Resources.GetText(Resource.String.CheckNetwork), ToastLength.Long).Show();
+                    }
+                }
 #else
                 ActiveUser.User = new User(etUsername.Text, etPassword.Text);
                 StartActivity(typeof(ShowRequestsActivity));

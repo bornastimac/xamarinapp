@@ -11,13 +11,6 @@ namespace CollectingMobile
     [Activity]
     public class ShowSpecimensActivity : Activity
     {
-        //protected override void OnStart()
-        //{
-        //    base.OnStart();
-        //    Specimen spec = ActiveRequests.Requests[0].Specimens[0];
-        //    ;
-        //}
-
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -38,7 +31,7 @@ namespace CollectingMobile
             {
                 Intent specimenInputActivity = new Intent(this, typeof(SpecimenInputActivity));
                 specimenInputActivity.PutExtra("SelectedRequestId", ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).ID);
-                specimenInputActivity.PutExtra("SelectedSpecimenId", ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).Specimens[e.Position].ID);
+                specimenInputActivity.PutExtra("SelectedSpecimenId", ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).Specimens[e.Position].ID ?? -1);
                 StartActivity(specimenInputActivity);
             };
 
@@ -54,6 +47,7 @@ namespace CollectingMobile
                     {
                         if (RestClient.UploadSpecimen(this, ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).Specimens[e.Position]))
                         {
+                            ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).Specimens[e.Position].Uploaded = true;
                             SerializationHelper.SerializeRequests(this, ActiveRequests.Requests);
                             RunOnUiThread(() => LoadSpecimensList());
                             RunOnUiThread(() => Toast.MakeText(this, Resources.GetText(Resource.String.UploadSuccess), ToastLength.Short).Show());
@@ -108,9 +102,6 @@ namespace CollectingMobile
             {
                 case Resource.Id.Logout:
                     LogoutHandler.LogMeOut(this);
-                    break;
-                case Resource.Id.Test:
-                    var b = RestClient.UploadSpecimens(this, ActiveRequests.Requests[1].Specimens);
                     break;
                 default:
                     break;

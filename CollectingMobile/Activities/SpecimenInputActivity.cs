@@ -38,8 +38,6 @@ namespace CollectingMobile
 
             FindViewById<TextView>(Resource.Id.LocationText).Text = specimenSelected.Location;
             FindViewById<EditText>(Resource.Id.SamplingPositionText).Text = specimenSelected.SamplingPosition;
-            //FindViewById<TextView>(Resource.Id.LocationText).Text = ((specimenSelected.Location.Equals("null") || (specimenSelected.Location==null)) ? ("-------") : (specimenSelected.Location));
-            //FindViewById<EditText>(Resource.Id.SamplingPositionText).Text = (specimenSelected.SamplingPosition.Equals("null") || specimenSelected.SamplingPosition == null) ? "-------" : specimenSelected.SamplingPosition;
         }
 
         private void StartLocationSearch()
@@ -118,6 +116,26 @@ namespace CollectingMobile
         public void OnStatusChanged(string provider, [GeneratedEnum] Availability status, Bundle extras)
         {
             //throw new NotImplementedException();
+        }
+
+        public override bool OnCreateOptionsMenu(IMenu menu)
+        {
+            MenuInflater.Inflate(Resource.Menu.menu, menu);
+            return base.OnCreateOptionsMenu(menu);
+        }
+
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            switch (item.ItemId)
+            {
+                case Resource.Id.Logout:
+                    LogoutHandler.LogMeOut(this);
+                    break;
+                default:
+                    break;
+            }
+
+            return base.OnOptionsItemSelected(item);
         }
     }
 }

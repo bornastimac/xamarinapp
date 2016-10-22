@@ -8,6 +8,8 @@ using System.Net;
 using System.IO;
 using System;
 using Android.Util;
+using System.Reflection;
+using Newtonsoft.Json;
 
 namespace CollectingMobile
 {
@@ -29,7 +31,7 @@ namespace CollectingMobile
 
             string responseContent = new System.IO.StreamReader(responseWeb.GetResponseStream()).ReadToEnd();
             JsonValue responseJSON = JsonValue.Parse(responseContent);
-
+            
             return responseJSON["d"];//{d:true} OR {d:false}
         }
 
@@ -67,11 +69,9 @@ namespace CollectingMobile
 
             HttpWebRequest requestWeb = SetRequestWebJSON(requestsURLForUser, dataJSON);
             HttpWebResponse responseWeb = requestWeb.GetResponse() as HttpWebResponse;
-
             string responseContent = new System.IO.StreamReader(responseWeb.GetResponseStream()).ReadToEnd();
-            JsonValue responseJSON = JsonValue.Parse(responseContent);
 
-            return RequestsFactory.GetRequestsFromJSON(responseJSON);
+            return RequestsFactory.GetRequestsFromJSON(responseContent);
         }
 
         private static List<Specimen> GetSpecimensForRequest(int requestID)
@@ -83,11 +83,9 @@ namespace CollectingMobile
 
             HttpWebRequest requestWeb = SetRequestWebJSON(specimensURLForRequest, dataJSON);
             HttpWebResponse responseWeb = requestWeb.GetResponse() as HttpWebResponse;
-
             string responseContent = new System.IO.StreamReader(responseWeb.GetResponseStream()).ReadToEnd();
-            JsonValue responseJSON = JsonValue.Parse(responseContent);
 
-            return RequestsFactory.GetSpecimensFromJSON(responseJSON);
+            return RequestsFactory.GetSpecimensFromJSON(responseContent);
         }
 
         public static bool AmIOnline(ConnectivityManager cm)
@@ -100,7 +98,7 @@ namespace CollectingMobile
             else
             {
                 Console.WriteLine();
-                
+
                 return false;
             }
         }
@@ -125,53 +123,46 @@ namespace CollectingMobile
 
         public static bool UploadSpecimens(Context context, List<Specimen> specimens)
         {
-            foreach (Specimen spec in specimens)
+            string specimensJSON = "[";
+            foreach (Specimen s in specimens)
             {
-                spec.Uploaded = true;
+                specimensJSON += CreateSpecimenJSON(context, s);
+                specimensJSON += ",";
             }
-            return true;
-            //string specimensJSON = "[";
-            //foreach (Specimen s in specimens)
-            //{
-            //    specimensJSON += CreateSpecimenJSON(context, s);
-            //    specimensJSON += ",";
-            //}
-            //specimensJSON = specimensJSON.TrimEnd(',');
-            //specimensJSON += "]";
+            specimensJSON = specimensJSON.TrimEnd(',');
+            specimensJSON += "]";
 
-            //byte[] dataJSON = new ASCIIEncoding().GetBytes(specimensJSON);
+            byte[] dataJSON = new ASCIIEncoding().GetBytes(specimensJSON);
 
-            //HttpWebRequest requestWeb = SetRequestWebJSON(postSpecimensURL, dataJSON);
-            //HttpWebResponse responseWeb = requestWeb.GetResponse() as HttpWebResponse;
+            HttpWebRequest requestWeb = SetRequestWebJSON(postSpecimensURL, dataJSON);
+            HttpWebResponse responseWeb = requestWeb.GetResponse() as HttpWebResponse;
 
-            //string responseContent = new System.IO.StreamReader(responseWeb.GetResponseStream()).ReadToEnd();
-            //JsonValue responseJSON = JsonValue.Parse(responseContent);
+            string responseContent = new StreamReader(responseWeb.GetResponseStream()).ReadToEnd();
+            JsonValue responseJSON = JsonValue.Parse(responseContent);
 
-            //return responseJSON["d"];
+            return responseJSON["d"];
         }
 
         public static bool UploadSpecimen(Context context, Specimen specimen)
         {
-            specimen.Uploaded = true;           
-            return true;
+            string specimensJSON = "[";
+            specimensJSON += CreateSpecimenJSON(context, specimen);
+            specimensJSON += "]";
+
+            byte[] dataJSON = new ASCIIEncoding().GetBytes(specimensJSON);
+
+            HttpWebRequest requestWeb = SetRequestWebJSON(postSpecimensURL, dataJSON);
+            HttpWebResponse responseWeb = requestWeb.GetResponse() as HttpWebResponse;
+
+            string responseContent = new StreamReader(responseWeb.GetResponseStream()).ReadToEnd();
+            JsonValue responseJSON = JsonValue.Parse(responseContent);
+
+            return responseJSON["d"];
         }
 
         private static string CreateSpecimenJSON(Context context, Specimen specimen)
         {
-            string specimenJSONTemplate;
-            using (StreamReader r = new StreamReader(context.Assets.Open("specimenJSONTemplate.json")))
-            {
-                specimenJSONTemplate = r.ReadToEnd();
-            }
-
-            JsonValue specimenJSON = JsonValue.Parse(specimenJSONTemplate);
-            specimenJSON["ID"] = specimen.ID;
-            specimenJSON["Description"] = specimen.Description;
-            specimenJSON["MaterialTypeID"] = specimen.MaterialTypeID;
-            specimenJSON["Location"] = specimen.Location;
-            specimenJSON["SamplingPosition"] = specimen.SamplingPosition;
-
-            return specimenJSON.ToString();
+            return JsonConvert.SerializeObject(specimen);            
         }
     }
 }

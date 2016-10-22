@@ -1,4 +1,6 @@
 {
+    "ID": null,
+	"Description": null,
     "LabCode": null,
     "SamplingMethodID": null,
     "ConstructionElementID": null,
@@ -6,7 +8,6 @@
     "SamplingFrequencyID": null,
     "SpecimenShapeID": null,
     "Code": null,
-    "Description": null,
     "MaterialTypeID": null,
     "StandardCodeID": null,
     "SamplingRequestID": null,
@@ -21,7 +22,6 @@
     "TestingUserGuid": null,
     "Location": null,
     "Material": null,
-    "ID": null,
     "TestingMethodsNormCode": null,
     "ConstructionElementsName": null,
     "SamplingFrequency": null,

@@ -71,6 +71,10 @@ namespace CollectingMobile
                         {
                             if (RestClient.UploadSpecimens(this, ActiveRequests.Requests[e.Position].Specimens))
                             {
+                                foreach (Specimen specimen in ActiveRequests.Requests[e.Position].Specimens)
+                                {
+                                    specimen.Uploaded = true;
+                                }
                                 ActiveRequests.Requests.RemoveAt(e.Position);
                                 SerializationHelper.SerializeRequests(this, ActiveRequests.Requests);
                                 RunOnUiThread(() => requestsView.Adapter = new RequestsListAdapter(this, ActiveRequests.Requests));
@@ -114,7 +118,7 @@ namespace CollectingMobile
 
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
-            MenuInflater.Inflate(Resource.Menu.menu, menu);
+            MenuInflater.Inflate(Resource.Menu.menuRequests, menu);
             return base.OnCreateOptionsMenu(menu);
         }
 
@@ -126,7 +130,7 @@ namespace CollectingMobile
                     LogoutHandler.LogMeOut(this);
                     break;
                 case Resource.Id.Test:
-                    var b = RestClient.UploadSpecimens(this, ActiveRequests.Requests[1].Specimens);
+
                     break;
                 case Resource.Id.RefreshRequests:
                     LoadRequests(FindViewById<ListView>(Resource.Id.RequestsListView));

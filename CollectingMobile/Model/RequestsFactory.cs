@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Json;
+using Newtonsoft.Json;
 
 namespace CollectingMobile
 {
@@ -30,23 +31,16 @@ namespace CollectingMobile
             return requests;
         }
 
-        public static List<Specimen> GetSpecimensFromJSON(JsonValue responseJSON)
+        public static List<Request> GetRequestsFromJSON(string responseJSON)
         {
-            List<Specimen> specimens = new List<Specimen>();
-
-            for (int i = 0; i < responseJSON.Count; i++)
-            {
-                JsonValue specimenJSON = responseJSON[i];
-                specimens.Add(new Specimen(
-                    specimenJSON["ID"],
-                    specimenJSON["Description"],
-                    specimenJSON["MaterialTypeID"],
-                    specimenJSON["SpecimenCount"]));
-            }
-
-            return specimens;
+            return JsonConvert.DeserializeObject<List<Request>>(responseJSON);
         }
 
+        public static List<Specimen> GetSpecimensFromJSON(string responseJSON)
+        {
+            return JsonConvert.DeserializeObject<List<Specimen>>(responseJSON);
+        }
+       
         public static List<Request> GetMockRequestsForUser(string username, int numberOfRequests)
         {
             List<Request> mockRequests = new List<Request>();
@@ -64,7 +58,7 @@ namespace CollectingMobile
 
             for (int i = 0; i < numberOfSpecimens; i++)
             {
-                mockSpecimens.Add(new Specimen(++idSpecimenMock, "SpecDescription_" + i, 1, new Random().Next(1, 6)));
+                mockSpecimens.Add(new Specimen());
             }
             return mockSpecimens;
         }

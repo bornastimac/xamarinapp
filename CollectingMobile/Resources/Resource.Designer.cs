@@ -84,8 +84,8 @@ namespace CollectingMobile
 			// aapt resource value: 0x7f07000f
 			public const int LocationText = 2131165199;
 			
-			// aapt resource value: 0x7f070018
-			public const int Logout = 2131165208;
+			// aapt resource value: 0x7f070016
+			public const int Logout = 2131165206;
 			
 			// aapt resource value: 0x7f070007
 			public const int MyButton = 2131165191;
@@ -93,8 +93,8 @@ namespace CollectingMobile
 			// aapt resource value: 0x7f070019
 			public const int PopupRequest = 2131165209;
 			
-			// aapt resource value: 0x7f070017
-			public const int RefreshRequests = 2131165207;
+			// aapt resource value: 0x7f070018
+			public const int RefreshRequests = 2131165208;
 			
 			// aapt resource value: 0x7f07000d
 			public const int RequestsListView = 2131165197;
@@ -120,8 +120,8 @@ namespace CollectingMobile
 			// aapt resource value: 0x7f070014
 			public const int SpecimenslistView = 2131165204;
 			
-			// aapt resource value: 0x7f070016
-			public const int Test = 2131165206;
+			// aapt resource value: 0x7f070017
+			public const int Test = 2131165207;
 			
 			// aapt resource value: 0x7f070015
 			public const int Toolbar = 2131165205;
@@ -207,7 +207,10 @@ namespace CollectingMobile
 			public const int menu = 2131099648;
 			
 			// aapt resource value: 0x7f060001
-			public const int popupRequest = 2131099649;
+			public const int menuRequests = 2131099649;
+			
+			// aapt resource value: 0x7f060002
+			public const int popupRequest = 2131099650;
 			
 			static Menu()
 			{

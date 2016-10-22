@@ -36,13 +36,13 @@ namespace CollectingMobile
             EditText etPassword = FindViewById<EditText>(Resource.Id.password);
             List<User> listOfUsers = SerializationHelper.DeserializeUsers(this);
 
+#if DEBUG
             etUsername.Text = "eugens1";
             etPassword.Text = "eugens1123%";
+#endif
 
             btnLogin.Click += delegate
             {
-                //  StartActivity(typeof(CameraActivity));
-#if DEBUG
                 ProgressDialog progressDialog = ProgressDialog.Show(this, "", Resources.GetText(Resource.String.Authenticating), true);
 
                 if (listOfUsers.Exists(p => (p.Name == etUsername.Text && p.Password == etPassword.Text)))
@@ -82,10 +82,6 @@ namespace CollectingMobile
                         Toast.MakeText(this, Resources.GetText(Resource.String.CheckNetwork), ToastLength.Long).Show();
                     }
                 }
-#else
-                ActiveUser.User = new User(etUsername.Text, etPassword.Text);
-                StartActivity(typeof(ShowRequestsActivity));
-#endif
             };
         }
 

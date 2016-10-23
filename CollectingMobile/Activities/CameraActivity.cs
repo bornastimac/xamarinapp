@@ -11,7 +11,7 @@ using Android.Content.PM;
 using Android.Net;
 using CollectingMobile.Model;
 
-namespace CollectingMobile.Activities
+namespace CollectingMobile
 {
     public static class App
     {
@@ -51,11 +51,11 @@ namespace CollectingMobile.Activities
             // Display in ImageView. We will resize the bitmap to fit the display.
             // Loading the full sized image will consume to much memory
             // and cause the application to crash.
-
+         
             int height = Resources.DisplayMetrics.HeightPixels;
             int width = imageView.Height;                
             //wut
-            App.bitmap = BitmapFactory.DecodeFile(App._file.Path); //ovdje se mogu dodati opcije za decode sa dodatnim argumentima
+            App.bitmap = App._file.Path.LoadAndResizeBitmap(width, height); //ovdje se mogu dodati opcije za decode sa dodatnim argumentima
             if (App.bitmap != null)
             {
                 imageView.SetImageBitmap(App.bitmap);
@@ -84,6 +84,7 @@ namespace CollectingMobile.Activities
                 App._dir.Mkdirs();
             }
         }
+
         private bool IsThereAnAppToTakePictures()
         {
             Intent intent = new Intent(MediaStore.ActionImageCapture);

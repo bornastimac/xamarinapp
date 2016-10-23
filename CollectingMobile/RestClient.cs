@@ -1,51 +1,48 @@
 using System.Collections.Generic;
 using System.Text;
 using Android.Content;
-using Android.Widget;
 using System.Json;
 using Android.Net;
 using System.Net;
 using System.IO;
 using System;
-using Android.Util;
-using System.Reflection;
 using Newtonsoft.Json;
 
 namespace CollectingMobile
 {
     class RestClient
     {
-        //TODO: use shared preferences instead of hardcoded strings
-        public static string serverLoginURL = @"https://jimsrv.no-ip.info/LabTest/_invoke/Login";
-        public static string getRequestsURL = @"http://jimsrv.no-ip.info/LabTest/ResourceService.ashx?type=samplingrequest&username=";
-        public static string getSpecimensURL = @"http://jimsrv.no-ip.info/LabTest/ResourceService.ashx?type=samplingrequestitems&samplingrequestid=";
-        public static string postSpecimensURL = @"http://jimsrv.no-ip.info/LabTest/ResourceService.ashx?type=samplingresults";
+        public static string serverDomain;
 
         public static bool IsLoginOk(string username, string password)
         {
+            string serverLoginURL = "https://" + serverDomain + "/LabTest/_invoke/Login";
             string requestJSON = "{\"username\":\"" + username + "\",\"password\":\"" + password + "\",\"createPersistentCookie\":true}";
-            byte[] dataJSON = new ASCIIEncoding().GetBytes(requestJSON);
 
-            HttpWebRequest requestWeb = SetRequestWebJSON(serverLoginURL, dataJSON);
-            HttpWebResponse responseWeb = requestWeb.GetResponse() as HttpWebResponse;
+            JsonValue responseJSON = JsonValue.Parse(PostWebContent(requestJSON, serverLoginURL));
 
-            string responseContent = new System.IO.StreamReader(responseWeb.GetResponseStream()).ReadToEnd();
-            JsonValue responseJSON = JsonValue.Parse(responseContent);
-            
-            return responseJSON["d"];//{d:true} OR {d:false}
+            return responseJSON["d"];//{d:true} OR {d:false}                 
         }
 
         private static HttpWebRequest SetRequestWebJSON(string serverURL, byte[] dataJSON)
         {
-            HttpWebRequest requestWeb = WebRequest.Create(serverURL) as HttpWebRequest;
-            requestWeb.Method = "POST";
-            requestWeb.ContentType = "application/json";
-            requestWeb.ContentLength = dataJSON.Length;
-            requestWeb.Expect = "application/json";
-            requestWeb.Proxy = null;
-            requestWeb.GetRequestStream().Write(dataJSON, 0, dataJSON.Length);
+            try
+            {
+                HttpWebRequest requestWeb = WebRequest.Create(serverURL) as HttpWebRequest;
+                requestWeb.Method = "POST";
+                requestWeb.ContentType = "application/json";
+                requestWeb.ContentLength = dataJSON.Length;
+                requestWeb.Expect = "application/json";
+                requestWeb.Proxy = null;
 
-            return requestWeb;
+                requestWeb.GetRequestStream().Write(dataJSON, 0, dataJSON.Length);
+                return requestWeb;
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("RestClient.SetRequestWebJSON: Exception");
+                return null;
+            }
         }
 
         public static List<Request> GetRequestsFromServer()
@@ -56,36 +53,38 @@ namespace CollectingMobile
             {
                 request.Specimens = GetSpecimensForRequest(request.ID);
             }
-
             return requests;
+        }
+
+        private static string PostWebContent(string requestJSON, string URL)
+        {
+            byte[] dataJSON = new ASCIIEncoding().GetBytes(requestJSON);
+
+            HttpWebRequest requestWeb = SetRequestWebJSON(URL, dataJSON);
+            if(requestWeb == null)
+            {
+                return "";
+            }
+            HttpWebResponse responseWeb = requestWeb.GetResponse() as HttpWebResponse;
+            string responseContent = new StreamReader(responseWeb.GetResponseStream()).ReadToEnd();
+
+            return responseContent;
         }
 
         private static List<Request> GetRequestsOnly()
         {
+            string getRequestsURL = "http://" + serverDomain + "/LabTest/ResourceService.ashx?type=samplingrequest&username=";
             string requestsURLForUser = getRequestsURL + ActiveUser.User.Name;
 
-            string requestJSON = "";
-            byte[] dataJSON = new ASCIIEncoding().GetBytes(requestJSON);
-
-            HttpWebRequest requestWeb = SetRequestWebJSON(requestsURLForUser, dataJSON);
-            HttpWebResponse responseWeb = requestWeb.GetResponse() as HttpWebResponse;
-            string responseContent = new System.IO.StreamReader(responseWeb.GetResponseStream()).ReadToEnd();
-
-            return RequestsFactory.GetRequestsFromJSON(responseContent);
+            return RequestsFactory.GetRequestsFromJSON(PostWebContent("", requestsURLForUser));
         }
 
         private static List<Specimen> GetSpecimensForRequest(int requestID)
         {
+            string getSpecimensURL = "http://" + serverDomain + "/LabTest/ResourceService.ashx?type=samplingrequestitems&samplingrequestid=";
             string specimensURLForRequest = getSpecimensURL + requestID;
 
-            string requestJSON = "";
-            byte[] dataJSON = new ASCIIEncoding().GetBytes(requestJSON);
-
-            HttpWebRequest requestWeb = SetRequestWebJSON(specimensURLForRequest, dataJSON);
-            HttpWebResponse responseWeb = requestWeb.GetResponse() as HttpWebResponse;
-            string responseContent = new System.IO.StreamReader(responseWeb.GetResponseStream()).ReadToEnd();
-
-            return RequestsFactory.GetSpecimensFromJSON(responseContent);
+            return RequestsFactory.GetSpecimensFromJSON(PostWebContent("", specimensURLForRequest));
         }
 
         public static bool AmIOnline(ConnectivityManager cm)
@@ -97,8 +96,7 @@ namespace CollectingMobile
             }
             else
             {
-                Console.WriteLine();
-
+                Console.WriteLine("RestClient.AmIOnline: NOT INTERNET CONNECTION");
                 return false;
             }
         }
@@ -123,6 +121,8 @@ namespace CollectingMobile
 
         public static bool UploadSpecimens(Context context, List<Specimen> specimens)
         {
+            string postSpecimensURL = "http://" + serverDomain + "/LabTest/ResourceService.ashx?type=samplingresults";
+
             string specimensJSON = "[";
             foreach (Specimen s in specimens)
             {
@@ -132,37 +132,25 @@ namespace CollectingMobile
             specimensJSON = specimensJSON.TrimEnd(',');
             specimensJSON += "]";
 
-            byte[] dataJSON = new ASCIIEncoding().GetBytes(specimensJSON);
-
-            HttpWebRequest requestWeb = SetRequestWebJSON(postSpecimensURL, dataJSON);
-            HttpWebResponse responseWeb = requestWeb.GetResponse() as HttpWebResponse;
-
-            string responseContent = new StreamReader(responseWeb.GetResponseStream()).ReadToEnd();
-            JsonValue responseJSON = JsonValue.Parse(responseContent);
+            JsonValue responseJSON = JsonValue.Parse(PostWebContent(specimensJSON, postSpecimensURL));
 
             return responseJSON["d"];
         }
 
         public static bool UploadSpecimen(Context context, Specimen specimen)
         {
-            string specimensJSON = "[";
-            specimensJSON += CreateSpecimenJSON(context, specimen);
-            specimensJSON += "]";
+            string postSpecimensURL = "http://" + serverDomain + "/LabTest/ResourceService.ashx?type=samplingresults";
 
-            byte[] dataJSON = new ASCIIEncoding().GetBytes(specimensJSON);
+            string specimensJSON = "[" + CreateSpecimenJSON(context, specimen) + "]";
 
-            HttpWebRequest requestWeb = SetRequestWebJSON(postSpecimensURL, dataJSON);
-            HttpWebResponse responseWeb = requestWeb.GetResponse() as HttpWebResponse;
-
-            string responseContent = new StreamReader(responseWeb.GetResponseStream()).ReadToEnd();
-            JsonValue responseJSON = JsonValue.Parse(responseContent);
+            JsonValue responseJSON = JsonValue.Parse(PostWebContent(specimensJSON, postSpecimensURL));
 
             return responseJSON["d"];
         }
 
         private static string CreateSpecimenJSON(Context context, Specimen specimen)
         {
-            return JsonConvert.SerializeObject(specimen);            
+            return JsonConvert.SerializeObject(specimen);
         }
     }
 }

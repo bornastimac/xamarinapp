@@ -249,6 +249,9 @@ namespace CollectingMobile
 			// aapt resource value: 0x7f05000a
 			public const int OfflineMode = 2131034122;
 			
+			// aapt resource value: 0x7f050014
+			public const int OpenCamera = 2131034132;
+			
 			// aapt resource value: 0x7f050001
 			public const int Password = 2131034113;
 			
@@ -284,9 +287,6 @@ namespace CollectingMobile
 			
 			// aapt resource value: 0x7f050000
 			public const int Username = 2131034112;
-			
-			// aapt resource value: 0x7f050014
-			public const int openCamera = 2131034132;
 			
 			static String()
 			{

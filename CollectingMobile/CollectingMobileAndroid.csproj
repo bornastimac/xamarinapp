@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="Activities\CameraActivity.cs" />
     <Compile Include="Activities\SpecimenInputActivity.cs" />
+    <Compile Include="ConfigHelper.cs" />
     <Compile Include="LogoutHandler.cs" />
     <Compile Include="Model\ActiveRequests.cs" />
     <Compile Include="Model\ActiveUser.cs" />

@@ -6,27 +6,28 @@ using System.Threading;
 using System.Collections.Generic;
 using System.Linq;
 using Android.Net;
-using CollectingMobile.Activities;
+using Newtonsoft.Json;
+using System;
+using System.IO;
+using Newtonsoft.Json.Linq;
 
 namespace CollectingMobile
 {
     [Activity(MainLauncher = true, Icon = "@drawable/icon", ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait, ConfigurationChanges = ConfigChanges.Locale)]
     public class LoginActivity : Activity
     {
-
-        List<User> listOfUsers;
-
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.Login);
 
             if (Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop)
-            {              
+            {
                 SetToolbar();
             }
 
             Init();
+            RestClient.serverDomain = ConfigHelper.GetServerDomain();
         }
 
         private void Init()

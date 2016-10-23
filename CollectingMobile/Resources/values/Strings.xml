@@ -20,5 +20,5 @@
   <string name="LoadingRequests">Loading requests...</string>
   <string name="Authenticating">Authenticating...</string>
   <string name="Test">Test</string>
-  <string name="openCamera">Open camera</string>
+  <string name="OpenCamera">Open camera</string>
 </resources>

@@ -69,7 +69,6 @@ namespace CollectingMobile
 
             foreach (Specimen specimen in ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).Specimens ?? new List<Specimen>())
             {
-                //TODO: remove string uploaded
                 string uploaded =  ((specimen.Uploaded) ? " | UP" : "");
                 specimenNames.Add(specimen.ID.ToString() + uploaded);
             }

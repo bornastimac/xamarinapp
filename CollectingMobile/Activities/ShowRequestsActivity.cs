@@ -64,7 +64,8 @@ namespace CollectingMobile
                 {
                     PopupMenu menu = new PopupMenu(this, e.View);
                     menu.Inflate(Resource.Menu.popupRequest);
-                    menu.MenuItemClick += (s, arg) => {
+                    menu.MenuItemClick += (s, arg) =>
+                    {
                         ProgressDialog progressDialog = ProgressDialog.Show(this, "", Resources.GetText(Resource.String.Uploading), true);
 
                         new Thread(new ThreadStart(delegate
@@ -85,7 +86,7 @@ namespace CollectingMobile
                                 RunOnUiThread(() => Toast.MakeText(this, Resources.GetText(Resource.String.UploadError), ToastLength.Long).Show());
                             }
                             RunOnUiThread(() => progressDialog.Hide());
-                        })).Start();                    
+                        })).Start();
                     };
                     menu.Show();
                 }
@@ -130,7 +131,7 @@ namespace CollectingMobile
                     LogoutHandler.LogMeOut(this);
                     break;
                 case Resource.Id.Test:
-
+                    StartActivity(typeof(CameraActivity));
                     break;
                 case Resource.Id.RefreshRequests:
                     LoadRequests(FindViewById<ListView>(Resource.Id.RequestsListView));

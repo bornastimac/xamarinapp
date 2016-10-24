@@ -42,6 +42,7 @@ namespace CollectingMobile
 
         private void StartLocationSearch()
         {
+            
             //string locationProvider;
             //Criteria locationCriteria = new Criteria();
 
@@ -56,6 +57,7 @@ namespace CollectingMobile
                 locMan.RequestLocationUpdates(LocationManager.GpsProvider, 1000, 1, this);
                 Toast.MakeText(this, Resources.GetText(Resource.String.SearchingLocation), ToastLength.Short).Show();
                 FindViewById<ImageButton>(Resource.Id.LocationButton).Enabled = false;
+                FindViewById<TextView>(Resource.Id.LocationText).Text = Resources.GetText(Resource.String.SearchingLocation);
             }
             else
             {

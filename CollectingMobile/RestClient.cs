@@ -7,6 +7,8 @@ using System.Net;
 using System.IO;
 using System;
 using Newtonsoft.Json;
+using Android.App;
+using System.Threading.Tasks;
 
 namespace CollectingMobile
 {
@@ -18,37 +20,24 @@ namespace CollectingMobile
         {
             string serverLoginURL = "https://" + serverDomain + "/LabTest/_invoke/Login";
             string requestJSON = "{\"username\":\"" + username + "\",\"password\":\"" + password + "\",\"createPersistentCookie\":true}";
-
-            JsonValue responseJSON = JsonValue.Parse(PostWebContent(requestJSON, serverLoginURL));
-
-            return responseJSON["d"];//{d:true} OR {d:false}                 
-        }
-
-        private static HttpWebRequest SetRequestWebJSON(string serverURL, byte[] dataJSON)
-        {
             try
             {
-                HttpWebRequest requestWeb = WebRequest.Create(serverURL) as HttpWebRequest;
-                requestWeb.Method = "POST";
-                requestWeb.ContentType = "application/json";
-                requestWeb.ContentLength = dataJSON.Length;
-                requestWeb.Expect = "application/json";
-                requestWeb.Proxy = null;
-
-                requestWeb.GetRequestStream().Write(dataJSON, 0, dataJSON.Length);
-                return requestWeb;
+                JsonValue responseJSON = JsonValue.Parse(PostAndGetResponseWebContent(requestJSON, serverLoginURL));
+                return responseJSON["d"];//{d:true} OR {d:false}
             }
-            catch (Exception)
+            catch (WebException)
             {
-                Console.WriteLine("RestClient.SetRequestWebJSON: Exception");
-                return null;
+                throw;
+            }
+            catch (UriFormatException)
+            {
+                throw;
             }
         }
 
         public static List<Request> GetRequestsFromServer()
         {
             List<Request> requests = GetRequestsOnly();
-
             foreach (Request request in requests)
             {
                 request.Specimens = GetSpecimensForRequest(request.ID);
@@ -56,35 +45,119 @@ namespace CollectingMobile
             return requests;
         }
 
-        private static string PostWebContent(string requestJSON, string URL)
+        private static string PostAndGetResponseWebContent(string requestJSON, string URL)
         {
             byte[] dataJSON = new ASCIIEncoding().GetBytes(requestJSON);
 
-            HttpWebRequest requestWeb = SetRequestWebJSON(URL, dataJSON);
-            if(requestWeb == null)
+            try
             {
-                return "";
-            }
-            HttpWebResponse responseWeb = requestWeb.GetResponse() as HttpWebResponse;
-            string responseContent = new StreamReader(responseWeb.GetResponseStream()).ReadToEnd();
+                HttpWebRequest requestWeb = WebRequest.Create(URL) as HttpWebRequest;
+                requestWeb.Method = "POST";
+                requestWeb.ContentType = "application/json";
+                requestWeb.ContentLength = dataJSON.Length;
+                requestWeb.Expect = "application/json";
+                requestWeb.Proxy = null;
+                requestWeb.GetRequestStream().Write(dataJSON, 0, dataJSON.Length);
+                HttpWebResponse responseWeb = requestWeb.GetResponse() as HttpWebResponse;
+                string responseContent = new StreamReader(responseWeb.GetResponseStream()).ReadToEnd();
 
-            return responseContent;
+                return responseContent;
+            }
+            catch (WebException)
+            {
+                throw;
+            }
+            catch (UriFormatException)
+            {
+                throw;
+            }
         }
 
         private static List<Request> GetRequestsOnly()
         {
-            string getRequestsURL = "http://" + serverDomain + "/LabTest/ResourceService.ashx?type=samplingrequest&username=";
-            string requestsURLForUser = getRequestsURL + ActiveUser.User.Name;
-
-            return RequestsFactory.GetRequestsFromJSON(PostWebContent("", requestsURLForUser));
+            string requestsURLForUser = "http://" + serverDomain + "/LabTest/ResourceService.ashx?type=samplingrequest&username=" + ActiveUser.User.Name;
+            try
+            {
+                JsonValue responseJSON = JsonValue.Parse(PostAndGetResponseWebContent("", requestsURLForUser));
+                return RequestsFactory.GetRequestsFromJSON(responseJSON);
+            }
+            catch (WebException)
+            {
+                throw;
+            }
+            catch (UriFormatException)
+            {
+                throw;
+            }
         }
 
         private static List<Specimen> GetSpecimensForRequest(int requestID)
         {
-            string getSpecimensURL = "http://" + serverDomain + "/LabTest/ResourceService.ashx?type=samplingrequestitems&samplingrequestid=";
-            string specimensURLForRequest = getSpecimensURL + requestID;
+            string specimensURLForRequest = "http://" + serverDomain + "/LabTest/ResourceService.ashx?type=samplingrequestitems&samplingrequestid=" + requestID;
+            try
+            {
+                return RequestsFactory.GetSpecimensFromJSON(PostAndGetResponseWebContent("", specimensURLForRequest));
+            }
+            catch (WebException)
+            {
+                throw;
+            }
+            catch (UriFormatException)
+            {
+                throw;
+            }
+        }
 
-            return RequestsFactory.GetSpecimensFromJSON(PostWebContent("", specimensURLForRequest));
+        public static bool UploadSpecimens(Context context, List<Specimen> specimens)
+        {
+            string postSpecimensURL = "http://" + serverDomain + "/LabTest/ResourceService.ashx?type=samplingresults";
+
+            string specimensJSON = "[";
+            foreach (Specimen s in specimens)
+            {
+                specimensJSON += CreateSpecimenJSON(context, s);
+                specimensJSON += ",";
+            }
+            specimensJSON = specimensJSON.TrimEnd(',');
+            specimensJSON += "]";
+            
+            try
+            {
+                JsonValue responseJSON = JsonValue.Parse(PostAndGetResponseWebContent(specimensJSON, postSpecimensURL));
+                return responseJSON["d"];
+            }
+            catch (WebException)
+            {
+                throw;
+            }
+            catch (UriFormatException)
+            {
+                throw;
+            }
+        }
+
+        public static bool UploadSpecimen(Context context, Specimen specimen)
+        {
+            string postSpecimensURL = "http://" + serverDomain + "/LabTest/ResourceService.ashx?type=samplingresults";
+            string specimensJSON = "[" + CreateSpecimenJSON(context, specimen) + "]";
+            try
+            {
+                JsonValue responseJSON = JsonValue.Parse(PostAndGetResponseWebContent(specimensJSON, postSpecimensURL));
+                return responseJSON["d"];
+            }
+            catch (WebException)
+            {
+                throw;
+            }
+            catch (UriFormatException)
+            {
+                throw;
+            }
+        }
+
+        private static string CreateSpecimenJSON(Context context, Specimen specimen)
+        {
+            return JsonConvert.SerializeObject(specimen);
         }
 
         public static bool AmIOnline(ConnectivityManager cm)
@@ -105,7 +178,7 @@ namespace CollectingMobile
         {
             try
             {
-                HttpWebRequest iNetRequest = (HttpWebRequest)WebRequest.Create("https://jimsrv.no-ip.info/LabTest/");
+                HttpWebRequest iNetRequest = (HttpWebRequest)WebRequest.Create("https://" + serverDomain + "/LabTest/");
                 iNetRequest.Timeout = 3000;
                 iNetRequest.Proxy = null;
                 WebResponse iNetResponse = iNetRequest.GetResponse();
@@ -119,39 +192,7 @@ namespace CollectingMobile
             }
         }
 
-        public static bool UploadSpecimens(Context context, List<Specimen> specimens)
-        {
-            string postSpecimensURL = "http://" + serverDomain + "/LabTest/ResourceService.ashx?type=samplingresults";
 
-            string specimensJSON = "[";
-            foreach (Specimen s in specimens)
-            {
-                specimensJSON += CreateSpecimenJSON(context, s);
-                specimensJSON += ",";
-            }
-            specimensJSON = specimensJSON.TrimEnd(',');
-            specimensJSON += "]";
-
-            JsonValue responseJSON = JsonValue.Parse(PostWebContent(specimensJSON, postSpecimensURL));
-
-            return responseJSON["d"];
-        }
-
-        public static bool UploadSpecimen(Context context, Specimen specimen)
-        {
-            string postSpecimensURL = "http://" + serverDomain + "/LabTest/ResourceService.ashx?type=samplingresults";
-
-            string specimensJSON = "[" + CreateSpecimenJSON(context, specimen) + "]";
-
-            JsonValue responseJSON = JsonValue.Parse(PostWebContent(specimensJSON, postSpecimensURL));
-
-            return responseJSON["d"];
-        }
-
-        private static string CreateSpecimenJSON(Context context, Specimen specimen)
-        {
-            return JsonConvert.SerializeObject(specimen);
-        }
     }
 }
 

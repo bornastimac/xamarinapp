@@ -5,6 +5,8 @@ using Android.OS;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
+using System;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -96,20 +98,38 @@ namespace CollectingMobile
         private void LoadRequests(ListView requestsView)
         {
             ProgressDialog progressDialog = ProgressDialog.Show(this, "", Resources.GetText(Resource.String.LoadingRequests), true);
+            Dialog dialog = new AlertDialog.Builder(this)
+                        .SetMessage(Resources.GetText(Resource.String.WebException))
+                        .SetCancelable(false)
+                        .SetNeutralButton(Resources.GetText(Resource.String.OK), (senderAlert, args) => {
+                            Finish();
+                        }).Create();
 
             if (RestClient.AmIOnline((ConnectivityManager)GetSystemService(ConnectivityService)))
             {
                 new Thread(new ThreadStart(delegate
                 {
-                    ActiveRequests.Requests = RestClient.GetRequestsFromServer();
-                    SerializationHelper.SerializeRequests(this, ActiveRequests.Requests);
-                    RunOnUiThread(() => requestsView.Adapter = new RequestsListAdapter(this, ActiveRequests.Requests));
-                    RunOnUiThread(() => progressDialog.Hide());
+                    try
+                    {
+                        ActiveRequests.Requests = RestClient.GetRequestsFromServer();
+                        SerializationHelper.SerializeRequests(this, ActiveRequests.Requests);
+                        RunOnUiThread(() => requestsView.Adapter = new RequestsListAdapter(this, ActiveRequests.Requests));
+                        RunOnUiThread(() => progressDialog.Hide());
+                    }
+                    catch (WebException) //catch (Exception ex) when (ex is WebException || ex is UriFormatException)
+                    {                     
+                        RunOnUiThread(() => progressDialog.Hide());
+                        RunOnUiThread(() => dialog.Show());
+                    }
+                    catch (UriFormatException)
+                    {
+                        RunOnUiThread(() => progressDialog.Hide());
+                        RunOnUiThread(() => dialog.Show());
+                    }
                 })).Start();
             }
             else
             {
-                //TODO: kontrola toka sa dialozima
                 Toast.MakeText(this, Resources.GetText(Resource.String.CheckNetwork) + "\n" + Resources.GetText(Resource.String.OfflineMode), ToastLength.Long).Show();
                 ActiveRequests.Requests = SerializationHelper.DeserializeRequests(this);
                 requestsView.Adapter = new RequestsListAdapter(this, ActiveRequests.Requests);

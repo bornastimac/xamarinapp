@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using System;
 using System.IO;
 using Newtonsoft.Json.Linq;
+using System.Net;
 
 namespace CollectingMobile
 {
@@ -49,32 +50,53 @@ namespace CollectingMobile
                 if (listOfUsers.Exists(p => (p.Name == etUsername.Text && p.Password == etPassword.Text)))
                 {
                     ActiveUser.User = new User(listOfUsers.First(p => (p.Name == etUsername.Text && p.Password == etPassword.Text)));
+                    progressDialog.Hide();
                     StartActivity(typeof(ShowRequestsActivity));
                 }
                 else
                 {
                     if (RestClient.AmIOnline((ConnectivityManager)GetSystemService(ConnectivityService)))
                     {
+                        Dialog dialog = new AlertDialog.Builder(this)
+                        .SetMessage(Resources.GetText(Resource.String.WebException))
+                        .SetCancelable(false)
+                        .SetNeutralButton(Resources.GetText(Resource.String.OK), (senderAlert, args) =>
+                        {
+                            Finish();
+                        }).Create();
+
                         new Thread(new ThreadStart(delegate
                         {
-                            if (RestClient.IsLoginOk(etUsername.Text, etPassword.Text))
+                            try
                             {
-                                ActiveUser.User = new User(etUsername.Text, etPassword.Text);
-                                listOfUsers.Add(ActiveUser.User);
-                                SerializationHelper.SerializeUsers(this, listOfUsers);
-                                StartActivity(typeof(ShowRequestsActivity));
-                            }
-                            else
-                            {
-                                if (RestClient.IsServerReachable())
+                                if (RestClient.IsLoginOk(etUsername.Text, etPassword.Text))
                                 {
-                                    RunOnUiThread(() => etUsername.Text = "");
-                                    RunOnUiThread(() => etPassword.Text = "");
-                                    RunOnUiThread(() => Toast.MakeText(ApplicationContext, "Incorrect Credentials", ToastLength.Long).Show());
+                                    ActiveUser.User = new User(etUsername.Text, etPassword.Text);
+                                    listOfUsers.Add(ActiveUser.User);
+                                    SerializationHelper.SerializeUsers(this, listOfUsers);
+                                    StartActivity(typeof(ShowRequestsActivity));
                                 }
+                                else
+                                {
+                                    if (RestClient.IsServerReachable())
+                                    {
+                                        RunOnUiThread(() => etUsername.Text = "");
+                                        RunOnUiThread(() => etPassword.Text = "");
+                                        RunOnUiThread(() => Toast.MakeText(ApplicationContext, "Incorrect Credentials", ToastLength.Long).Show());
+                                    }
+                                }
+                                RunOnUiThread(() => progressDialog.Hide());
                             }
-                            RunOnUiThread(() => progressDialog.Hide());
-
+                            catch (WebException) //catch (Exception ex) when (ex is WebException || ex is UriFormatException)
+                            {
+                                RunOnUiThread(() => progressDialog.Hide());
+                                RunOnUiThread(() => dialog.Show());
+                            }
+                            catch (UriFormatException)
+                            {
+                                RunOnUiThread(() => progressDialog.Hide());
+                                RunOnUiThread(() => dialog.Show());
+                            }
                         })).Start();
                     }
                     else

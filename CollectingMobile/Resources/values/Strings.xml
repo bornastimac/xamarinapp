@@ -5,6 +5,8 @@
   <string name="Requests">Requests</string>
   <string name="Specimens">Specimens</string>
   <string name="SpecimenInput">Input specimen</string>
+  <string name="OK">Okay</string>
+  <string name="WebException">Check server domain in config file.</string>
   <string name="Login">Log in</string>
   <string name="Logout">Log out</string>
   <string name="Saved">Saved</string>

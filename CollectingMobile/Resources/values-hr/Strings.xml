@@ -5,6 +5,8 @@
   <string name="Requests">Nalozi</string>
   <string name="Specimens">Uzorci</string>
   <string name="SpecimenInput">Unesi uzorak</string>
+  <string name="OK">U redu</string>
+  <string name="WebException">Provjerite domenu servera u konfiguracijskoj datoteci.</string>
   <string name="Login">Log in</string>
   <string name="Logout">Log out</string>
   <string name="Saved">Pohranjeno</string>

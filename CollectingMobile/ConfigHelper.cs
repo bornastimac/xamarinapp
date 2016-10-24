@@ -34,7 +34,7 @@ namespace CollectingMobile
 
                 using (var writer = new StreamWriter(configDirectory.AbsolutePath + "/config.json"))
                 {
-                    writer.WriteLine("{\"server\": \"yourServerDomain\"}");
+                    writer.WriteLine("{\"server\": \"yourServerDomain -eg. google.com\"}");
                 }
             }
 

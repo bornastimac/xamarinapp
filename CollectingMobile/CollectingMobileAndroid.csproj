@@ -63,8 +63,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActiveAppMode.cs" />
     <Compile Include="Activities\CameraActivity.cs" />
     <Compile Include="Activities\SpecimenInputActivity.cs" />
+    <Compile Include="AppMode.cs" />
     <Compile Include="ConfigHelper.cs" />
     <Compile Include="LogoutHandler.cs" />
     <Compile Include="Model\ActiveRequests.cs" />

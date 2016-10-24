@@ -31,7 +31,7 @@ namespace CollectingMobile
             return requests;
         }
 
-        public static List<Request> GetRequestsFromJSON(string responseJSON)
+        public static List<Request> GetRequestsFromJSON(string responseJSON)//unused because we cannot deserialize whole request json into our Request class
         {
             return JsonConvert.DeserializeObject<List<Request>>(responseJSON);
         }

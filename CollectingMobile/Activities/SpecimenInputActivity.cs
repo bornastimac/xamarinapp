@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Timers;
 
 using Android.App;
 using Android.Content;
@@ -16,7 +17,8 @@ namespace CollectingMobile
     [Activity]
     public class SpecimenInputActivity : Activity, ILocationListener
     {
-        LocationManager locMan;      
+        LocationManager locMan;
+        Timer searchingLocationAnimationTimer;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -42,10 +44,12 @@ namespace CollectingMobile
 
         private void StartLocationSearch()
         {
-            
+            searchingLocationAnimationTimer = new Timer();
+            searchingLocationAnimationTimer.Interval = 500;
+            searchingLocationAnimationTimer.Elapsed += AnimateLocationText;
+
             //string locationProvider;
             //Criteria locationCriteria = new Criteria();
-
             //locationCriteria.Accuracy = Accuracy.Coarse;
             //locationCriteria.PowerRequirement = Power.Medium;
 
@@ -64,6 +68,16 @@ namespace CollectingMobile
                 Toast.MakeText(this, Resources.GetText(Resource.String.NoLocationService), ToastLength.Short).Show();
             }
         }
+
+        private void AnimateLocationText(object sender, ElapsedEventArgs args)
+        {
+            TextView tw = FindViewById<TextView>(Resource.Id.LocationText);
+            if (tw.Text.Length <= 8)
+            {
+                tw.Text += " .";
+            }              
+        }
+
 
         private void InitButtons()
         {
@@ -99,6 +113,7 @@ namespace CollectingMobile
         public void OnLocationChanged(Location location)
         {
             FindViewById<ImageButton>(Resource.Id.LocationButton).Enabled = true;
+            searchingLocationAnimationTimer.Stop();
             FindViewById<TextView>(Resource.Id.LocationText).Text = location.Latitude + ", " + location.Longitude;
             locMan.RemoveUpdates(this);
         }

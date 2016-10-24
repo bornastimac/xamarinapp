@@ -19,7 +19,6 @@ namespace CollectingMobile
             for (int i = 0; i < responseJSON.Count; i++)
             {
                 JsonValue requestJSON = responseJSON[i];
-
                 requests.Add(new Request(
                     requestJSON["ID"],
                     requestJSON["Code"],

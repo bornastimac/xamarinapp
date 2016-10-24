@@ -87,12 +87,7 @@ namespace CollectingMobile
                                 }
                                 RunOnUiThread(() => progressDialog.Hide());
                             }
-                            catch (WebException) //catch (Exception ex) when (ex is WebException || ex is UriFormatException)
-                            {
-                                RunOnUiThread(() => progressDialog.Hide());
-                                RunOnUiThread(() => dialog.Show());
-                            }
-                            catch (UriFormatException)
+                            catch (Exception ex) when (ex is WebException || ex is UriFormatException)
                             {
                                 RunOnUiThread(() => progressDialog.Hide());
                                 RunOnUiThread(() => dialog.Show());

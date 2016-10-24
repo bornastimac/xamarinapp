@@ -225,17 +225,20 @@ namespace CollectingMobile
 		public partial class String
 		{
 			
-			// aapt resource value: 0x7f050012
-			public const int ApplicationName = 2131034130;
-			
 			// aapt resource value: 0x7f050014
-			public const int Authenticating = 2131034132;
+			public const int ApplicationName = 2131034132;
+			
+			// aapt resource value: 0x7f050016
+			public const int Authenticating = 2131034134;
 			
 			// aapt resource value: 0x7f05000a
 			public const int CheckNetwork = 2131034122;
 			
-			// aapt resource value: 0x7f050013
-			public const int LoadingRequests = 2131034131;
+			// aapt resource value: 0x7f05000f
+			public const int Geolocation = 2131034127;
+			
+			// aapt resource value: 0x7f050015
+			public const int LoadingRequests = 2131034133;
 			
 			// aapt resource value: 0x7f050007
 			public const int Login = 2131034119;
@@ -252,14 +255,17 @@ namespace CollectingMobile
 			// aapt resource value: 0x7f05000c
 			public const int OfflineMode = 2131034124;
 			
-			// aapt resource value: 0x7f050016
-			public const int OpenCamera = 2131034134;
+			// aapt resource value: 0x7f050018
+			public const int OpenCamera = 2131034136;
 			
 			// aapt resource value: 0x7f050001
 			public const int Password = 2131034113;
 			
 			// aapt resource value: 0x7f050002
 			public const int Requests = 2131034114;
+			
+			// aapt resource value: 0x7f050010
+			public const int SamplingPosition = 2131034128;
 			
 			// aapt resource value: 0x7f050009
 			public const int Saved = 2131034121;
@@ -276,17 +282,17 @@ namespace CollectingMobile
 			// aapt resource value: 0x7f050003
 			public const int Specimens = 2131034115;
 			
-			// aapt resource value: 0x7f050015
-			public const int Test = 2131034133;
+			// aapt resource value: 0x7f050017
+			public const int Test = 2131034135;
+			
+			// aapt resource value: 0x7f050013
+			public const int UploadError = 2131034131;
+			
+			// aapt resource value: 0x7f050012
+			public const int UploadSuccess = 2131034130;
 			
 			// aapt resource value: 0x7f050011
-			public const int UploadError = 2131034129;
-			
-			// aapt resource value: 0x7f050010
-			public const int UploadSuccess = 2131034128;
-			
-			// aapt resource value: 0x7f05000f
-			public const int Uploading = 2131034127;
+			public const int Uploading = 2131034129;
 			
 			// aapt resource value: 0x7f050000
 			public const int Username = 2131034112;

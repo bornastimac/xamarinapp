@@ -15,6 +15,8 @@
   <string name="OfflineMode">Working in offline mode</string>
   <string name="SearchingLocation">Searching for location...</string>
   <string name="NoLocationService">No location service</string>
+  <string name="Geolocation">Geolocation:</string>
+  <string name="SamplingPosition">Sampling position:</string>
   <string name="Uploading">Uploading...</string>
   <string name="UploadSuccess">Upload OK</string>
   <string name="UploadError">Could not upload</string>

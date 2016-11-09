@@ -21,6 +21,11 @@ namespace CollectingMobile
         {
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.Login);
+            Button btn = FindViewById<Button>(Resource.Id.Camera);
+            btn.Click += delegate
+             {
+                 StartActivity(typeof(CameraActivity));
+             };
 
             if (Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop)
             {

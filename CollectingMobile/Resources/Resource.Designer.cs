@@ -78,53 +78,56 @@ namespace CollectingMobile
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f070011
-			public const int LocationButton = 2131165201;
+			// aapt resource value: 0x7f070008
+			public const int Camera = 2131165192;
 			
-			// aapt resource value: 0x7f07000f
-			public const int LocationText = 2131165199;
+			// aapt resource value: 0x7f070012
+			public const int LocationButton = 2131165202;
 			
-			// aapt resource value: 0x7f070016
-			public const int Logout = 2131165206;
+			// aapt resource value: 0x7f070010
+			public const int LocationText = 2131165200;
+			
+			// aapt resource value: 0x7f070017
+			public const int Logout = 2131165207;
 			
 			// aapt resource value: 0x7f070007
 			public const int MyButton = 2131165191;
 			
+			// aapt resource value: 0x7f07001a
+			public const int PopupRequest = 2131165210;
+			
 			// aapt resource value: 0x7f070019
-			public const int PopupRequest = 2131165209;
+			public const int RefreshRequests = 2131165209;
 			
-			// aapt resource value: 0x7f070018
-			public const int RefreshRequests = 2131165208;
-			
-			// aapt resource value: 0x7f07000d
-			public const int RequestsListView = 2131165197;
+			// aapt resource value: 0x7f07000e
+			public const int RequestsListView = 2131165198;
 			
 			// aapt resource value: 0x7f070002
 			public const int RootLoginActivity = 2131165186;
 			
-			// aapt resource value: 0x7f07000c
-			public const int RootRequestsActivity = 2131165196;
+			// aapt resource value: 0x7f07000d
+			public const int RootRequestsActivity = 2131165197;
 			
-			// aapt resource value: 0x7f07000e
-			public const int RootSpecimenInputActivity = 2131165198;
-			
-			// aapt resource value: 0x7f070013
-			public const int RootSpecimensActivity = 2131165203;
-			
-			// aapt resource value: 0x7f070010
-			public const int SamplingPositionText = 2131165200;
-			
-			// aapt resource value: 0x7f070012
-			public const int SaveButton = 2131165202;
+			// aapt resource value: 0x7f07000f
+			public const int RootSpecimenInputActivity = 2131165199;
 			
 			// aapt resource value: 0x7f070014
-			public const int SpecimenslistView = 2131165204;
+			public const int RootSpecimensActivity = 2131165204;
 			
-			// aapt resource value: 0x7f070017
-			public const int Test = 2131165207;
+			// aapt resource value: 0x7f070011
+			public const int SamplingPositionText = 2131165201;
+			
+			// aapt resource value: 0x7f070013
+			public const int SaveButton = 2131165203;
 			
 			// aapt resource value: 0x7f070015
-			public const int Toolbar = 2131165205;
+			public const int SpecimenslistView = 2131165205;
+			
+			// aapt resource value: 0x7f070018
+			public const int Test = 2131165208;
+			
+			// aapt resource value: 0x7f070016
+			public const int Toolbar = 2131165206;
 			
 			// aapt resource value: 0x7f070001
 			public const int imageView1 = 2131165185;
@@ -138,17 +141,17 @@ namespace CollectingMobile
 			// aapt resource value: 0x7f070005
 			public const int passwordlabel = 2131165189;
 			
-			// aapt resource value: 0x7f07000b
-			public const int requestDate = 2131165195;
-			
-			// aapt resource value: 0x7f070009
-			public const int requestDescription = 2131165193;
+			// aapt resource value: 0x7f07000c
+			public const int requestDate = 2131165196;
 			
 			// aapt resource value: 0x7f07000a
-			public const int requestId = 2131165194;
+			public const int requestDescription = 2131165194;
 			
-			// aapt resource value: 0x7f070008
-			public const int textView1 = 2131165192;
+			// aapt resource value: 0x7f07000b
+			public const int requestId = 2131165195;
+			
+			// aapt resource value: 0x7f070009
+			public const int textView1 = 2131165193;
 			
 			// aapt resource value: 0x7f070004
 			public const int username = 2131165188;

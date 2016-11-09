@@ -11,6 +11,7 @@ using Android.Content.PM;
 using Android.Net;
 using CollectingMobile.Model;
 
+
 namespace CollectingMobile
 {
     public static class App
@@ -22,7 +23,7 @@ namespace CollectingMobile
     [Activity(Label = "CameraActivity")]
     public class CameraActivity : Activity
     {
-        ImageView imageView;
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -30,47 +31,37 @@ namespace CollectingMobile
 
             if (IsThereAnAppToTakePictures())
             {
-                CreateDirectoryForPictures();
 
-                Button button = FindViewById<Button>(Resource.Id.myButton);
-                imageView = FindViewById<ImageView>(Resource.Id.imageView1);
-                button.Click += TakeAPicture;
+                TakeAPicture();
             }
         }
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
         {
             base.OnActivityResult(requestCode, resultCode, data);
             
-            // Make it available in the gallery
-
-            Intent mediaScanIntent = new Intent(Intent.ActionMediaScannerScanFile);
-            Android.Net.Uri contentUri = Android.Net.Uri.FromFile(App._file);
-            mediaScanIntent.SetData(contentUri);
-            SendBroadcast(mediaScanIntent);
-
-            // Display in ImageView. We will resize the bitmap to fit the display.
-            // Loading the full sized image will consume to much memory
-            // and cause the application to crash.
-         
-            int height = Resources.DisplayMetrics.HeightPixels;
-            int width = imageView.Height;                
-            //wut
-            App.bitmap = App._file.Path.LoadAndResizeBitmap(width, height); //ovdje se mogu dodati opcije za decode sa dodatnim argumentima
-            if (App.bitmap != null)
+            if( resultCode == Result.Ok)
             {
-                imageView.SetImageBitmap(App.bitmap);
-                App.bitmap = null;
+                var bitmap = (Bitmap)data.Extras.Get("data");
+                ImageView iw = FindViewById<ImageView>(Resource.Id.imageView1);
+                iw.SetImageBitmap(bitmap);
+                byte[] bitmapData;
+                using(var stream = new System.IO.MemoryStream())
+                {
+                    bitmap.Compress(Bitmap.CompressFormat.Png, 0, stream);  //moze ici i async
+                    bitmapData = stream.ToArray();
+                }
+                
+                //pošalji bitmapData u json-u
+                
+                
             }
-
-            // Dispose of the Java side bitmap.
-            GC.Collect();
+          //  GC.Collect();
         }
 
-        private void TakeAPicture(object sender, EventArgs e)
+        private void TakeAPicture()
         {
             Intent intent = new Intent(MediaStore.ActionImageCapture);
-            App._file = new File(App._dir, String.Format("myPhoto_{0}.jpg", Guid.NewGuid()));
-            intent.PutExtra(MediaStore.ExtraOutput, Android.Net.Uri.FromFile(App._file));
+
             StartActivityForResult(intent, 0);
         }
 

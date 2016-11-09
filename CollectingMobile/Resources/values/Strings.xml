@@ -14,6 +14,7 @@
   <string name="ServerProblem">Cannot communicate with server</string>
   <string name="OfflineMode">Working in offline mode</string>
   <string name="SearchingLocation">Searching for location...</string>
+  <string name="QR">QR</string>
   <string name="NoLocationService">No location service</string>
   <string name="Geolocation">Geolocation:</string>
   <string name="SamplingPosition">Sampling position:</string>

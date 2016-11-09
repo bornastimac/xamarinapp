@@ -1,7 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Timers;
 
 using Android.App;
@@ -38,8 +35,9 @@ namespace CollectingMobile
         {
             Specimen specimenSelected = ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).Specimens.Find(spec => spec.ID == Intent.GetIntExtra("SelectedSpecimenId", -1));
 
-            FindViewById<TextView>(Resource.Id.LocationText).Text = specimenSelected.Location;
+            FindViewById<TextView>(Resource.Id.LocationText).Text = specimenSelected.Location == "" ? "-----, -----" : specimenSelected.Location;
             FindViewById<EditText>(Resource.Id.SamplingPositionText).Text = specimenSelected.SamplingPosition;
+            FindViewById<TextView>(Resource.Id.QRText).Text = specimenSelected.Qrcode == "" ? "----" : specimenSelected.Qrcode;
         }
 
         private void StartLocationSearch()
@@ -61,7 +59,7 @@ namespace CollectingMobile
                 locMan.RequestLocationUpdates(LocationManager.GpsProvider, 1000, 1, this);
                 Toast.MakeText(this, Resources.GetText(Resource.String.SearchingLocation), ToastLength.Short).Show();
                 FindViewById<ImageButton>(Resource.Id.LocationButton).Enabled = false;
-                FindViewById<TextView>(Resource.Id.LocationText).Text = Resources.GetText(Resource.String.SearchingLocation);
+                searchingLocationAnimationTimer.Start();
             }
             else
             {
@@ -72,13 +70,16 @@ namespace CollectingMobile
         private void AnimateLocationText(object sender, ElapsedEventArgs args)
         {
             TextView tw = FindViewById<TextView>(Resource.Id.LocationText);
-            if (tw.Text.Length <= 8)
+            if (tw.Text.Length <= 18)
             {
-                tw.Text += " .";
-            }              
+                tw.Text += " . .";
+            }
+            else
+            {
+                tw.Text = ".";
+            }
         }
-
-
+        
         private void InitButtons()
         {
             //save specimen
@@ -86,17 +87,33 @@ namespace CollectingMobile
                 Specimen specimenSelected = ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).Specimens.Find(spec => spec.ID == Intent.GetIntExtra("SelectedSpecimenId", -1));
                 specimenSelected.Location = FindViewById<TextView>(Resource.Id.LocationText).Text;
                 specimenSelected.SamplingPosition = FindViewById<EditText>(Resource.Id.SamplingPositionText).Text;
+                specimenSelected.Qrcode = FindViewById<TextView>(Resource.Id.QRText).Text;
                 SerializationHelper.SerializeRequests(this, ActiveRequests.Requests);
                 Toast.MakeText(this, Resources.GetText(Resource.String.Saved), ToastLength.Short).Show();
                 Finish();
             };
 
             //get geolocation
-            FindViewById<ImageButton>(Resource.Id.LocationButton).Click += (object sender, EventArgs args) => {               
+            FindViewById<ImageButton>(Resource.Id.LocationButton).Click += (object sender, EventArgs args) => {
                 StartLocationSearch();             
+            };
+
+            //QR scan
+            FindViewById<ImageButton>(Resource.Id.QRButton).Click += (object sender, EventArgs args) => {
+                ScanQR();
             };
         }
 
+        private async void ScanQR()
+        {
+            var scanner = new ZXing.Mobile.MobileBarcodeScanner();
+            var result = await scanner.Scan();
+
+            if (result != null)
+            {
+                RunOnUiThread(()=> FindViewById<TextView>(Resource.Id.QRText).Text = result.Text);
+            }
+        }
 
 
         private void SetToolbar()

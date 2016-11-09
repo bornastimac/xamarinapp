@@ -7,8 +7,6 @@ using System.Net;
 using System.IO;
 using System;
 using Newtonsoft.Json;
-using Android.App;
-using System.Threading.Tasks;
 
 namespace CollectingMobile
 {
@@ -48,7 +46,6 @@ namespace CollectingMobile
         private static string PostAndGetResponseWebContent(string requestJSON, string URL)
         {
             byte[] dataJSON = new ASCIIEncoding().GetBytes(requestJSON);
-
             try
             {
                 HttpWebRequest requestWeb = WebRequest.Create(URL) as HttpWebRequest;

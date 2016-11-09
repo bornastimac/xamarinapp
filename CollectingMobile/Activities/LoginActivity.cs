@@ -11,6 +11,7 @@ using System;
 using System.IO;
 using Newtonsoft.Json.Linq;
 using System.Net;
+using ZXing.Mobile;
 
 namespace CollectingMobile
 {
@@ -38,6 +39,8 @@ namespace CollectingMobile
 
         private void Init()
         {
+            MobileBarcodeScanner.Initialize(Application);
+
             Button btnLogin = FindViewById<Button>(Resource.Id.MyButton);
             EditText etUsername = FindViewById<EditText>(Resource.Id.username);
             EditText etPassword = FindViewById<EditText>(Resource.Id.password);

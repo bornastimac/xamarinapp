@@ -14,6 +14,7 @@
   <string name="ServerProblem">Nema konekcije sa serverom</string>
   <string name="Uploading">Upload u tijeku...</string>
   <string name="UploadSuccess">Upload OK</string>
+  <string name="QR">QR</string>
   <string name="Geolocation">Geolokacija:</string>
   <string name="SamplingPosition">Pozicija uzorkovanja:</string>
   <string name="NoLocationService">Nema servisa za lokaciju</string>

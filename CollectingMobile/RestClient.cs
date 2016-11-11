@@ -43,9 +43,9 @@ namespace CollectingMobile
             return requests;
         }
 
-        private static string PostAndGetResponseWebContent(string requestJSON, string URL)
+        private static string PostAndGetResponseWebContent(string JSON, string URL)
         {
-            byte[] dataJSON = new ASCIIEncoding().GetBytes(requestJSON);
+            byte[] dataJSON = new ASCIIEncoding().GetBytes(JSON);
             try
             {
                 HttpWebRequest requestWeb = WebRequest.Create(URL) as HttpWebRequest;

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace CollectingMobile
 {
-    [Activity]
+    [Activity(ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
     public class ShowRequestsActivity : Activity
     {
         protected override void OnCreate(Bundle savedInstanceState)

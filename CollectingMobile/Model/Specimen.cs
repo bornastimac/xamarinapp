@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
@@ -6,6 +7,7 @@ namespace CollectingMobile
     [Serializable]
     public class Specimen
     {
+        [JsonIgnore]
         public bool Uploaded = false;
 
         public int? ID;

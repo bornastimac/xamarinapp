@@ -10,7 +10,7 @@ using Android.Provider;
 using Android.Content.PM;
 using Android.Net;
 using CollectingMobile.Model;
-
+using System.Net.Http;
 
 namespace CollectingMobile
 {
@@ -20,7 +20,7 @@ namespace CollectingMobile
         public static File _dir;
         public static Bitmap bitmap;
     }
-    [Activity(Label = "CameraActivity")]
+    [Activity(ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
     public class CameraActivity : Activity
     {
 
@@ -45,18 +45,41 @@ namespace CollectingMobile
                 ImageView iw = FindViewById<ImageView>(Resource.Id.imageView1);
                 iw.SetImageBitmap(bitmap);
                 byte[] bitmapData;
+
                 using(var stream = new System.IO.MemoryStream())
                 {
                     bitmap.Compress(Bitmap.CompressFormat.Png, 0, stream);  //moze ici i async
                     bitmapData = stream.ToArray();
                 }
-                
-                //pošalji bitmapData u json-u
-                
-                
+
+                UploadImage("26", bitmapData);
             }
           //  GC.Collect();
         }
+
+        private async void UploadImage(string specimenID, byte[] imageData)
+        {
+            //save file
+            Java.IO.File picctureFile = new Java.IO.File(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + "/CollectingMobile/Pictures/" + specimenID + ".png");
+            using (FileOutputStream writer = new FileOutputStream(picctureFile))
+            {
+                writer.Write(imageData);
+            }
+
+            //upload
+            string url = @"http://" + RestClient.serverDomain + "/LabTest/Blob.ashx?PhotoPhotoHandler=u|" + specimenID + "&_v=2";
+            using (var client = new HttpClient())
+            {
+                using (var content = new MultipartFormDataContent())
+                {
+                    content.Add(new StreamContent(new System.IO.MemoryStream(imageData)), "slika", specimenID + ".png");
+                    await client.PostAsync(url, content);
+                }
+            }
+
+            
+
+            }
 
         private void TakeAPicture()
         {

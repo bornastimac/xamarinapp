@@ -15,7 +15,7 @@ using ZXing.Mobile;
 
 namespace CollectingMobile
 {
-    [Activity(MainLauncher = true, Icon = "@drawable/icon", ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait, ConfigurationChanges = ConfigChanges.Locale)]
+    [Activity(MainLauncher = true, Icon = "@drawable/inRebus", ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait, ConfigurationChanges = ConfigChanges.Locale)]
     public class LoginActivity : Activity
     {
         protected override void OnCreate(Bundle bundle)

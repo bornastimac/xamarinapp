@@ -8,7 +8,7 @@ using System.Threading;
 
 namespace CollectingMobile
 {
-    [Activity]
+    [Activity(ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
     public class ShowSpecimensActivity : Activity
     {
         protected override void OnCreate(Bundle savedInstanceState)

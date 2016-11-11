@@ -6,4 +6,15 @@
     android:minHeight="?android:attr/actionBarSize"
     android:background="?android:attr/colorPrimary"
     android:title="CHANGE_TITLE"
-    android:theme="@android:style/ThemeOverlay.Material.Dark.ActionBar" />
+    android:theme="@android:style/ThemeOverlay.Material.Dark.ActionBar">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"/>
+            <!-- android:src="@drawable/ic_signal_wifi_off_white_18dp"     -->
+          
+    </RelativeLayout>
+</Toolbar>

@@ -26,12 +26,13 @@
                         android:textSize="20dp"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content" />
-                    <TextView
+                    <EditText
                         android:text=""
                         android:id="@+id/LocationText"
                         android:gravity="center"
                         android:textSize="20dp"
                         android:textStyle="italic"
+                        android:focusable="false"
                         android:maxLines="2"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content" />
@@ -51,12 +52,13 @@
                         android:textSize="20dp"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content" />
-                    <TextView
+                    <EditText
                         android:text=""
                         android:id="@+id/QRText"
                         android:gravity="center"
                         android:textSize="20dp"
                         android:textStyle="italic"
+                        android:focusable="false"
                         android:maxLines="2"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content" />
@@ -87,7 +89,8 @@
                     android:id="@+id/SaveButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_check_circle_black_24dp" />
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_check_circle_black_48dp" />
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>

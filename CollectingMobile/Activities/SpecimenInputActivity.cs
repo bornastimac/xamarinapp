@@ -11,7 +11,7 @@ using Android.Locations;
 
 namespace CollectingMobile
 {
-    [Activity]
+    [Activity(ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
     public class SpecimenInputActivity : Activity, ILocationListener
     {
         LocationManager locMan;
@@ -35,9 +35,9 @@ namespace CollectingMobile
         {
             Specimen specimenSelected = ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).Specimens.Find(spec => spec.ID == Intent.GetIntExtra("SelectedSpecimenId", -1));
 
-            FindViewById<TextView>(Resource.Id.LocationText).Text = specimenSelected.Location == "" ? "-----, -----" : specimenSelected.Location;
+            FindViewById<EditText>(Resource.Id.LocationText).Text = specimenSelected.Location == "" ? "-----, -----" : specimenSelected.Location;
             FindViewById<EditText>(Resource.Id.SamplingPositionText).Text = specimenSelected.SamplingPosition;
-            FindViewById<TextView>(Resource.Id.QRText).Text = specimenSelected.Qrcode == "" ? "----" : specimenSelected.Qrcode;
+            FindViewById<EditText>(Resource.Id.QRText).Text = specimenSelected.Qrcode == "" ? "----" : specimenSelected.Qrcode;
         }
 
         private void StartLocationSearch()
@@ -85,9 +85,9 @@ namespace CollectingMobile
             //save specimen
             FindViewById<ImageButton>(Resource.Id.SaveButton).Click += (object sender, EventArgs args) => {
                 Specimen specimenSelected = ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).Specimens.Find(spec => spec.ID == Intent.GetIntExtra("SelectedSpecimenId", -1));
-                specimenSelected.Location = FindViewById<TextView>(Resource.Id.LocationText).Text;
+                specimenSelected.Location = FindViewById<EditText>(Resource.Id.LocationText).Text;
                 specimenSelected.SamplingPosition = FindViewById<EditText>(Resource.Id.SamplingPositionText).Text;
-                specimenSelected.Qrcode = FindViewById<TextView>(Resource.Id.QRText).Text;
+                specimenSelected.Qrcode = FindViewById<EditText>(Resource.Id.QRText).Text;
                 SerializationHelper.SerializeRequests(this, ActiveRequests.Requests);
                 Toast.MakeText(this, Resources.GetText(Resource.String.Saved), ToastLength.Short).Show();
                 Finish();
@@ -111,7 +111,7 @@ namespace CollectingMobile
 
             if (result != null)
             {
-                RunOnUiThread(()=> FindViewById<TextView>(Resource.Id.QRText).Text = result.Text);
+                RunOnUiThread(()=> FindViewById<EditText>(Resource.Id.QRText).Text = result.Text);
             }
         }
 
@@ -131,7 +131,7 @@ namespace CollectingMobile
         {
             FindViewById<ImageButton>(Resource.Id.LocationButton).Enabled = true;
             searchingLocationAnimationTimer.Stop();
-            FindViewById<TextView>(Resource.Id.LocationText).Text = location.Latitude + ", " + location.Longitude;
+            FindViewById<EditText>(Resource.Id.LocationText).Text = location.Latitude + ", " + location.Longitude;
             locMan.RemoveUpdates(this);
         }
 

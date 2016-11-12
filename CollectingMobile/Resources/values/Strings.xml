@@ -11,6 +11,7 @@
   <string name="Logout">Log out</string>
   <string name="Saved">Saved</string>
   <string name="CheckNetwork">Check your network connection</string>
+  <string name="Connected">Connected</string>
   <string name="ServerProblem">Cannot communicate with server</string>
   <string name="OfflineMode">Working in offline mode</string>
   <string name="SearchingLocation">Searching for location...</string>

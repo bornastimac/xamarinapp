@@ -7,6 +7,8 @@ using System.Net;
 using System.IO;
 using System;
 using Newtonsoft.Json;
+using System.Net.Http;
+using Android.Graphics;
 
 namespace CollectingMobile
 {
@@ -149,7 +151,33 @@ namespace CollectingMobile
             catch (UriFormatException)
             {
                 throw;
-            }
+            }                
+        }
+
+        public async static void UploadImage(Specimen specimen)
+        {
+            Java.IO.File pictureFile = new Java.IO.File(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + "/CollectingMobile/Pictures/" + specimen.ID + ".png");
+            if (pictureFile.Exists())
+            {
+                Bitmap bmp = BitmapFactory.DecodeFile(pictureFile.AbsolutePath);
+                byte[] imageData;
+
+                using (var stream = new System.IO.MemoryStream())
+                {
+                    bmp.Compress(Bitmap.CompressFormat.Png, 0, stream);
+                    imageData = stream.ToArray();
+                }
+
+                string url = @"http://" + serverDomain + "/LabTest/Blob.ashx?PhotoPhotoHandler=u|" + specimen.ID + "&_v=2";
+                using (var client = new HttpClient())
+                {
+                    using (var content = new MultipartFormDataContent())
+                    {
+                        content.Add(new StreamContent(new MemoryStream(imageData)), "slika", specimen.ID + ".png");
+                        await client.PostAsync(url, content);
+                    }
+                }
+            }            
         }
 
         private static string CreateSpecimenJSON(Context context, Specimen specimen)

@@ -81,7 +81,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActiveAppMode.cs" />
-    <Compile Include="Activities\CameraActivity.cs" />
+    <Compile Include="Activities\ViewPhotoActivity.cs" />
     <Compile Include="Activities\SpecimenInputActivity.cs" />
     <Compile Include="AppMode.cs" />
     <Compile Include="ConfigHelper.cs" />
@@ -121,6 +121,9 @@
     </AndroidResource>
     <AndroidAsset Include="Assets\specimenJSONTemplate.json" />
     <AndroidResource Include="Resources\layout\CameraLayout.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\PhotoLayout.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
@@ -191,6 +194,9 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\ic_check_circle_black_48dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_add_a_photo_black_24dp.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

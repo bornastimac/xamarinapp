@@ -5,6 +5,7 @@ using Android.OS;
 using Android.Views;
 using Android.Widget;
 using System.Threading;
+using Android.Net;
 
 namespace CollectingMobile
 {
@@ -25,6 +26,22 @@ namespace CollectingMobile
             LoadSpecimensList();
         }
 
+        protected override void OnResume()
+        {
+            base.OnResume();
+            if (Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop)
+            {
+                if (!RestClient.AmIOnline((ConnectivityManager)GetSystemService(ConnectivityService)))
+                {
+                    FindViewById<ImageButton>(Resource.Id.NoConnectionButton).SetImageResource(Resource.Drawable.ic_signal_wifi_off_white_18dp);
+                }
+                else
+                {
+                    FindViewById<ImageButton>(Resource.Id.NoConnectionButton).SetImageResource(0);
+                }
+            }
+        }
+
         private void InitSpecimensView(ListView specimensView)
         {
             specimensView.ItemClick += delegate (object sender, AdapterView.ItemClickEventArgs e)
@@ -37,29 +54,33 @@ namespace CollectingMobile
 
             specimensView.ItemLongClick += delegate (object sender, AdapterView.ItemLongClickEventArgs e)
             {
-                PopupMenu menu = new PopupMenu(this, e.View);
-                menu.Inflate(Resource.Menu.popupRequest);
-                menu.MenuItemClick += (s, arg) =>
+                if (RestClient.AmIOnline((ConnectivityManager)GetSystemService(ConnectivityService)))
                 {
-                    ProgressDialog progressDialog = ProgressDialog.Show(this, "", Resources.GetText(Resource.String.Uploading), true);
-
-                    new Thread(new ThreadStart(delegate
+                    PopupMenu menu = new PopupMenu(this, e.View);
+                    menu.Inflate(Resource.Menu.popupRequest);
+                    menu.MenuItemClick += (s, arg) =>
                     {
-                        if (RestClient.UploadSpecimen(this, ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).Specimens[e.Position]))
+                        ProgressDialog progressDialog = ProgressDialog.Show(this, "", Resources.GetText(Resource.String.Uploading), true);
+
+                        new Thread(new ThreadStart(delegate
                         {
-                            ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).Specimens[e.Position].Uploaded = true;
-                            SerializationHelper.SerializeRequests(this, ActiveRequests.Requests);
-                            RunOnUiThread(() => LoadSpecimensList());
-                            RunOnUiThread(() => Toast.MakeText(this, Resources.GetText(Resource.String.UploadSuccess), ToastLength.Short).Show());
-                        }
-                        else
-                        {
-                            RunOnUiThread(() => Toast.MakeText(this, Resources.GetText(Resource.String.UploadError), ToastLength.Long).Show());
-                        }
-                        RunOnUiThread(() => progressDialog.Hide());
-                    })).Start();
-                };
-                menu.Show();
+                            if (RestClient.UploadSpecimen(this, ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).Specimens[e.Position]))
+                            {
+                                RestClient.UploadImage(ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).Specimens[e.Position]);
+                                ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).Specimens[e.Position].Uploaded = true;
+                                SerializationHelper.SerializeRequests(this, ActiveRequests.Requests);
+                                RunOnUiThread(() => LoadSpecimensList());
+                                RunOnUiThread(() => Toast.MakeText(this, Resources.GetText(Resource.String.UploadSuccess), ToastLength.Short).Show());
+                            }
+                            else
+                            {
+                                RunOnUiThread(() => Toast.MakeText(this, Resources.GetText(Resource.String.UploadError), ToastLength.Long).Show());
+                            }
+                            RunOnUiThread(() => progressDialog.Hide());
+                        })).Start();
+                    };
+                    menu.Show();
+                }
             };
         }
 
@@ -86,6 +107,19 @@ namespace CollectingMobile
                 FindViewById<LinearLayout>(Resource.Id.RootSpecimensActivity).AddView(toolbar, 0);
                 SetActionBar(toolbar);
                 ActionBar.Title = Resources.GetText(Resource.String.Specimens);
+                FindViewById<ImageButton>(Resource.Id.NoConnectionButton).Click += delegate
+                {
+                    if (RestClient.AmIOnline((ConnectivityManager)GetSystemService(ConnectivityService)))
+                    {
+                        FindViewById<ImageButton>(Resource.Id.NoConnectionButton).SetImageResource(0);
+                        Toast.MakeText(this, Resources.GetText(Resource.String.Connected), ToastLength.Short).Show();
+                    }
+                    else
+                    {
+                        Toast.MakeText(this, Resources.GetText(Resource.String.CheckNetwork), ToastLength.Long).Show();
+                    }
+
+                };
             }
         }
 

@@ -37,6 +37,22 @@ namespace CollectingMobile
             }
         }
 
+        protected override void OnResume()
+        {
+            base.OnResume();
+            if (Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop)
+            {
+                if (!RestClient.AmIOnline((ConnectivityManager)GetSystemService(ConnectivityService)))
+                {
+                    FindViewById<ImageButton>(Resource.Id.NoConnectionButton).SetImageResource(Resource.Drawable.ic_signal_wifi_off_white_18dp);
+                }
+                else
+                {
+                    FindViewById<ImageButton>(Resource.Id.NoConnectionButton).SetImageResource(0);
+                }
+            }
+        }
+
         private void SetToolbar()
         {
             if (Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop)
@@ -45,6 +61,19 @@ namespace CollectingMobile
                 FindViewById<LinearLayout>(Resource.Id.RootRequestsActivity).AddView(toolbar, 0);
                 SetActionBar(toolbar);
                 ActionBar.Title = Resources.GetText(Resource.String.Requests);
+                FindViewById<ImageButton>(Resource.Id.NoConnectionButton).Click += delegate
+                {
+                    if (RestClient.AmIOnline((ConnectivityManager)GetSystemService(ConnectivityService)))
+                    {
+                        FindViewById<ImageButton>(Resource.Id.NoConnectionButton).SetImageResource(0);
+                        Toast.MakeText(this, Resources.GetText(Resource.String.Connected), ToastLength.Short).Show();
+                    }
+                    else
+                    {
+                        Toast.MakeText(this, Resources.GetText(Resource.String.CheckNetwork), ToastLength.Long).Show();
+                    }
+
+                };
             }
         }
 
@@ -62,35 +91,39 @@ namespace CollectingMobile
 
             requestsView.ItemLongClick += delegate (object sender, AdapterView.ItemLongClickEventArgs e)
             {
-                if (requestsView.Adapter.GetType() == typeof(RequestsListAdapter))
+                if (RestClient.AmIOnline((ConnectivityManager)GetSystemService(ConnectivityService)))
                 {
-                    PopupMenu menu = new PopupMenu(this, e.View);
-                    menu.Inflate(Resource.Menu.popupRequest);
-                    menu.MenuItemClick += (s, arg) =>
+                    if (requestsView.Adapter.GetType() == typeof(RequestsListAdapter))
                     {
-                        ProgressDialog progressDialog = ProgressDialog.Show(this, "", Resources.GetText(Resource.String.Uploading), true);
-
-                        new Thread(new ThreadStart(delegate
+                        PopupMenu menu = new PopupMenu(this, e.View);
+                        menu.Inflate(Resource.Menu.popupRequest);
+                        menu.MenuItemClick += (s, arg) =>
                         {
-                            if (RestClient.UploadSpecimens(this, ActiveRequests.Requests[e.Position].Specimens))
+                            ProgressDialog progressDialog = ProgressDialog.Show(this, "", Resources.GetText(Resource.String.Uploading), true);
+
+                            new Thread(new ThreadStart(delegate
                             {
-                                foreach (Specimen specimen in ActiveRequests.Requests[e.Position].Specimens)
+                                if (RestClient.UploadSpecimens(this, ActiveRequests.Requests[e.Position].Specimens))
                                 {
-                                    specimen.Uploaded = true;
+                                    foreach (Specimen specimen in ActiveRequests.Requests[e.Position].Specimens)
+                                    {
+                                        specimen.Uploaded = true;
+                                        RestClient.UploadImage(specimen);
+                                    }
+                                    ActiveRequests.Requests.RemoveAt(e.Position);
+                                    SerializationHelper.SerializeRequests(this, ActiveRequests.Requests);
+                                    RunOnUiThread(() => requestsView.Adapter = new RequestsListAdapter(this, ActiveRequests.Requests));
+                                    RunOnUiThread(() => Toast.MakeText(this, Resources.GetText(Resource.String.UploadSuccess), ToastLength.Short).Show());
                                 }
-                                ActiveRequests.Requests.RemoveAt(e.Position);
-                                SerializationHelper.SerializeRequests(this, ActiveRequests.Requests);
-                                RunOnUiThread(() => requestsView.Adapter = new RequestsListAdapter(this, ActiveRequests.Requests));
-                                RunOnUiThread(() => Toast.MakeText(this, Resources.GetText(Resource.String.UploadSuccess), ToastLength.Short).Show());
-                            }
-                            else
-                            {
-                                RunOnUiThread(() => Toast.MakeText(this, Resources.GetText(Resource.String.UploadError), ToastLength.Long).Show());
-                            }
-                            RunOnUiThread(() => progressDialog.Hide());
-                        })).Start();
-                    };
-                    menu.Show();
+                                else
+                                {
+                                    RunOnUiThread(() => Toast.MakeText(this, Resources.GetText(Resource.String.UploadError), ToastLength.Long).Show());
+                                }
+                                RunOnUiThread(() => progressDialog.Hide());
+                            })).Start();
+                        };
+                        menu.Show();
+                    }
                 }
             };
         }
@@ -146,7 +179,7 @@ namespace CollectingMobile
                     LogoutHandler.LogMeOut(this);
                     break;
                 case Resource.Id.Test:
-                    StartActivity(typeof(CameraActivity));
+                    StartActivity(typeof(ViewPhotoActivity));
                     break;
                 case Resource.Id.RefreshRequests:
                     LoadRequests(FindViewById<ListView>(Resource.Id.RequestsListView));

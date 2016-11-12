@@ -62,6 +62,10 @@
                         android:maxLines="2"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content" />
+                  <ImageView
+                        android:id="@+id/PhotoView"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp" />
                 </LinearLayout>
             <!-- 85% Width End-->
             </RelativeLayout>
@@ -83,6 +87,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_border_outer_black_24dp" />
+                    <ImageButton
+                        android:id="@+id/PhotoButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_add_a_photo_black_24dp" />
                 </LinearLayout>
                 <ImageButton
                     android:layout_alignParentBottom="true"

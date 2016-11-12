@@ -8,6 +8,11 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.Locations;
+using Android.Graphics;
+using System.Net.Http;
+using Java.IO;
+using Android.Provider;
+using Android.Net;
 
 namespace CollectingMobile
 {
@@ -29,15 +34,48 @@ namespace CollectingMobile
 
             InitButtons();
             InitViewValues();
+
+        }
+
+        protected override void OnResume()
+        {
+            base.OnResume();
+            if (Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop)
+            {
+                if (!RestClient.AmIOnline((ConnectivityManager)GetSystemService(ConnectivityService)))
+                {
+                    FindViewById<ImageButton>(Resource.Id.NoConnectionButton).SetImageResource(Resource.Drawable.ic_signal_wifi_off_white_18dp);
+                }
+                else
+                {
+                    FindViewById<ImageButton>(Resource.Id.NoConnectionButton).SetImageResource(0);
+                }
+            }
         }
 
         private void InitViewValues()
         {
             Specimen specimenSelected = ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).Specimens.Find(spec => spec.ID == Intent.GetIntExtra("SelectedSpecimenId", -1));
 
-            FindViewById<EditText>(Resource.Id.LocationText).Text = specimenSelected.Location == "" ? "-----, -----" : specimenSelected.Location;
+            FindViewById<EditText>(Resource.Id.LocationText).Text = specimenSelected.Location == "" || specimenSelected.Location == null ? "-----, -----" : specimenSelected.Location;
             FindViewById<EditText>(Resource.Id.SamplingPositionText).Text = specimenSelected.SamplingPosition;
-            FindViewById<EditText>(Resource.Id.QRText).Text = specimenSelected.Qrcode == "" ? "----" : specimenSelected.Qrcode;
+            FindViewById<EditText>(Resource.Id.QRText).Text = specimenSelected.Qrcode == "" || specimenSelected.Qrcode == null ? "----" : specimenSelected.Qrcode;
+
+            File photoSpecimen = new File(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + "/CollectingMobile/Pictures/" + specimenSelected.ID + ".png");
+            if (photoSpecimen.Exists())
+            {
+                FindViewById<ImageView>(Resource.Id.PhotoView).SetImageBitmap(BitmapFactory.DecodeFile(photoSpecimen.AbsolutePath));               
+            }
+
+            FindViewById<ImageView>(Resource.Id.PhotoView).Click += delegate
+            {
+                if (photoSpecimen.Exists())
+                {
+                    Intent viewPhoto = new Intent(this, typeof(ViewPhotoActivity));
+                    viewPhoto.PutExtra("photoPath", photoSpecimen.AbsolutePath);
+                    StartActivity(viewPhoto);
+                }             
+            };
         }
 
         private void StartLocationSearch()
@@ -102,6 +140,12 @@ namespace CollectingMobile
             FindViewById<ImageButton>(Resource.Id.QRButton).Click += (object sender, EventArgs args) => {
                 ScanQR();
             };
+
+            //add image
+            FindViewById<ImageButton>(Resource.Id.PhotoButton).Click += (object sender, EventArgs args) => {
+                Intent intent = new Intent(MediaStore.ActionImageCapture);
+                StartActivityForResult(intent, 0);
+            };
         }
 
         private async void ScanQR()
@@ -124,6 +168,50 @@ namespace CollectingMobile
                 FindViewById<LinearLayout>(Resource.Id.RootSpecimenInputActivity).AddView(toolbar, 0);
                 SetActionBar(toolbar);
                 ActionBar.Title = Resources.GetText(Resource.String.SpecimenInput);
+                FindViewById<ImageButton>(Resource.Id.NoConnectionButton).Click += delegate
+                {
+                    if (RestClient.AmIOnline((ConnectivityManager)GetSystemService(ConnectivityService)))
+                    {
+                        FindViewById<ImageButton>(Resource.Id.NoConnectionButton).SetImageResource(0);
+                        Toast.MakeText(this, Resources.GetText(Resource.String.Connected), ToastLength.Short).Show();
+                    }
+                    else
+                    {
+                        Toast.MakeText(this, Resources.GetText(Resource.String.CheckNetwork), ToastLength.Long).Show();
+                    }
+                        
+                };
+            }
+        }
+
+        protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
+        {
+            base.OnActivityResult(requestCode, resultCode, data);
+
+            if (resultCode == Result.Ok)
+            {
+                var bitmap = (Bitmap)data.Extras.Get("data");
+                FindViewById<ImageView>(Resource.Id.PhotoView).SetImageBitmap(bitmap);
+                byte[] bitmapData;
+
+                using (var stream = new System.IO.MemoryStream())
+                {
+                    bitmap.Compress(Bitmap.CompressFormat.Png, 0, stream);
+                    bitmapData = stream.ToArray();
+                }
+
+                Specimen specimenSelected = ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).Specimens.Find(spec => spec.ID == Intent.GetIntExtra("SelectedSpecimenId", -1));
+
+                SaveImage(specimenSelected.ID.ToString(), bitmapData);
+            }
+        }
+
+        private void SaveImage(string specimenID, byte[] imageData)
+        {
+            Java.IO.File picctureFile = new Java.IO.File(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + "/CollectingMobile/Pictures/" + specimenID + ".png");
+            using (FileOutputStream writer = new FileOutputStream(picctureFile))
+            {
+                writer.Write(imageData);
             }
         }
 

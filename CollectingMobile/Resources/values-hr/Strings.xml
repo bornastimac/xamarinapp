@@ -11,6 +11,7 @@
   <string name="Logout">Log out</string>
   <string name="Saved">Pohranjeno</string>
   <string name="CheckNetwork">Provjerite jeste li spojeni na internet</string>
+  <string name="Connected">Spojeni ste na internet</string>
   <string name="ServerProblem">Nema konekcije sa serverom</string>
   <string name="Uploading">Upload u tijeku...</string>
   <string name="UploadSuccess">Upload OK</string>

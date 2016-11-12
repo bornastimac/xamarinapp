@@ -39,13 +39,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/Login" />
-  <Button
-        android:layout_marginTop="320dp"
-        android:gravity="center_horizontal"
-        android:id="@+id/Camera"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Camera" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

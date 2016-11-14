@@ -7,7 +7,7 @@
   <string name="SpecimenInput">Unesi uzorak</string>
   <string name="OK">U redu</string>
   <string name="WebException">Provjerite domenu servera u konfiguracijskoj datoteci.</string>
-  <string name="Login">Log in</string>
+  <string name="Login">Sign in</string>
   <string name="Logout">Log out</string>
   <string name="Saved">Pohranjeno</string>
   <string name="CheckNetwork">Provjerite jeste li spojeni na internet</string>
@@ -26,4 +26,5 @@
   <string name="LoadingRequests">Dohvat naloga u tijeku...</string>
   <string name="Authenticating">Autentificiranje u tijeku...</string>
   <string name="Test">Test</string>
+  <string name="copyright">© 2016 In Rebus. All Rights Reserved.</string>
 </resources>

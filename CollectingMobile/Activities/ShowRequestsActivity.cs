@@ -81,6 +81,7 @@ namespace CollectingMobile
         {
             requestsView.ItemClick += delegate (object sender, AdapterView.ItemClickEventArgs e)
             {
+                
                 if (requestsView.Adapter.GetType() == typeof(RequestsListAdapter))
                 {
                     Intent showSpecimensActivity = new Intent(this, typeof(ShowSpecimensActivity));

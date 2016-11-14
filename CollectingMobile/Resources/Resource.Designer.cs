@@ -44,50 +44,120 @@ namespace CollectingMobile
 			}
 		}
 		
+		public partial class Color
+		{
+			
+			// aapt resource value: 0x7f040002
+			public const int accent = 2130968578;
+			
+			// aapt resource value: 0x7f040003
+			public const int accent2 = 2130968579;
+			
+			// aapt resource value: 0x7f040006
+			public const int listSelector = 2130968582;
+			
+			// aapt resource value: 0x7f040000
+			public const int primary = 2130968576;
+			
+			// aapt resource value: 0x7f040001
+			public const int secondary = 2130968577;
+			
+			// aapt resource value: 0x7f040005
+			public const int textInAccent = 2130968581;
+			
+			// aapt resource value: 0x7f040004
+			public const int white = 2130968580;
+			
+			static Color()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
+			
+			private Color()
+			{
+			}
+		}
+		
 		public partial class Drawable
 		{
 			
 			// aapt resource value: 0x7f020000
-			public const int check = 2130837504;
+			public const int ButtonShapeRectangle = 2130837504;
 			
 			// aapt resource value: 0x7f020001
-			public const int ic_add_a_photo_black_24dp = 2130837505;
+			public const int check = 2130837505;
 			
 			// aapt resource value: 0x7f020002
-			public const int ic_border_outer_black_24dp = 2130837506;
+			public const int gradient = 2130837506;
 			
 			// aapt resource value: 0x7f020003
-			public const int ic_border_outer_white_24dp = 2130837507;
+			public const int ic_add_a_photo_black_24dp = 2130837507;
 			
 			// aapt resource value: 0x7f020004
-			public const int ic_check_circle_black_24dp = 2130837508;
+			public const int ic_add_a_photo_white_18dp = 2130837508;
 			
 			// aapt resource value: 0x7f020005
-			public const int ic_check_circle_black_48dp = 2130837509;
+			public const int ic_border_outer_black_24dp = 2130837509;
 			
 			// aapt resource value: 0x7f020006
-			public const int ic_check_circle_white_24dp = 2130837510;
+			public const int ic_border_outer_white_18dp = 2130837510;
 			
 			// aapt resource value: 0x7f020007
-			public const int ic_location_searching_black_24dp = 2130837511;
+			public const int ic_border_outer_white_24dp = 2130837511;
 			
 			// aapt resource value: 0x7f020008
-			public const int ic_location_searching_white_24dp = 2130837512;
+			public const int ic_check_circle_black_24dp = 2130837512;
 			
 			// aapt resource value: 0x7f020009
-			public const int ic_signal_wifi_off_black_18dp = 2130837513;
+			public const int ic_check_circle_black_48dp = 2130837513;
 			
 			// aapt resource value: 0x7f02000a
-			public const int ic_signal_wifi_off_white_18dp = 2130837514;
+			public const int ic_check_circle_white_24dp = 2130837514;
 			
 			// aapt resource value: 0x7f02000b
-			public const int Icon = 2130837515;
+			public const int ic_done_white_18dp = 2130837515;
 			
 			// aapt resource value: 0x7f02000c
-			public const int inRebus = 2130837516;
+			public const int ic_done_white_24dp = 2130837516;
 			
 			// aapt resource value: 0x7f02000d
-			public const int location_icon = 2130837517;
+			public const int ic_location_searching_black_24dp = 2130837517;
+			
+			// aapt resource value: 0x7f02000e
+			public const int ic_location_searching_white_18dp = 2130837518;
+			
+			// aapt resource value: 0x7f02000f
+			public const int ic_location_searching_white_24dp = 2130837519;
+			
+			// aapt resource value: 0x7f020010
+			public const int ic_lock_outline_white_18dp = 2130837520;
+			
+			// aapt resource value: 0x7f020011
+			public const int ic_lock_white_18dp = 2130837521;
+			
+			// aapt resource value: 0x7f020012
+			public const int ic_perm_identity_white_18dp = 2130837522;
+			
+			// aapt resource value: 0x7f020013
+			public const int ic_person_white_18dp = 2130837523;
+			
+			// aapt resource value: 0x7f020014
+			public const int ic_signal_wifi_off_black_18dp = 2130837524;
+			
+			// aapt resource value: 0x7f020015
+			public const int ic_signal_wifi_off_white_18dp = 2130837525;
+			
+			// aapt resource value: 0x7f020016
+			public const int Icon = 2130837526;
+			
+			// aapt resource value: 0x7f020017
+			public const int inRebus = 2130837527;
+			
+			// aapt resource value: 0x7f020018
+			public const int location_icon = 2130837528;
+			
+			// aapt resource value: 0x7f020019
+			public const int SaveButton = 2130837529;
 			
 			static Drawable()
 			{
@@ -102,104 +172,101 @@ namespace CollectingMobile
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f070014
-			public const int LocationButton = 2131165204;
+			// aapt resource value: 0x7f080013
+			public const int LocationButton = 2131230739;
 			
-			// aapt resource value: 0x7f070010
-			public const int LocationText = 2131165200;
+			// aapt resource value: 0x7f08000f
+			public const int LocationText = 2131230735;
 			
-			// aapt resource value: 0x7f07001d
-			public const int Logout = 2131165213;
+			// aapt resource value: 0x7f08001c
+			public const int Logout = 2131230748;
 			
-			// aapt resource value: 0x7f070007
-			public const int MyButton = 2131165191;
+			// aapt resource value: 0x7f080005
+			public const int MyButton = 2131230725;
 			
-			// aapt resource value: 0x7f07001b
-			public const int NoConnectionButton = 2131165211;
+			// aapt resource value: 0x7f08001a
+			public const int NoConnectionButton = 2131230746;
 			
-			// aapt resource value: 0x7f070016
-			public const int PhotoButton = 2131165206;
+			// aapt resource value: 0x7f080015
+			public const int PhotoButton = 2131230741;
 			
-			// aapt resource value: 0x7f070009
-			public const int PhotoFullView = 2131165193;
+			// aapt resource value: 0x7f080007
+			public const int PhotoFullView = 2131230727;
 			
-			// aapt resource value: 0x7f070013
-			public const int PhotoView = 2131165203;
+			// aapt resource value: 0x7f080011
+			public const int PhotoView = 2131230737;
 			
-			// aapt resource value: 0x7f070020
-			public const int PopupRequest = 2131165216;
+			// aapt resource value: 0x7f08001f
+			public const int PopupRequest = 2131230751;
 			
-			// aapt resource value: 0x7f070015
-			public const int QRButton = 2131165205;
+			// aapt resource value: 0x7f080014
+			public const int QRButton = 2131230740;
 			
-			// aapt resource value: 0x7f070012
-			public const int QRText = 2131165202;
+			// aapt resource value: 0x7f080010
+			public const int QRText = 2131230736;
 			
-			// aapt resource value: 0x7f07001f
-			public const int RefreshRequests = 2131165215;
+			// aapt resource value: 0x7f08001e
+			public const int RefreshRequests = 2131230750;
 			
-			// aapt resource value: 0x7f07000e
-			public const int RequestsListView = 2131165198;
+			// aapt resource value: 0x7f08000c
+			public const int RequestsListView = 2131230732;
 			
-			// aapt resource value: 0x7f070002
-			public const int RootLoginActivity = 2131165186;
+			// aapt resource value: 0x7f080002
+			public const int RootLoginActivity = 2131230722;
 			
-			// aapt resource value: 0x7f07000d
-			public const int RootRequestsActivity = 2131165197;
+			// aapt resource value: 0x7f08000b
+			public const int RootRequestsActivity = 2131230731;
 			
-			// aapt resource value: 0x7f07000f
-			public const int RootSpecimenInputActivity = 2131165199;
+			// aapt resource value: 0x7f08000d
+			public const int RootSpecimenInputActivity = 2131230733;
 			
-			// aapt resource value: 0x7f070018
-			public const int RootSpecimensActivity = 2131165208;
+			// aapt resource value: 0x7f080017
+			public const int RootSpecimensActivity = 2131230743;
 			
-			// aapt resource value: 0x7f070011
-			public const int SamplingPositionText = 2131165201;
+			// aapt resource value: 0x7f08000e
+			public const int SamplingPositionText = 2131230734;
 			
-			// aapt resource value: 0x7f070017
-			public const int SaveButton = 2131165207;
+			// aapt resource value: 0x7f080012
+			public const int SaveButton = 2131230738;
 			
-			// aapt resource value: 0x7f070019
-			public const int SpecimenslistView = 2131165209;
+			// aapt resource value: 0x7f080018
+			public const int SpecimenslistView = 2131230744;
 			
-			// aapt resource value: 0x7f07001e
-			public const int Test = 2131165214;
+			// aapt resource value: 0x7f08001d
+			public const int Test = 2131230749;
 			
-			// aapt resource value: 0x7f07001a
-			public const int Toolbar = 2131165210;
+			// aapt resource value: 0x7f080019
+			public const int Toolbar = 2131230745;
 			
-			// aapt resource value: 0x7f07001c
-			public const int contentFrame = 2131165212;
+			// aapt resource value: 0x7f08001b
+			public const int contentFrame = 2131230747;
 			
-			// aapt resource value: 0x7f070001
-			public const int imageView1 = 2131165185;
+			// aapt resource value: 0x7f080001
+			public const int imageView1 = 2131230721;
 			
-			// aapt resource value: 0x7f070000
-			public const int myButton = 2131165184;
+			// aapt resource value: 0x7f080000
+			public const int myButton = 2131230720;
 			
-			// aapt resource value: 0x7f070006
-			public const int password = 2131165190;
+			// aapt resource value: 0x7f080004
+			public const int password = 2131230724;
 			
-			// aapt resource value: 0x7f070005
-			public const int passwordlabel = 2131165189;
+			// aapt resource value: 0x7f08000a
+			public const int requestDate = 2131230730;
 			
-			// aapt resource value: 0x7f07000c
-			public const int requestDate = 2131165196;
+			// aapt resource value: 0x7f080008
+			public const int requestDescription = 2131230728;
 			
-			// aapt resource value: 0x7f07000a
-			public const int requestDescription = 2131165194;
+			// aapt resource value: 0x7f080009
+			public const int requestId = 2131230729;
 			
-			// aapt resource value: 0x7f07000b
-			public const int requestId = 2131165195;
+			// aapt resource value: 0x7f080016
+			public const int specimenItem = 2131230742;
 			
-			// aapt resource value: 0x7f070008
-			public const int textView1 = 2131165192;
+			// aapt resource value: 0x7f080006
+			public const int textView1 = 2131230726;
 			
-			// aapt resource value: 0x7f070004
-			public const int username = 2131165188;
-			
-			// aapt resource value: 0x7f070003
-			public const int usernamelabel = 2131165187;
+			// aapt resource value: 0x7f080003
+			public const int username = 2131230723;
 			
 			static Id()
 			{
@@ -233,16 +300,19 @@ namespace CollectingMobile
 			public const int SpecimenInput = 2130903045;
 			
 			// aapt resource value: 0x7f030006
-			public const int Specimens = 2130903046;
+			public const int SpecimenItem = 2130903046;
 			
 			// aapt resource value: 0x7f030007
-			public const int toolbar = 2130903047;
+			public const int Specimens = 2130903047;
 			
 			// aapt resource value: 0x7f030008
-			public const int zxingscanneractivitylayout = 2130903048;
+			public const int toolbar = 2130903048;
 			
 			// aapt resource value: 0x7f030009
-			public const int zxingscannerfragmentlayout = 2130903049;
+			public const int zxingscanneractivitylayout = 2130903049;
+			
+			// aapt resource value: 0x7f03000a
+			public const int zxingscannerfragmentlayout = 2130903050;
 			
 			static Layout()
 			{
@@ -257,14 +327,14 @@ namespace CollectingMobile
 		public partial class Menu
 		{
 			
-			// aapt resource value: 0x7f060000
-			public const int menu = 2131099648;
+			// aapt resource value: 0x7f070000
+			public const int menu = 2131165184;
 			
-			// aapt resource value: 0x7f060001
-			public const int menuRequests = 2131099649;
+			// aapt resource value: 0x7f070001
+			public const int menuRequests = 2131165185;
 			
-			// aapt resource value: 0x7f060002
-			public const int popupRequest = 2131099650;
+			// aapt resource value: 0x7f070002
+			public const int popupRequest = 2131165186;
 			
 			static Menu()
 			{
@@ -279,86 +349,89 @@ namespace CollectingMobile
 		public partial class String
 		{
 			
-			// aapt resource value: 0x7f050016
-			public const int ApplicationName = 2131034134;
+			// aapt resource value: 0x7f060016
+			public const int ApplicationName = 2131099670;
 			
-			// aapt resource value: 0x7f050018
-			public const int Authenticating = 2131034136;
+			// aapt resource value: 0x7f060018
+			public const int Authenticating = 2131099672;
 			
-			// aapt resource value: 0x7f05000a
-			public const int CheckNetwork = 2131034122;
+			// aapt resource value: 0x7f06000a
+			public const int CheckNetwork = 2131099658;
 			
-			// aapt resource value: 0x7f05000b
-			public const int Connected = 2131034123;
+			// aapt resource value: 0x7f06000b
+			public const int Connected = 2131099659;
 			
-			// aapt resource value: 0x7f050011
-			public const int Geolocation = 2131034129;
+			// aapt resource value: 0x7f060011
+			public const int Geolocation = 2131099665;
 			
-			// aapt resource value: 0x7f050017
-			public const int LoadingRequests = 2131034135;
+			// aapt resource value: 0x7f060017
+			public const int LoadingRequests = 2131099671;
 			
-			// aapt resource value: 0x7f050007
-			public const int Login = 2131034119;
+			// aapt resource value: 0x7f060007
+			public const int Login = 2131099655;
 			
-			// aapt resource value: 0x7f050008
-			public const int Logout = 2131034120;
+			// aapt resource value: 0x7f060008
+			public const int Logout = 2131099656;
 			
-			// aapt resource value: 0x7f050010
-			public const int NoLocationService = 2131034128;
+			// aapt resource value: 0x7f060010
+			public const int NoLocationService = 2131099664;
 			
-			// aapt resource value: 0x7f050005
-			public const int OK = 2131034117;
+			// aapt resource value: 0x7f060005
+			public const int OK = 2131099653;
 			
-			// aapt resource value: 0x7f05000d
-			public const int OfflineMode = 2131034125;
+			// aapt resource value: 0x7f06000d
+			public const int OfflineMode = 2131099661;
 			
-			// aapt resource value: 0x7f05001a
-			public const int OpenCamera = 2131034138;
+			// aapt resource value: 0x7f06001a
+			public const int OpenCamera = 2131099674;
 			
-			// aapt resource value: 0x7f050001
-			public const int Password = 2131034113;
+			// aapt resource value: 0x7f060001
+			public const int Password = 2131099649;
 			
-			// aapt resource value: 0x7f05000f
-			public const int QR = 2131034127;
+			// aapt resource value: 0x7f06000f
+			public const int QR = 2131099663;
 			
-			// aapt resource value: 0x7f050002
-			public const int Requests = 2131034114;
+			// aapt resource value: 0x7f060002
+			public const int Requests = 2131099650;
 			
-			// aapt resource value: 0x7f050012
-			public const int SamplingPosition = 2131034130;
+			// aapt resource value: 0x7f060012
+			public const int SamplingPosition = 2131099666;
 			
-			// aapt resource value: 0x7f050009
-			public const int Saved = 2131034121;
+			// aapt resource value: 0x7f060009
+			public const int Saved = 2131099657;
 			
-			// aapt resource value: 0x7f05000e
-			public const int SearchingLocation = 2131034126;
+			// aapt resource value: 0x7f06000e
+			public const int SearchingLocation = 2131099662;
 			
-			// aapt resource value: 0x7f05000c
-			public const int ServerProblem = 2131034124;
+			// aapt resource value: 0x7f06000c
+			public const int ServerProblem = 2131099660;
 			
-			// aapt resource value: 0x7f050004
-			public const int SpecimenInput = 2131034116;
+			// aapt resource value: 0x7f060004
+			public const int SpecimenInput = 2131099652;
 			
-			// aapt resource value: 0x7f050003
-			public const int Specimens = 2131034115;
+			// aapt resource value: 0x7f060003
+			public const int Specimens = 2131099651;
 			
-			// aapt resource value: 0x7f050019
-			public const int Test = 2131034137;
+			// aapt resource value: 0x7f060019
+			public const int Test = 2131099673;
 			
-			// aapt resource value: 0x7f050015
-			public const int UploadError = 2131034133;
+			// aapt resource value: 0x7f060015
+			public const int UploadError = 2131099669;
 			
-			// aapt resource value: 0x7f050014
-			public const int UploadSuccess = 2131034132;
+			// aapt resource value: 0x7f060014
+			public const int UploadSuccess = 2131099668;
 			
-			// aapt resource value: 0x7f050013
-			public const int Uploading = 2131034131;
+			// aapt resource value: 0x7f060013
+			public const int Uploading = 2131099667;
 			
-			// aapt resource value: 0x7f050000
-			public const int Username = 2131034112;
+			// aapt resource value: 0x7f060000
+			public const int Username = 2131099648;
 			
-			// aapt resource value: 0x7f050006
-			public const int WebException = 2131034118;
+			// aapt resource value: 0x7f060006
+			public const int WebException = 2131099654;
+			
+			// aapt resource value: 0x7f06001b
+			public const int copyright = 2131099675;
 			
 			static String()
 			{
@@ -373,8 +446,8 @@ namespace CollectingMobile
 		public partial class Style
 		{
 			
-			// aapt resource value: 0x7f040000
-			public const int CustomTheme = 2130968576;
+			// aapt resource value: 0x7f050000
+			public const int CustomTheme = 2131034112;
 			
 			static Style()
 			{

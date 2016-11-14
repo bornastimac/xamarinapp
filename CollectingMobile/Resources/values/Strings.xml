@@ -7,7 +7,7 @@
   <string name="SpecimenInput">Input specimen</string>
   <string name="OK">Okay</string>
   <string name="WebException">Check server domain in config file.</string>
-  <string name="Login">Log in</string>
+  <string name="Login">Sign in</string>
   <string name="Logout">Log out</string>
   <string name="Saved">Saved</string>
   <string name="CheckNetwork">Check your network connection</string>
@@ -27,4 +27,5 @@
   <string name="Authenticating">Authenticating...</string>
   <string name="Test">Test</string>
   <string name="OpenCamera">Open camera</string>
+  <string name="copyright">© 2016 In Rebus. All Rights Reserved.</string>
 </resources>

@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation ="vertical">
+
+  <TextView
+     android:textSize ="25dp"
+     android:id="@+id/specimenItem"
+     android:layout_width="fill_parent"
+     android:layout_height="wrap_content"
+     android:layout_marginLeft="5dp"
+     android:ellipsize="end"
+     android:textColor="@color/secondary"/>
+
+</LinearLayout>

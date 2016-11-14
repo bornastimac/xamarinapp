@@ -61,7 +61,7 @@ namespace CollectingMobile
                     menu.MenuItemClick += (s, arg) =>
                     {
                         ProgressDialog progressDialog = ProgressDialog.Show(this, "", Resources.GetText(Resource.String.Uploading), true);
-
+                        
                         new Thread(new ThreadStart(delegate
                         {
                             if (RestClient.UploadSpecimen(this, ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).Specimens[e.Position]))

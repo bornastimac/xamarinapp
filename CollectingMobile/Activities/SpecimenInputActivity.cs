@@ -121,7 +121,7 @@ namespace CollectingMobile
         private void InitButtons()
         {
             //save specimen
-            FindViewById<ImageButton>(Resource.Id.SaveButton).Click += (object sender, EventArgs args) => {
+            FindViewById<Button>(Resource.Id.SaveButton).Click += (object sender, EventArgs args) => {
                 Specimen specimenSelected = ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).Specimens.Find(spec => spec.ID == Intent.GetIntExtra("SelectedSpecimenId", -1));
                 specimenSelected.Location = FindViewById<EditText>(Resource.Id.LocationText).Text;
                 specimenSelected.SamplingPosition = FindViewById<EditText>(Resource.Id.SamplingPositionText).Text;

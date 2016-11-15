@@ -181,8 +181,8 @@ namespace CollectingMobile
 			// aapt resource value: 0x7f080013
 			public const int LocationButton = 2131230739;
 			
-			// aapt resource value: 0x7f08000f
-			public const int LocationText = 2131230735;
+			// aapt resource value: 0x7f080010
+			public const int LocationText = 2131230736;
 			
 			// aapt resource value: 0x7f080025
 			public const int Logout = 2131230757;
@@ -199,8 +199,8 @@ namespace CollectingMobile
 			// aapt resource value: 0x7f080007
 			public const int PhotoFullView = 2131230727;
 			
-			// aapt resource value: 0x7f080011
-			public const int PhotoView = 2131230737;
+			// aapt resource value: 0x7f080012
+			public const int PhotoView = 2131230738;
 			
 			// aapt resource value: 0x7f080028
 			public const int PopupRequest = 2131230760;
@@ -211,8 +211,8 @@ namespace CollectingMobile
 			// aapt resource value: 0x7f080014
 			public const int QRButton = 2131230740;
 			
-			// aapt resource value: 0x7f080010
-			public const int QRText = 2131230736;
+			// aapt resource value: 0x7f080011
+			public const int QRText = 2131230737;
 			
 			// aapt resource value: 0x7f080027
 			public const int RefreshRequests = 2131230759;
@@ -235,11 +235,11 @@ namespace CollectingMobile
 			// aapt resource value: 0x7f080018
 			public const int SamplingPosition = 2131230744;
 			
-			// aapt resource value: 0x7f08000e
-			public const int SamplingPositionText = 2131230734;
+			// aapt resource value: 0x7f08000f
+			public const int SamplingPositionText = 2131230735;
 			
-			// aapt resource value: 0x7f080012
-			public const int SaveButton = 2131230738;
+			// aapt resource value: 0x7f08000e
+			public const int SaveButton = 2131230734;
 			
 			// aapt resource value: 0x7f08001f
 			public const int SaveButton1 = 2131230751;

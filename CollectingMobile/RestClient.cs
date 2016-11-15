@@ -109,7 +109,7 @@ namespace CollectingMobile
 
         public static bool UploadSpecimens(Context context, List<Specimen> specimens)
         {
-            string postSpecimensURL = "http://" + serverDomain + "/LabTest/ResourceService.ashx?type=samplingresults";
+            string postSpecimensURL = "http://" + serverDomain + "/LabTest/ResourceService.ashx?type=samplingresults&username=" + ActiveUser.User.Name;
 
             string specimensJSON = "[";
             foreach (Specimen s in specimens)
@@ -137,7 +137,7 @@ namespace CollectingMobile
 
         public static bool UploadSpecimen(Context context, Specimen specimen)
         {
-            string postSpecimensURL = "http://" + serverDomain + "/LabTest/ResourceService.ashx?type=samplingresults";
+            string postSpecimensURL = "http://" + serverDomain + "/LabTest/ResourceService.ashx?type=samplingresults&username=" + ActiveUser.User.Name;
             string specimensJSON = "[" + CreateSpecimenJSON(context, specimen) + "]";
             try
             {

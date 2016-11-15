@@ -21,6 +21,19 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+                  <Button
+                        android:text="Save"
+                        android:textColor="@color/textInAccent"
+                        android:typeface="normal"
+                        android:textStyle="bold"
+                        android:layout_alignParentBottom="true"
+                        android:textSize="20dp"
+                        android:background="@color/accent2"
+                        android:id="@+id/SaveButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="150dp" />
                     <TextView
                         android:text="@string/SamplingPosition"
                         android:textSize="25dp"
@@ -84,19 +97,7 @@
                         android:id="@+id/PhotoView"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent" />
-                    <Button
-                        android:text="Save"
-                        android:textColor="@color/textInAccent"
-                        android:typeface="normal"
-                        android:textStyle="bold"
-                        android:layout_alignParentBottom="true"
-                        android:textSize="20dp"
-                        android:background="@color/accent2"
-                        android:id="@+id/SaveButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right"
-                        android:layout_marginTop="150dp" />
+                    
                 </LinearLayout>
             <!-- 85% Width End-->
             </RelativeLayout>

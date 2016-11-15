@@ -2,12 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/RootSpecimensActivity"
     android:orientation="vertical"
-    android:layout_width="fill_parent"
+    android:layout_width="fill_parent"   
     android:layout_height="fill_parent">
     <ListView
         android:id="@+id/SpecimenslistView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="@color/primary"
-        android:listSelector="@color/listSelector" />
+        android:background="@color/backgroundBright"
+        android:divider="@color/textInAccent"
+        android:dividerHeight="2dp"
+        android:listSelector="@color/listSelector"
+ />
 </LinearLayout>

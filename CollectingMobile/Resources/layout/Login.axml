@@ -49,19 +49,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="IN REBUS"
-        android:textSize="15dp"
-        android:textStyle="bold"
-        android:textColor="@color/textInAccent"
-        android:id="@+id/textView1"
-        android:typeface="normal"
-        android:layout_marginBottom="10dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="@string/copyright"
         android:textSize="15dp"
         android:textStyle="bold"
@@ -70,7 +57,7 @@
         android:typeface="normal"
         android:layout_marginBottom="10dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp" />
+        android:layout_marginRight="10dp"
+        android:layout_centerInParent="true" />
 </RelativeLayout>

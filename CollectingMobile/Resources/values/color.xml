@@ -7,6 +7,8 @@
   <item name="accent2" type="color">#FFD24A58</item>
   <item name="white" type="color">#FFFFFFFF</item>
   <item name="textInAccent" type="color">#7F000000</item>
-  <item name="listSelector" type="color">#FF303030</item>
+  <item name="listSelector" type="color">#5F303030</item>
+  <item name="backgroundBright" type="color">#FFDDDDDD</item>
+  <item name="titleTextColor" type="color">#7F000000</item>
 
 </resources> 

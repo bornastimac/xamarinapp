@@ -25,7 +25,7 @@ namespace CollectingMobile
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            SetContentView(Resource.Layout.SpecimenInput);
+            SetContentView(Resource.Layout.SpecimenInputt);
 
             if (Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop)
             {
@@ -121,7 +121,7 @@ namespace CollectingMobile
         private void InitButtons()
         {
             //save specimen
-            FindViewById<Button>(Resource.Id.SaveButton).Click += (object sender, EventArgs args) => {
+            FindViewById<ImageButton>(Resource.Id.SaveButton1).Click += (object sender, EventArgs args) => {
                 Specimen specimenSelected = ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).Specimens.Find(spec => spec.ID == Intent.GetIntExtra("SelectedSpecimenId", -1));
                 specimenSelected.Location = FindViewById<EditText>(Resource.Id.LocationText).Text;
                 specimenSelected.SamplingPosition = FindViewById<EditText>(Resource.Id.SamplingPositionText).Text;
@@ -142,7 +142,7 @@ namespace CollectingMobile
             };
 
             //add image
-            FindViewById<ImageButton>(Resource.Id.PhotoButton).Click += (object sender, EventArgs args) => {
+            FindViewById<ImageView>(Resource.Id.PhotoView).Click += (object sender, EventArgs args) => {
                 Intent intent = new Intent(MediaStore.ActionImageCapture);
                 StartActivityForResult(intent, 0);
             };

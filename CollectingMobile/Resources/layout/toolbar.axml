@@ -11,11 +11,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <ImageButton
-          android:id="@+id/NoConnectionButton"
+            android:id="@+id/NoConnectionButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true" 
-            android:background="@android:color/transparent"/>
+            android:layout_alignParentRight="true"
+            android:background="@android:color/transparent" />
     <!-- android:src="@drawable/ic_signal_wifi_off_white_18dp"     -->
     </RelativeLayout>
 </Toolbar>

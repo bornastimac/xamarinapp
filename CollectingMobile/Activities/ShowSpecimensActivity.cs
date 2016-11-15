@@ -95,7 +95,7 @@ namespace CollectingMobile
             }
 
             var specimensListView = FindViewById<ListView>(Resource.Id.SpecimenslistView);
-            specimensListView.Adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItemActivated1, specimenNames);
+            specimensListView.Adapter = new ArrayAdapter<string>(this, Resource.Layout.SpecimenItem, specimenNames);
             //specimensListView.ChoiceMode = ChoiceMode.Multiple;
         }
 

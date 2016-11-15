@@ -10,12 +10,11 @@
      android:layout_width="fill_parent"
      android:layout_height="wrap_content"
      android:layout_marginLeft="5dp"
-     android:layout_marginRight="75dp"
+     android:layout_marginRight="5dp"
      android:maxLines ="2"
-     android:lines = "2"
-     
+     android:lines = "2"    
      android:ellipsize="end"
-     android:textColor="@color/white"/>
+     android:textColor="@color/textInAccent"/>
   <TextView   
     
       android:id="@+id/requestId"
@@ -23,8 +22,7 @@
       android:layout_height="wrap_content"
       android:layout_marginLeft="5dp"
       android:textColor="@color/accent2"
-      android:gravity="right"
-      
+      android:gravity="left"    
       />
   <TextView   
       android:id="@+id/requestDate"
@@ -33,6 +31,6 @@
       android:layout_marginLeft="5dp"
       android:textColor="@color/accent2"
       android:textStyle="bold"
-      android:gravity="right"/>
+      android:gravity="left"/>
   
 </LinearLayout>

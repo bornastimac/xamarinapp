@@ -1,14 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?> 
 <resources>
        
-    <item name="primary" type="color">#7F1a1a1a</item>
-    <item name="secondary" type="color">#FFFFF5C3</item>
-    <item name="accent" type="color">#7FD24A58</item>
-  <item name="accent2" type="color">#FFD24A58</item>
-  <item name="white" type="color">#FFFFFFFF</item>
-  <item name="textInAccent" type="color">#7F000000</item>
-  <item name="listSelector" type="color">#5F303030</item>
+    <item name="primary" type="color">#7F1a1a1a</item> <!--pocetna boja gradienta-->
+  <item name="accent2" type="color">#FFD24A58</item><!--boja login buttona i description/date texta u requestovima-->
+  <item name="white" type="color">#FFFFFFFF</item><!--self explanatory-->
+  <item name="textInAccent" type="color">#7F000000</item><!--boja teksta crna s 50% opacity-->
+  <item name="listSelector" type="color">#5F303030</item><!--boja dok je item u listi oznacen-->
   <item name="backgroundBright" type="color">#FFDDDDDD</item>
-  <item name="titleTextColor" type="color">#7F000000</item>
+  <item name="titleTextColor" type="color">#7F000000</item> <!--isto kao textInAccent-->
 
 </resources> 

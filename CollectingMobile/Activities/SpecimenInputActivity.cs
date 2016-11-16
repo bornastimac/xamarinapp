@@ -26,7 +26,7 @@ namespace CollectingMobile
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            SetContentView(Resource.Layout.SpecimenInputt);
+            SetContentView(Resource.Layout.SpecimenInput);
 
             if (Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop)
             {
@@ -35,7 +35,6 @@ namespace CollectingMobile
 
             InitButtons();
             InitViewValues();
-
         }
 
         protected override void OnResume()
@@ -203,6 +202,7 @@ namespace CollectingMobile
                     Specimen specimenSelected = ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).Specimens.Find(spec => spec.ID == Intent.GetIntExtra("SelectedSpecimenId", -1));
 
                 SaveImage(specimenSelected.ID.ToString(), bitmapBytes);
+                specimenSelected.PhotoFileName = specimenSelected.ID + ".png";
             }
         }
 

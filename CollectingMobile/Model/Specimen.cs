@@ -46,6 +46,7 @@ namespace CollectingMobile
         public string TestingMethodsNormCode;
         public string Material;
         public string SamplingFrequency;
+        public string PhotoFileName;
         #endregion
 
         #region public Specimen(params){params};
@@ -83,7 +84,8 @@ namespace CollectingMobile
             string ConstructionElementsName,
             string TestingMethodsNormCode,
             string Material,
-            string SamplingFrequency)
+            string SamplingFrequency,
+            string PhotoFileName)
         {
             this.ID = ID;
             this.Description = Description;
@@ -119,6 +121,7 @@ namespace CollectingMobile
             this.TestingMethodsNormCode = TestingMethodsNormCode;
             this.Material = Material;
             this.SamplingFrequency = SamplingFrequency;
+            this.PhotoFileName = PhotoFileName;
         }
         #endregion
 

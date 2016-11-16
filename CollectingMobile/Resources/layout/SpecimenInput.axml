@@ -3,139 +3,139 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:id="@+id/RootSpecimenInputActivity"
-    android:orientation="vertical">
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
-        <LinearLayout
-            android:layout_weight="0.3"
-            android:layout_height="fill_parent"
-            android:layout_width="0dp">
-            <RelativeLayout
-                android:layout_width="0dip"
-                android:layout_height="fill_parent"
-                android:layout_weight="0.75">
-            <!-- 85% width-->
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                  <Button
-                        android:text="Save"
-                        android:textColor="@color/textInAccent"
-                        android:typeface="normal"
-                        android:textStyle="bold"
-                        android:layout_alignParentBottom="true"
-                        android:textSize="20dp"
-                        android:background="@color/accent2"
-                        android:id="@+id/SaveButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right"
-                        android:layout_marginTop="150dp" />
-                    <TextView
-                        android:text="@string/SamplingPosition"
-                        android:textSize="25dp"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="10dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginTop="20dp" />
-                    <EditText
-                        android:id="@+id/SamplingPositionText"
-                        android:layout_width="fill_parent"
-                        android:textSize="25dp"
-                        android:layout_height="wrap_content"
-                        android:maxLines="5"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginLeft="25dp"
-                        android:height="50dp" />
-                    <TextView
-                        android:text="@string/Geolocation"
-                        android:textSize="25dp"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginTop="10dp" />
-                    <EditText
-                        android:text=""
-                        android:id="@+id/LocationText"
-                        android:gravity="center"
-                        android:textSize="25dp"
-                        android:textStyle="italic"
-                        android:focusable="false"
-                        android:editable="false"
-                        android:maxLines="2"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginLeft="25dp"
-                        android:height="50dp" />
-                    <TextView
-                        android:text="@string/QR"
-                        android:textSize="25dp"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginTop="10dp" />
-                    <EditText
-                        android:text=""
-                        android:id="@+id/QRText"
-                        android:gravity="center"
-                        android:textSize="25dp"
-                        android:textStyle="italic"
-                        android:focusable="false"
-                        android:editable="false"
-                        android:maxLines="2"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="25dp"
-                        android:layout_marginRight="20dp"
-                        android:height="50dp" />
-                    <ImageView
-                        android:id="@+id/PhotoView"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent" />
-                    
-                </LinearLayout>
-            <!-- 85% Width End-->
-            </RelativeLayout>
-            <RelativeLayout
-                android:layout_width="0dip"
-                android:layout_height="fill_parent"
-                android:layout_weight="0.25">
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_marginBottom="100dp">
-                    <ImageButton
-                        android:id="@+id/LocationButton"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_marginTop="135dp"
-                        android:src="@drawable/ic_location_searching_white_18dp"
-                        android:background="@drawable/buttonshaperectangle"
-                        android:layout_marginLeft="20dp" />
-                    <ImageButton
-                        android:id="@+id/QRButton"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:src="@drawable/ic_border_outer_white_18dp"
-                        android:layout_marginTop="40dp"
-                        android:background="@drawable/buttonshaperectangle"
-                        android:layout_marginLeft="20dp" />
-                    <ImageButton
-                        android:id="@+id/PhotoButton"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:src="@drawable/ic_add_a_photo_white_18dp"
-                        android:layout_marginTop="40dp"
-                        android:background="@drawable/buttonshaperectangle"
-                        android:layout_marginLeft="20dp" />
-                </LinearLayout>
-            </RelativeLayout>
-        </LinearLayout>
-    </LinearLayout>
+    android:orientation="vertical"
+    android:background="@color/backgroundBright">
+    <RelativeLayout
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/relativeLayout1"
+        android:layout_weight="1"
+        android:layout_marginTop="20dp">
+        <TextView
+            android:text="@string/SamplingPosition"
+            android:textColor="@color/textInAccent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/SamplingPosition"
+            android:layout_centerHorizontal="true" />
+        <EditText
+            android:id="@+id/SamplingPositionText"
+            android:textColor="@color/textInAccent"
+            android:layout_width="250dp"
+            android:textSize="25dp"
+            android:layout_height="wrap_content"
+            android:maxLines="5"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="25dp"
+            android:height="50dp"
+            android:layout_below="@id/SamplingPosition"
+            android:layout_centerHorizontal="true" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/relativeLayout2"
+        android:layout_weight="1">
+        <TextView
+            android:text="@string/Geolocation"
+            android:textColor="@color/textInAccent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/Location"
+            android:layout_centerHorizontal="true" />
+        <EditText
+            android:id="@+id/LocationText"
+            android:layout_width="250dp"
+            android:textColor="@color/textInAccent"
+            android:textSize="20dp"
+            android:layout_height="wrap_content"
+            android:maxLines="5"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="25dp"
+            android:height="50dp"
+            android:layout_below="@id/Location"
+            android:lines="2"
+            android:textStyle="italic"
+            android:layout_centerHorizontal="true" />
+        <ImageButton
+            android:id="@+id/LocationButton"
+            android:src="@drawable/ic_location_searching_black_24dp"
+            android:background="@drawable/buttonshaperectangle"
+            android:layout_toRightOf="@id/LocationText"
+            android:layout_width="50dp"
+            android:layout_height="50dp     " />
+    </RelativeLayout>
+    <RelativeLayout
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/relativeLayout3"
+        android:layout_weight="1">
+        <TextView
+            android:text="@string/QR"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textInAccent"
+            android:id="@+id/QR"
+            android:layout_centerHorizontal="true" />
+        <EditText
+            android:id="@+id/QRText"
+            android:layout_width="250dp"
+            android:textSize="20dp"
+            android:layout_height="wrap_content"
+            android:maxLines="5"
+            android:textColor="@color/textInAccent"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="25dp"
+            android:height="50dp"
+            android:layout_below="@id/QR"
+            android:textStyle="italic"
+            android:layout_centerHorizontal="true" />
+        <ImageButton
+            android:id="@+id/QRButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_border_outer_black_24dp"
+            android:background="@drawable/buttonshaperectangle"
+            android:layout_toRightOf="@id/QRText" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:minWidth="50px"
+        android:minHeight="50px"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/relativeLayout4"
+        android:layout_weight="1">
+        <ImageView
+            android:src="@android:drawable/ic_menu_gallery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/PhotoView"
+            android:layout_centerHorizontal="true"
+            android:minHeight="50dp"
+            android:minWidth="50dp"
+            android:maxHeight="200dp"
+            android:maxWidth="200dp" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/relativeLayout5"
+        android:layout_weight="1">
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/SaveButton1"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_done_black_24dp"
+            android:background="@drawable/buttonshaperectangle"
+            android:layout_marginRight="20.0dp" />
+    </RelativeLayout>
 </LinearLayout>

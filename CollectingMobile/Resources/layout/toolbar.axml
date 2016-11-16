@@ -6,6 +6,7 @@
     android:minHeight="?android:attr/actionBarSize"
     android:background="?android:attr/colorPrimary"
     android:title="CHANGE_TITLE"
+    android:titleTextColor="@color/white"
     android:theme="@android:style/ThemeOverlay.Material.Dark.ActionBar">
     <RelativeLayout
         android:layout_width="wrap_content"

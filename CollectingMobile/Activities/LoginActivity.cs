@@ -113,8 +113,8 @@ namespace CollectingMobile
                 Toolbar toolbar = (Toolbar)LayoutInflater.Inflate(Resource.Layout.toolbar, null);
                 toolbar.LayoutParameters = new Android.Views.ViewGroup.LayoutParams(RelativeLayout.LayoutParams.MatchParent, RelativeLayout.LayoutParams.WrapContent);
                 FindViewById<RelativeLayout>(Resource.Id.RootLoginActivity).AddView(toolbar, 0);
+                FindViewById<TextView>(Resource.Id.ToolbarText).Text = Resources.GetText(Resource.String.Login);
                 SetActionBar(toolbar);
-                ActionBar.Title = Resources.GetText(Resource.String.Login);
             }
         }
     }

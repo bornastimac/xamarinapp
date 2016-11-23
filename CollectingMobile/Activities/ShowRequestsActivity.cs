@@ -60,7 +60,7 @@ namespace CollectingMobile
                 Toolbar toolbar = (Toolbar)LayoutInflater.Inflate(Resource.Layout.toolbar, null);
                 FindViewById<LinearLayout>(Resource.Id.RootRequestsActivity).AddView(toolbar, 0);
                 SetActionBar(toolbar);
-                ActionBar.Title = Resources.GetText(Resource.String.Requests);
+                FindViewById<TextView>(Resource.Id.ToolbarText).Text = Resources.GetText(Resource.String.Requests);
                 FindViewById<ImageButton>(Resource.Id.NoConnectionButton).Click += delegate
                 {
                     if (RestClient.AmIOnline((ConnectivityManager)GetSystemService(ConnectivityService)))

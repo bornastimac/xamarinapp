@@ -16,17 +16,19 @@
         <TextView
             android:text="@string/SamplingPosition"
             android:textColor="@color/textInAccent"
+            android:textSize="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/SamplingPosition"
             android:layout_centerHorizontal="true" />
         <EditText
             android:id="@+id/SamplingPositionText"
+            android:inputType="textMultiLine"
             android:textColor="@color/textInAccent"
             android:layout_width="250dp"
+            android:gravity="center_horizontal"
             android:textSize="25dp"
             android:layout_height="wrap_content"
-            android:maxLines="5"
             android:layout_marginRight="20dp"
             android:layout_marginLeft="25dp"
             android:height="50dp"
@@ -43,41 +45,48 @@
         <TextView
             android:text="@string/Geolocation"
             android:textColor="@color/textInAccent"
+            android:textSize="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/Location"
             android:layout_centerHorizontal="true" />
         <EditText
             android:id="@+id/LocationText"
-            android:layout_width="250dp"
+            android:layout_width="230dp"
+            android:inputType="textMultiLine"
+            android:gravity="center_horizontal"
             android:textColor="@color/textInAccent"
-            android:textSize="20dp"
+            android:textSize="16dp"
             android:layout_height="wrap_content"
-            android:maxLines="5"
+            android:focusable="false"
+            android:lines="2"
             android:layout_marginRight="20dp"
             android:layout_marginLeft="25dp"
             android:height="50dp"
             android:layout_below="@id/Location"
-            android:lines="2"
             android:textStyle="italic"
             android:layout_centerHorizontal="true" />
         <ImageButton
             android:id="@+id/LocationButton"
             android:src="@drawable/ic_location_searching_black_24dp"
-            android:background="@drawable/buttonshaperectangle"
+            android:background="@android:color/transparent"
+            android:fadingEdge="vertical"
+            android:typeface="normal"
             android:layout_toRightOf="@id/LocationText"
             android:layout_width="50dp"
-            android:layout_height="50dp     " />
+            android:layout_height="50dp" />
     </RelativeLayout>
     <RelativeLayout
         android:minWidth="25px"
         android:minHeight="25px"
+        android:textSize="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/relativeLayout3"
         android:layout_weight="1">
         <TextView
             android:text="@string/QR"
+            android:textSize="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/textInAccent"
@@ -85,23 +94,26 @@
             android:layout_centerHorizontal="true" />
         <EditText
             android:id="@+id/QRText"
-            android:layout_width="250dp"
+            android:layout_width="230dp"
             android:textSize="20dp"
             android:layout_height="wrap_content"
-            android:maxLines="5"
             android:textColor="@color/textInAccent"
             android:layout_marginRight="20dp"
+            android:focusable="false"
             android:layout_marginLeft="25dp"
             android:height="50dp"
             android:layout_below="@id/QR"
+            android:gravity="center_horizontal"
             android:textStyle="italic"
             android:layout_centerHorizontal="true" />
         <ImageButton
             android:id="@+id/QRButton"
+            android:background="@android:color/transparent"
+            android:fadingEdge="vertical"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:typeface="normal"
             android:src="@drawable/ic_border_outer_black_24dp"
-            android:background="@drawable/buttonshaperectangle"
             android:layout_toRightOf="@id/QRText" />
     </RelativeLayout>
     <RelativeLayout
@@ -112,15 +124,13 @@
         android:id="@+id/relativeLayout4"
         android:layout_weight="1">
         <ImageView
-            android:src="@android:drawable/ic_menu_gallery"
+            android:src="@drawable/ic_add_a_photo_black_24dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:maxHeight="150dp"
+            android:maxWidth="150dp"
             android:id="@+id/PhotoView"
-            android:layout_centerHorizontal="true"
-            android:minHeight="50dp"
-            android:minWidth="50dp"
-            android:maxHeight="200dp"
-            android:maxWidth="200dp" />
+            android:layout_centerHorizontal="true" />
     </RelativeLayout>
     <RelativeLayout
         android:minWidth="25px"
@@ -130,12 +140,14 @@
         android:id="@+id/relativeLayout5"
         android:layout_weight="1">
         <ImageButton
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/SaveButton1"
+            android:background="@android:color/transparent"
             android:layout_alignParentRight="true"
+            android:maxHeight="150dp"
+            android:maxWidth="150dp"
             android:src="@drawable/ic_done_black_24dp"
-            android:background="@drawable/buttonshaperectangle"
             android:layout_marginRight="20.0dp" />
     </RelativeLayout>
 </LinearLayout>

@@ -64,25 +64,12 @@ namespace CollectingMobile
             Java.IO.File photoSpecimen = new Java.IO.File(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + "/CollectingMobile/Pictures/" + specimenSelected.ID + ".png");
             if (photoSpecimen.Exists())
             {
-                FindViewById<ImageView>(Resource.Id.PhotoView).SetImageBitmap(BitmapFactory.DecodeFile(photoSpecimen.AbsolutePath));               
+                FindViewById<ImageView>(Resource.Id.PhotoView).SetImageBitmap(BitmapFactory.DecodeFile(photoSpecimen.AbsolutePath));
             }
-
-            FindViewById<ImageView>(Resource.Id.PhotoView).Click += delegate
-            {
-                if (photoSpecimen.Exists())
-                {
-                    Intent viewPhoto = new Intent(this, typeof(ViewPhotoActivity));
-                    viewPhoto.PutExtra("photoPath", photoSpecimen.AbsolutePath);
-                    StartActivity(viewPhoto);
-                }             
-            };
         }
 
         private void StartLocationSearch()
         {
-            searchingLocationAnimationTimer = new Timer();
-            searchingLocationAnimationTimer.Interval = 500;
-            searchingLocationAnimationTimer.Elapsed += AnimateLocationText;
 
             //string locationProvider;
             //Criteria locationCriteria = new Criteria();
@@ -94,6 +81,11 @@ namespace CollectingMobile
 
             if (locMan.IsProviderEnabled(LocationManager.GpsProvider))
             {
+
+                FindViewById<TextView>(Resource.Id.LocationText).Text = ".";
+                searchingLocationAnimationTimer = new Timer();
+                searchingLocationAnimationTimer.Interval = 500;
+                searchingLocationAnimationTimer.Elapsed += AnimateLocationText;
                 locMan.RequestLocationUpdates(LocationManager.GpsProvider, 1000, 1, this);
                 Toast.MakeText(this, Resources.GetText(Resource.String.SearchingLocation), ToastLength.Short).Show();
                 FindViewById<ImageButton>(Resource.Id.LocationButton).Enabled = false;
@@ -107,21 +99,27 @@ namespace CollectingMobile
 
         private void AnimateLocationText(object sender, ElapsedEventArgs args)
         {
-            TextView tw = FindViewById<TextView>(Resource.Id.LocationText);
-            if (tw.Text.Length <= 18)
+            RunOnUiThread(() =>
             {
-                tw.Text += " . .";
+                TextView tw = FindViewById<TextView>(Resource.Id.LocationText);
+                if (tw.Text.Length <= 18)
+                {
+                    tw.Text += " . .";
+                }
+                else
+                {
+                    tw.Text = ".";
+                }
             }
-            else
-            {
-                tw.Text = ".";
-            }
+            );
+
         }
-        
+
         private void InitButtons()
         {
             //save specimen
-            FindViewById<ImageButton>(Resource.Id.SaveButton1).Click += (object sender, EventArgs args) => {
+            FindViewById<ImageButton>(Resource.Id.SaveButton1).Click += (object sender, EventArgs args) =>
+            {
                 Specimen specimenSelected = ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).Specimens.Find(spec => spec.ID == Intent.GetIntExtra("SelectedSpecimenId", -1));
                 specimenSelected.Location = FindViewById<EditText>(Resource.Id.LocationText).Text;
                 specimenSelected.SamplingPosition = FindViewById<EditText>(Resource.Id.SamplingPositionText).Text;
@@ -132,19 +130,33 @@ namespace CollectingMobile
             };
 
             //get geolocation
-            FindViewById<ImageButton>(Resource.Id.LocationButton).Click += (object sender, EventArgs args) => {
-                StartLocationSearch();             
+            FindViewById<ImageButton>(Resource.Id.LocationButton).Click += (object sender, EventArgs args) =>
+            {
+                StartLocationSearch();
             };
 
             //QR scan
-            FindViewById<ImageButton>(Resource.Id.QRButton).Click += (object sender, EventArgs args) => {
+            FindViewById<ImageButton>(Resource.Id.QRButton).Click += (object sender, EventArgs args) =>
+            {
                 ScanQR();
             };
 
             //add image
-            FindViewById<ImageView>(Resource.Id.PhotoView).Click += (object sender, EventArgs args) => {
-                Intent intent = new Intent(MediaStore.ActionImageCapture);
-                StartActivityForResult(intent, 0);
+            FindViewById<ImageView>(Resource.Id.PhotoView).Click += (object sender, EventArgs args) =>
+            {
+                Specimen specimenSelected = ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).Specimens.Find(spec => spec.ID == Intent.GetIntExtra("SelectedSpecimenId", -1));
+                File photoSpecimen = new File(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + "/CollectingMobile/Pictures/" + specimenSelected.ID + ".png");
+                if (!photoSpecimen.Exists())
+                {
+                    Intent intent = new Intent(MediaStore.ActionImageCapture);
+                    StartActivityForResult(intent, 0);
+                }
+                else
+                {
+                    Intent viewPhoto = new Intent(this, typeof(ViewPhotoActivity));
+                    viewPhoto.PutExtra("photoPath", photoSpecimen.AbsolutePath);
+                    StartActivity(viewPhoto);
+                }
             };
         }
 
@@ -155,7 +167,7 @@ namespace CollectingMobile
 
             if (result != null)
             {
-                RunOnUiThread(()=> FindViewById<EditText>(Resource.Id.QRText).Text = result.Text);
+                RunOnUiThread(() => FindViewById<EditText>(Resource.Id.QRText).Text = result.Text);
             }
         }
 
@@ -167,7 +179,7 @@ namespace CollectingMobile
                 Toolbar toolbar = (Toolbar)LayoutInflater.Inflate(Resource.Layout.toolbar, null);
                 FindViewById<LinearLayout>(Resource.Id.RootSpecimenInputActivity).AddView(toolbar, 0);
                 SetActionBar(toolbar);
-                ActionBar.Title = Resources.GetText(Resource.String.SpecimenInput);
+                FindViewById<TextView>(Resource.Id.ToolbarText).Text = Resources.GetText(Resource.String.SpecimenInput);
                 FindViewById<ImageButton>(Resource.Id.NoConnectionButton).Click += delegate
                 {
                     if (RestClient.AmIOnline((ConnectivityManager)GetSystemService(ConnectivityService)))
@@ -179,7 +191,7 @@ namespace CollectingMobile
                     {
                         Toast.MakeText(this, Resources.GetText(Resource.String.CheckNetwork), ToastLength.Long).Show();
                     }
-                        
+
                 };
             }
         }

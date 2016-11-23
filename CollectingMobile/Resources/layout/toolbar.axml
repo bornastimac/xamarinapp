@@ -4,13 +4,20 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="?android:attr/actionBarSize"
-    android:background="?android:attr/colorPrimary"
-    android:title="CHANGE_TITLE"
-    android:titleTextColor="@color/white"
+    android:background="@color/primary"
     android:theme="@android:style/ThemeOverlay.Material.Dark.ActionBar">
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent">
+        <TextView
+            android:id="@+id/ToolbarText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:background="@android:color/transparent" />
         <ImageButton
             android:id="@+id/NoConnectionButton"
             android:layout_width="wrap_content"

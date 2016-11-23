@@ -222,9 +222,6 @@
     <AndroidResource Include="Resources\drawable\ic_lock_outline_white_18dp.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\ButtonShapeRectangle.xml" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\drawable\ic_location_searching_white_18dp.png" />
   </ItemGroup>
   <ItemGroup>

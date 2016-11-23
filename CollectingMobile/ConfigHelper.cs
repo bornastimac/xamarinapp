@@ -36,6 +36,8 @@ namespace CollectingMobile
                 {
                     writer.WriteLine("{\"server\": \"yourServerDomain -eg. google.com\"}");
                 }
+
+                new Java.IO.File(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + "/CollectingMobile/Pictures").Mkdir();
             }
 
             return configDirectory.AbsolutePath + "/config.json";

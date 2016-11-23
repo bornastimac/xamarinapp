@@ -87,11 +87,11 @@ namespace CollectingMobile
         private void LoadSpecimensList()
         {
             List<string> specimenNames = new List<string>();
-
+            int i = 0;
             foreach (Specimen specimen in ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).Specimens ?? new List<Specimen>())
             {
                 string uploaded =  ((specimen.Uploaded) ? " | UP" : "");
-                specimenNames.Add(specimen.ID.ToString() + uploaded);
+                specimenNames.Add(++i + "  " + specimen.MaterialTypesName.ToString() + "  " + ((specimen.SamplingPosition != null) ? "\n(" + specimen.SamplingPosition + ")" : ""));
             }
 
             var specimensListView = FindViewById<ListView>(Resource.Id.SpecimenslistView);
@@ -106,7 +106,7 @@ namespace CollectingMobile
                 Toolbar toolbar = (Toolbar)LayoutInflater.Inflate(Resource.Layout.toolbar, null);
                 FindViewById<LinearLayout>(Resource.Id.RootSpecimensActivity).AddView(toolbar, 0);
                 SetActionBar(toolbar);
-                ActionBar.Title = Resources.GetText(Resource.String.Specimens);
+                FindViewById<TextView>(Resource.Id.ToolbarText).Text = Resources.GetText(Resource.String.Specimens);
                 FindViewById<ImageButton>(Resource.Id.NoConnectionButton).Click += delegate
                 {
                     if (RestClient.AmIOnline((ConnectivityManager)GetSystemService(ConnectivityService)))
@@ -118,7 +118,6 @@ namespace CollectingMobile
                     {
                         Toast.MakeText(this, Resources.GetText(Resource.String.CheckNetwork), ToastLength.Long).Show();
                     }
-
                 };
             }
         }

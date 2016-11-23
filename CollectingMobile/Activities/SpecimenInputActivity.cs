@@ -61,7 +61,7 @@ namespace CollectingMobile
             FindViewById<EditText>(Resource.Id.SamplingPositionText).Text = specimenSelected.SamplingPosition;
             FindViewById<EditText>(Resource.Id.QRText).Text = specimenSelected.Qrcode == "" || specimenSelected.Qrcode == null ? "----" : specimenSelected.Qrcode;
 
-            Java.IO.File photoSpecimen = new Java.IO.File(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + "/CollectingMobile/Pictures/" + specimenSelected.ID + ".png");
+            Java.IO.File photoSpecimen = new Java.IO.File(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + "/CollectingMobile/Pictures/" + specimenSelected.ID + ".jpeg");
             if (photoSpecimen.Exists())
             {
                 FindViewById<ImageView>(Resource.Id.PhotoView).SetImageBitmap(BitmapFactory.DecodeFile(photoSpecimen.AbsolutePath));
@@ -144,7 +144,7 @@ namespace CollectingMobile
             FindViewById<ImageView>(Resource.Id.PhotoView).Click += (object sender, EventArgs args) =>
             {
                 Specimen specimenSelected = ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).Specimens.Find(spec => spec.ID == Intent.GetIntExtra("SelectedSpecimenId", -1));
-                Java.IO.File photoSpecimen = new Java.IO.File(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + "/CollectingMobile/Pictures/" + specimenSelected.ID + ".png");
+                Java.IO.File photoSpecimen = new Java.IO.File(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + "/CollectingMobile/Pictures/" + specimenSelected.ID + ".jpeg");
                 if (!photoSpecimen.Exists())
                 {
                     Intent intent = new Intent(MediaStore.ActionImageCapture);
@@ -203,17 +203,18 @@ namespace CollectingMobile
             {
                 var bitmap = (Bitmap)data.Extras.Get("data");
                 byte[] bitmapBytes;
+                var scaledBitmap = Bitmap.CreateScaledBitmap(bitmap, 1024, 768, false);
                 FindViewById<ImageView>(Resource.Id.PhotoView).SetImageBitmap(bitmap);
                 using (MemoryStream stream = new MemoryStream())
                 {
-                    bitmap.Compress(Bitmap.CompressFormat.Jpeg, 100, stream);
+                    scaledBitmap.Compress(Bitmap.CompressFormat.Jpeg, 100, stream);
                     bitmapBytes = stream.ToArray();
                 }
 
                     Specimen specimenSelected = ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).Specimens.Find(spec => spec.ID == Intent.GetIntExtra("SelectedSpecimenId", -1));
 
                 SaveImage(specimenSelected.ID.ToString(), bitmapBytes);
-                specimenSelected.PhotoFileName = specimenSelected.ID + ".png";
+                specimenSelected.PhotoFileName = specimenSelected.ID + ".jpeg";
             }
         }
 

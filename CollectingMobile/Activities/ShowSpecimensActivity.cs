@@ -6,6 +6,7 @@ using Android.Views;
 using Android.Widget;
 using System.Threading;
 using Android.Net;
+using CollectingMobile.Model;
 
 namespace CollectingMobile
 {
@@ -83,7 +84,7 @@ namespace CollectingMobile
                 }
             };
         }
-
+       
         private void LoadSpecimensList()
         {
             List<string> specimenNames = new List<string>();
@@ -91,7 +92,7 @@ namespace CollectingMobile
             foreach (Specimen specimen in ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).Specimens ?? new List<Specimen>())
             {
                 string uploaded =  ((specimen.Uploaded) ? " | UP" : "");
-                specimenNames.Add(++i + "  " + specimen.MaterialTypesName.ToString() + "  " + ((specimen.SamplingPosition != null) ? "\n(" + specimen.SamplingPosition + ")" : ""));
+                specimenNames.Add(++i + "  " + ((specimen.MaterialTypesName != null) ? specimen.MaterialTypesName.ToString() : "?") + "  " + ((specimen.SamplingPosition != null) ? "\n(" + specimen.SamplingPosition + ")" : ""));
             }
 
             var specimensListView = FindViewById<ListView>(Resource.Id.SpecimenslistView);

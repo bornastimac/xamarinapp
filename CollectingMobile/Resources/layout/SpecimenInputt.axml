@@ -59,6 +59,8 @@
             android:height="50dp"
             android:layout_below="@id/Location"
             android:lines="2"
+            android:focusable="false"
+            android:editable="false"
             android:textStyle="italic"
             android:layout_centerHorizontal="true" />
         <ImageButton
@@ -94,6 +96,8 @@
             android:layout_marginLeft="25dp"
             android:height="50dp"
             android:layout_below="@id/QR"
+            android:focusable="false"
+            android:editable="false"
             android:textStyle="italic"
             android:layout_centerHorizontal="true" />
         <ImageButton

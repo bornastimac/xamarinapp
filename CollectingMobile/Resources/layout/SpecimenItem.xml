@@ -4,5 +4,5 @@
       android:textSize ="25dp"
       android:textColor="@color/textInAccent"
       android:layout_width="fill_parent"
-      android:singleLine="true"
+      android:minLines="2"
       android:layout_height="fill_parent"/>

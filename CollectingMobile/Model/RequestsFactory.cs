@@ -9,7 +9,7 @@ namespace CollectingMobile
     class RequestsFactory
     {
         private static int idRequestMock = 0;
-        private static int idSpecimenMock = 0;
+        
 
         public static List<Request> GetRequestsFromJSON(JsonValue responseJSON)
         {

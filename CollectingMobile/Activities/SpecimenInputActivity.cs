@@ -70,7 +70,6 @@ namespace CollectingMobile
 
         private void StartLocationSearch()
         {
-
             //string locationProvider;
             //Criteria locationCriteria = new Criteria();
             //locationCriteria.Accuracy = Accuracy.Coarse;
@@ -145,7 +144,7 @@ namespace CollectingMobile
             FindViewById<ImageView>(Resource.Id.PhotoView).Click += (object sender, EventArgs args) =>
             {
                 Specimen specimenSelected = ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).Specimens.Find(spec => spec.ID == Intent.GetIntExtra("SelectedSpecimenId", -1));
-                File photoSpecimen = new File(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + "/CollectingMobile/Pictures/" + specimenSelected.ID + ".png");
+                Java.IO.File photoSpecimen = new Java.IO.File(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + "/CollectingMobile/Pictures/" + specimenSelected.ID + ".png");
                 if (!photoSpecimen.Exists())
                 {
                     Intent intent = new Intent(MediaStore.ActionImageCapture);

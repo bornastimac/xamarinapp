@@ -22,7 +22,21 @@ namespace CollectingMobile
             string requestJSON = "{\"username\":\"" + username + "\",\"password\":\"" + password + "\",\"createPersistentCookie\":true}";
             try
             {
-                JsonValue responseJSON = JsonValue.Parse(PostAndGetResponseWebContent(requestJSON, serverLoginURL));
+                byte[] dataJSON = new ASCIIEncoding().GetBytes(requestJSON);           
+                HttpWebRequest requestWeb = WebRequest.Create(serverLoginURL) as HttpWebRequest;
+                requestWeb.Method = "POST";
+                requestWeb.ContentType = "application/json";
+                requestWeb.ContentLength = dataJSON.Length;
+                requestWeb.CookieContainer = new CookieContainer();
+                requestWeb.Expect = "application/json";
+                requestWeb.Proxy = null;
+                requestWeb.GetRequestStream().Write(dataJSON, 0, dataJSON.Length);
+
+                HttpWebResponse responseWeb = requestWeb.GetResponse() as HttpWebResponse;
+                ActiveUser.cookies.Add(responseWeb.Cookies);
+                string responseContent = new StreamReader(responseWeb.GetResponseStream()).ReadToEnd();
+
+                JsonValue responseJSON = JsonValue.Parse(responseContent);
                 return responseJSON["d"];//{d:true} OR {d:false}
             }
             catch (WebException)
@@ -51,6 +65,8 @@ namespace CollectingMobile
             try
             {
                 HttpWebRequest requestWeb = WebRequest.Create(URL) as HttpWebRequest;
+                requestWeb.CookieContainer = new CookieContainer();
+                requestWeb.CookieContainer.Add(ActiveUser.cookies);
                 requestWeb.Method = "POST";
                 requestWeb.ContentType = "application/json";
                 requestWeb.ContentLength = dataJSON.Length;
@@ -156,20 +172,28 @@ namespace CollectingMobile
 
         public async static void UploadImage(Specimen specimen)
         {
-
             string url = @"http://" + serverDomain + "/LabTest/Blob.ashx?PhotoPhotoHandler=u|" + specimen.ID + "&_v=2";
 
-            using (var streamReader = new StreamReader(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + "/CollectingMobile/Pictures/" + specimen.ID + ".jpeg"))
-            using (var memStream = new MemoryStream())
+            Java.IO.File pictureFile = new Java.IO.File(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + "/CollectingMobile/Pictures/" + specimen.ID + ".jpeg");
+
+            if (pictureFile.Exists())
             {
-                streamReader.BaseStream.CopyTo(memStream);
+                Bitmap bitmap = BitmapFactory.DecodeFile(pictureFile.AbsolutePath);
+
+                byte[] bitmapBytes;
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    bitmap.Compress(Bitmap.CompressFormat.Png, 100, stream);
+                    bitmapBytes = stream.ToArray();
+                }
+
                 using (var client = new HttpClient())
                 using (var content = new MultipartFormDataContent())
                 {
-                    content.Add(new StreamContent(memStream), "slika", specimen.ID + ".jpeg");
+                    content.Add(new StreamContent(new MemoryStream(bitmapBytes)), "slika", specimen.ID + ".jpeg");
                     await client.PostAsync(url, content);
                 }
-            }
+            }          
         }
 
         private static string CreateSpecimenJSON(Context context, Specimen specimen)
@@ -208,8 +232,6 @@ namespace CollectingMobile
                 return false;
             }
         }
-
-
     }
 }
 

@@ -190,7 +190,6 @@ namespace CollectingMobile
                     {
                         Toast.MakeText(this, Resources.GetText(Resource.String.CheckNetwork), ToastLength.Long).Show();
                     }
-
                 };
             }
         }
@@ -201,17 +200,16 @@ namespace CollectingMobile
 
             if (resultCode == Result.Ok)
             {
-                var bitmap = (Bitmap)data.Extras.Get("data");
-                byte[] bitmapBytes;
-                var scaledBitmap = Bitmap.CreateScaledBitmap(bitmap, 1024, 768, false);
+                var bitmap = (Bitmap)data.Extras.Get("data");    
                 FindViewById<ImageView>(Resource.Id.PhotoView).SetImageBitmap(bitmap);
+
+                byte[] bitmapBytes;
                 using (MemoryStream stream = new MemoryStream())
                 {
                     scaledBitmap.Compress(Bitmap.CompressFormat.Jpeg, 100, stream);
                     bitmapBytes = stream.ToArray();
                 }
-
-                    Specimen specimenSelected = ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).Specimens.Find(spec => spec.ID == Intent.GetIntExtra("SelectedSpecimenId", -1));
+                Specimen specimenSelected = ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).Specimens.Find(spec => spec.ID == Intent.GetIntExtra("SelectedSpecimenId", -1));
 
                 SaveImage(specimenSelected.ID.ToString(), bitmapBytes);
                 specimenSelected.PhotoFileName = specimenSelected.ID + ".jpeg";
@@ -220,8 +218,8 @@ namespace CollectingMobile
 
         private void SaveImage(string specimenID, byte[] imageData)
         {
-            Java.IO.File picctureFile = new Java.IO.File(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + "/CollectingMobile/Pictures/" + specimenID + ".jpeg");
-            using (FileOutputStream writer = new FileOutputStream(picctureFile))
+            Java.IO.File pictureFile = new Java.IO.File(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + "/CollectingMobile/Pictures/" + specimenID + ".jpeg");
+            using (FileOutputStream writer = new FileOutputStream(pictureFile))
             {
                 writer.Write(imageData);
             }

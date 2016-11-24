@@ -92,7 +92,7 @@ namespace CollectingMobile
             foreach (Specimen specimen in ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).Specimens ?? new List<Specimen>())
             {
                 string uploaded =  ((specimen.Uploaded) ? " | UP" : "");
-                specimenNames.Add(++i + "  " + ((specimen.MaterialTypesName != null) ? specimen.MaterialTypesName.ToString() : "?") + "  " + ((specimen.SamplingPosition != null) ? "\n(" + specimen.SamplingPosition + ")" : ""));
+                specimenNames.Add(++i + "  " + ((specimen.Material != null) ? specimen.Material.ToString() : "?") + "  " + ((specimen.SamplingPosition != null) ? "\n(" + specimen.SamplingPosition + ")" : ""));
             }
 
             var specimensListView = FindViewById<ListView>(Resource.Id.SpecimenslistView);

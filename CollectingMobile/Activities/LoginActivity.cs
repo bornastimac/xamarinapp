@@ -50,52 +50,52 @@ namespace CollectingMobile
             {
                 ProgressDialog progressDialog = ProgressDialog.Show(this, "", Resources.GetText(Resource.String.Authenticating), true);
 
-                if (listOfUsers.Exists(p => (p.Name == etUsername.Text && p.Password == etPassword.Text)))
+                if (RestClient.AmIOnline((ConnectivityManager)GetSystemService(ConnectivityService)))
                 {
-                    ActiveUser.User = new User(listOfUsers.First(p => (p.Name == etUsername.Text && p.Password == etPassword.Text)));
-                    progressDialog.Hide();
-                    StartActivity(typeof(ShowRequestsActivity));
+                    Dialog dialog = new AlertDialog.Builder(this)
+                    .SetMessage(Resources.GetText(Resource.String.WebException))
+                    .SetCancelable(false)
+                    .SetNeutralButton(Resources.GetText(Resource.String.OK), (senderAlert, args) =>
+                    {
+                        Finish();
+                    }).Create();
+
+                    new Thread(new ThreadStart(delegate
+                    {
+                        try
+                        {
+                            if (RestClient.IsLoginOk(etUsername.Text, etPassword.Text))
+                            {
+                                ActiveUser.User = new User(etUsername.Text, etPassword.Text);
+                                listOfUsers.Add(ActiveUser.User);
+                                SerializationHelper.SerializeUsers(this, listOfUsers);
+                                StartActivity(typeof(ShowRequestsActivity));
+                            }
+                            else
+                            {
+                                if (RestClient.IsServerReachable())
+                                {
+                                    RunOnUiThread(() => etUsername.Text = "");
+                                    RunOnUiThread(() => etPassword.Text = "");
+                                    RunOnUiThread(() => Toast.MakeText(ApplicationContext, "Incorrect Credentials", ToastLength.Long).Show());
+                                }
+                            }
+                            RunOnUiThread(() => progressDialog.Hide());
+                        }
+                        catch (Exception ex) when (ex is WebException || ex is UriFormatException)
+                        {
+                            RunOnUiThread(() => progressDialog.Hide());
+                            RunOnUiThread(() => dialog.Show());
+                        }
+                    })).Start();
                 }
                 else
                 {
-                    if (RestClient.AmIOnline((ConnectivityManager)GetSystemService(ConnectivityService)))
+                    if (listOfUsers.Exists(p => (p.Name == etUsername.Text && p.Password == etPassword.Text)))
                     {
-                        Dialog dialog = new AlertDialog.Builder(this)
-                        .SetMessage(Resources.GetText(Resource.String.WebException))
-                        .SetCancelable(false)
-                        .SetNeutralButton(Resources.GetText(Resource.String.OK), (senderAlert, args) =>
-                        {
-                            Finish();
-                        }).Create();
-
-                        new Thread(new ThreadStart(delegate
-                        {
-                            try
-                            {
-                                if (RestClient.IsLoginOk(etUsername.Text, etPassword.Text))
-                                {
-                                    ActiveUser.User = new User(etUsername.Text, etPassword.Text);
-                                    listOfUsers.Add(ActiveUser.User);
-                                    SerializationHelper.SerializeUsers(this, listOfUsers);
-                                    StartActivity(typeof(ShowRequestsActivity));
-                                }
-                                else
-                                {
-                                    if (RestClient.IsServerReachable())
-                                    {
-                                        RunOnUiThread(() => etUsername.Text = "");
-                                        RunOnUiThread(() => etPassword.Text = "");
-                                        RunOnUiThread(() => Toast.MakeText(ApplicationContext, "Incorrect Credentials", ToastLength.Long).Show());
-                                    }
-                                }
-                                RunOnUiThread(() => progressDialog.Hide());
-                            }
-                            catch (Exception ex) when (ex is WebException || ex is UriFormatException)
-                            {
-                                RunOnUiThread(() => progressDialog.Hide());
-                                RunOnUiThread(() => dialog.Show());
-                            }
-                        })).Start();
+                        ActiveUser.User = new User(listOfUsers.First(p => (p.Name == etUsername.Text && p.Password == etPassword.Text)));
+                        progressDialog.Hide();
+                        StartActivity(typeof(ShowRequestsActivity));
                     }
                     else
                     {

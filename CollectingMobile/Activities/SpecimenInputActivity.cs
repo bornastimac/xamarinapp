@@ -14,6 +14,7 @@ using Java.IO;
 using Android.Provider;
 using Android.Net;
 using System.IO;
+using CollectingMobile.Model;
 
 namespace CollectingMobile
 {
@@ -64,7 +65,8 @@ namespace CollectingMobile
             Java.IO.File photoSpecimen = new Java.IO.File(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + "/CollectingMobile/Pictures/" + specimenSelected.ID + ".jpeg");
             if (photoSpecimen.Exists())
             {
-                FindViewById<ImageView>(Resource.Id.PhotoView).SetImageBitmap(BitmapFactory.DecodeFile(photoSpecimen.AbsolutePath));
+                var resizedBitmap = (Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + "/CollectingMobile/Pictures/" + specimenSelected.ID.ToString() + ".jpeg").LoadAndResizeBitmap(400, 300);
+                FindViewById<ImageView>(Resource.Id.PhotoView).SetImageBitmap(resizedBitmap);
             }
         }
 
@@ -148,7 +150,9 @@ namespace CollectingMobile
                 if (!photoSpecimen.Exists())
                 {
                     Intent intent = new Intent(MediaStore.ActionImageCapture);
-                    StartActivityForResult(intent, 0);
+                    Java.IO.File file = new Java.IO.File(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + "/CollectingMobile/Pictures/", specimenSelected.ID + ".jpeg");
+                    intent.PutExtra(MediaStore.ExtraOutput, Android.Net.Uri.FromFile(file));
+                    StartActivityForResult(intent, 1777);
                 }
                 else
                 {
@@ -200,19 +204,23 @@ namespace CollectingMobile
 
             if (resultCode == Result.Ok)
             {
-                var bitmap = (Bitmap)data.Extras.Get("data");    
-                FindViewById<ImageView>(Resource.Id.PhotoView).SetImageBitmap(bitmap);
 
                 byte[] bitmapBytes;
-                using (MemoryStream stream = new MemoryStream())
-                {
-                    scaledBitmap.Compress(Bitmap.CompressFormat.Jpeg, 100, stream);
-                    bitmapBytes = stream.ToArray();
-                }
                 Specimen specimenSelected = ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).Specimens.Find(spec => spec.ID == Intent.GetIntExtra("SelectedSpecimenId", -1));
+                Java.IO.File toDelete = new Java.IO.File(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + "/CollectingMobile/Pictures/", specimenSelected.ID + ".jpeg");
+                specimenSelected.PhotoFileName = specimenSelected.ID + ".jpeg";
+                var bmp = BitmapFactory.DecodeFile(toDelete.AbsolutePath);
+                using (var ms = new MemoryStream())
+                {                  
+                    bmp.Compress(Bitmap.CompressFormat.Jpeg, 75, ms);
+                    bitmapBytes= ms.ToArray();
+                }
+                  var resizedBitmap = (Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + "/CollectingMobile/Pictures/" + specimenSelected.PhotoFileName).LoadAndResizeBitmap(400,300);
+                 FindViewById<ImageView>(Resource.Id.PhotoView).SetImageBitmap(resizedBitmap); 
+                toDelete.Delete();
 
                 SaveImage(specimenSelected.ID.ToString(), bitmapBytes);
-                specimenSelected.PhotoFileName = specimenSelected.ID + ".jpeg";
+                
             }
         }
 

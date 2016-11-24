@@ -9,6 +9,8 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.Graphics;
+using System.IO;
+using static Android.Graphics.BitmapFactory;
 
 namespace CollectingMobile.Model
 {
@@ -24,6 +26,7 @@ namespace CollectingMobile.Model
             // in order to fit the requested dimensions.
             int outHeight = options.OutHeight;
             int outWidth = options.OutWidth;
+            
             int inSampleSize = 1;
 
             if (outHeight > height || outWidth > width)
@@ -40,5 +43,7 @@ namespace CollectingMobile.Model
 
             return resizedBitmap;
         }
+
+       
     }
 }

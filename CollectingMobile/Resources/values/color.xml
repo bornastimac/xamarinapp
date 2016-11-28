@@ -5,7 +5,7 @@
   <item name="button" type="color">#FFD24A58</item>
   <item name="textColor" type="color">#FFFFFFFF</item><!--boja u editTextovima-->
   <item name="textInAccent" type="color">#7F000000</item><!--boja teksta crna s 50% opacity-->
-  <item name="listSelector" type="color">#5F303030</item><!--boja dok je item u listi oznacen-->
+  <item name="listSelector" type="color">#BF707070</item><!--boja dok je item u listi oznacen-->
   
   <!-- 
   <item name="primary" type="color">#FFDDDDDD</item> 
@@ -15,6 +15,5 @@
   <item name="listSelector" type="color">#5F303030</item>
   jos promijeniti ikone u buttonima za promjenu teme
   -->
-
 
 </resources>

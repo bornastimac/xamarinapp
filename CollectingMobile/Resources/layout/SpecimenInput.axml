@@ -70,7 +70,7 @@
         <Button
             android:id="@+id/LocationButton"
             android:drawableLeft="@drawable/ic_location_searching_white_24dp"
-            android:paddingLeft="7dp"       
+            android:paddingLeft="7dp"
             android:background="@color/button"
             android:fadingEdge="vertical"
             android:typeface="normal"
@@ -115,7 +115,7 @@
             android:background="@color/button"
             android:fadingEdge="vertical"
             android:layout_width="50dp"
-            android:layout_height="50dp"            
+            android:layout_height="50dp"
             android:layout_toRightOf="@id/QRText" />
     </RelativeLayout>
     <RelativeLayout

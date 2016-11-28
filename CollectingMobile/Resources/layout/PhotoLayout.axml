@@ -1,6 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/PhotoFullView"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
-</ImageView>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/PhotoLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient">
+
+  <ImageView
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"   
+     android:id="@+id/photoRetakeImageView"
+     android:layout_marginTop="30dp"
+     android:layout_alignParentTop="true"
+     android:layout_marginLeft="10dp"
+     android:layout_gravity="center"
+     android:layout_marginRight="10dp"
+      />
+  <Button
+      
+      android:background="@color/button"
+      android:id="@+id/photoRetakeButton"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Retake photo"
+      android:drawableLeft="@drawable/ic_add_a_photo_white_18dp"
+      android:fadingEdge="vertical"
+      android:textColor="@color/textInAccent"
+      android:typeface="normal"
+      android:textStyle="bold"
+      android:width="30dp"
+      android:height ="30dp"
+      android:layout_alignParentRight="true"
+      android:layout_alignParentBottom="true"
+     />
+ 
+</RelativeLayout>

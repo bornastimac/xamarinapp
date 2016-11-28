@@ -52,6 +52,13 @@ namespace CollectingMobile
                     FindViewById<ImageButton>(Resource.Id.NoConnectionButton).SetImageResource(0);
                 }
             }
+            Specimen specimenSelected = ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).Specimens.Find(spec => spec.ID == Intent.GetIntExtra("SelectedSpecimenId", -1));
+            Java.IO.File photoSpecimen = new Java.IO.File(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + "/CollectingMobile/Pictures/" + specimenSelected.ID + ".jpeg");
+            if (photoSpecimen.Exists())
+            {
+                var resizedBitmap = (Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + "/CollectingMobile/Pictures/" + specimenSelected.ID.ToString() + ".jpeg").LoadAndResizeBitmap(400, 300);
+                FindViewById<ImageView>(Resource.Id.PhotoView).SetImageBitmap(resizedBitmap);
+            }
         }
 
         private void InitViewValues()
@@ -219,14 +226,14 @@ namespace CollectingMobile
                  FindViewById<ImageView>(Resource.Id.PhotoView).SetImageBitmap(resizedBitmap); 
                 toDelete.Delete();
 
-                SaveImage(specimenSelected.ID.ToString(), bitmapBytes);
+                SaveImage(toDelete.AbsolutePath, bitmapBytes);
                 
             }
         }
 
-        private void SaveImage(string specimenID, byte[] imageData)
+        public static void SaveImage(string path, byte[] imageData)
         {
-            Java.IO.File pictureFile = new Java.IO.File(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + "/CollectingMobile/Pictures/" + specimenID + ".jpeg");
+            Java.IO.File pictureFile = new Java.IO.File(path);
             using (FileOutputStream writer = new FileOutputStream(pictureFile))
             {
                 writer.Write(imageData);

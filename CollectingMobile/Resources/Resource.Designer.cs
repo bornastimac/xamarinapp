@@ -166,83 +166,83 @@ namespace CollectingMobile
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f080012
-			public const int Location = 2131230738;
-			
 			// aapt resource value: 0x7f080014
-			public const int LocationButton = 2131230740;
+			public const int Location = 2131230740;
 			
-			// aapt resource value: 0x7f080013
-			public const int LocationText = 2131230739;
+			// aapt resource value: 0x7f080016
+			public const int LocationButton = 2131230742;
 			
-			// aapt resource value: 0x7f080023
-			public const int Logout = 2131230755;
+			// aapt resource value: 0x7f080015
+			public const int LocationText = 2131230741;
+			
+			// aapt resource value: 0x7f080025
+			public const int Logout = 2131230757;
 			
 			// aapt resource value: 0x7f080005
 			public const int MyButton = 2131230725;
 			
-			// aapt resource value: 0x7f080021
-			public const int NoConnectionButton = 2131230753;
+			// aapt resource value: 0x7f080023
+			public const int NoConnectionButton = 2131230755;
 			
 			// aapt resource value: 0x7f080007
-			public const int PhotoFullView = 2131230727;
+			public const int PhotoLayout = 2131230727;
 			
-			// aapt resource value: 0x7f08001a
-			public const int PhotoView = 2131230746;
+			// aapt resource value: 0x7f08001c
+			public const int PhotoView = 2131230748;
 			
-			// aapt resource value: 0x7f080026
-			public const int PopupRequest = 2131230758;
-			
-			// aapt resource value: 0x7f080016
-			public const int QR = 2131230742;
+			// aapt resource value: 0x7f080028
+			public const int PopupRequest = 2131230760;
 			
 			// aapt resource value: 0x7f080018
-			public const int QRButton = 2131230744;
+			public const int QR = 2131230744;
 			
-			// aapt resource value: 0x7f080017
-			public const int QRText = 2131230743;
+			// aapt resource value: 0x7f08001a
+			public const int QRButton = 2131230746;
 			
-			// aapt resource value: 0x7f080025
-			public const int RefreshRequests = 2131230757;
+			// aapt resource value: 0x7f080019
+			public const int QRText = 2131230745;
 			
-			// aapt resource value: 0x7f08000c
-			public const int RequestsListView = 2131230732;
+			// aapt resource value: 0x7f080027
+			public const int RefreshRequests = 2131230759;
+			
+			// aapt resource value: 0x7f08000e
+			public const int RequestsListView = 2131230734;
 			
 			// aapt resource value: 0x7f080002
 			public const int RootLoginActivity = 2131230722;
 			
-			// aapt resource value: 0x7f08000b
-			public const int RootRequestsActivity = 2131230731;
-			
 			// aapt resource value: 0x7f08000d
-			public const int RootSpecimenInputActivity = 2131230733;
-			
-			// aapt resource value: 0x7f08001d
-			public const int RootSpecimensActivity = 2131230749;
+			public const int RootRequestsActivity = 2131230733;
 			
 			// aapt resource value: 0x7f08000f
-			public const int SamplingPosition = 2131230735;
-			
-			// aapt resource value: 0x7f080010
-			public const int SamplingPositionText = 2131230736;
-			
-			// aapt resource value: 0x7f08001c
-			public const int SaveButton1 = 2131230748;
-			
-			// aapt resource value: 0x7f08001e
-			public const int SpecimenslistView = 2131230750;
-			
-			// aapt resource value: 0x7f080024
-			public const int Test = 2131230756;
+			public const int RootSpecimenInputActivity = 2131230735;
 			
 			// aapt resource value: 0x7f08001f
-			public const int Toolbar = 2131230751;
+			public const int RootSpecimensActivity = 2131230751;
+			
+			// aapt resource value: 0x7f080011
+			public const int SamplingPosition = 2131230737;
+			
+			// aapt resource value: 0x7f080012
+			public const int SamplingPositionText = 2131230738;
+			
+			// aapt resource value: 0x7f08001e
+			public const int SaveButton1 = 2131230750;
 			
 			// aapt resource value: 0x7f080020
-			public const int ToolbarText = 2131230752;
+			public const int SpecimenslistView = 2131230752;
+			
+			// aapt resource value: 0x7f080026
+			public const int Test = 2131230758;
+			
+			// aapt resource value: 0x7f080021
+			public const int Toolbar = 2131230753;
 			
 			// aapt resource value: 0x7f080022
-			public const int contentFrame = 2131230754;
+			public const int ToolbarText = 2131230754;
+			
+			// aapt resource value: 0x7f080024
+			public const int contentFrame = 2131230756;
 			
 			// aapt resource value: 0x7f080001
 			public const int imageView1 = 2131230721;
@@ -253,29 +253,35 @@ namespace CollectingMobile
 			// aapt resource value: 0x7f080004
 			public const int password = 2131230724;
 			
-			// aapt resource value: 0x7f08000e
-			public const int relativeLayout1 = 2131230734;
-			
-			// aapt resource value: 0x7f080011
-			public const int relativeLayout2 = 2131230737;
-			
-			// aapt resource value: 0x7f080015
-			public const int relativeLayout3 = 2131230741;
-			
-			// aapt resource value: 0x7f080019
-			public const int relativeLayout4 = 2131230745;
-			
-			// aapt resource value: 0x7f08001b
-			public const int relativeLayout5 = 2131230747;
-			
-			// aapt resource value: 0x7f08000a
-			public const int requestDate = 2131230730;
+			// aapt resource value: 0x7f080009
+			public const int photoRetakeButton = 2131230729;
 			
 			// aapt resource value: 0x7f080008
-			public const int requestDescription = 2131230728;
+			public const int photoRetakeImageView = 2131230728;
 			
-			// aapt resource value: 0x7f080009
-			public const int requestId = 2131230729;
+			// aapt resource value: 0x7f080010
+			public const int relativeLayout1 = 2131230736;
+			
+			// aapt resource value: 0x7f080013
+			public const int relativeLayout2 = 2131230739;
+			
+			// aapt resource value: 0x7f080017
+			public const int relativeLayout3 = 2131230743;
+			
+			// aapt resource value: 0x7f08001b
+			public const int relativeLayout4 = 2131230747;
+			
+			// aapt resource value: 0x7f08001d
+			public const int relativeLayout5 = 2131230749;
+			
+			// aapt resource value: 0x7f08000c
+			public const int requestDate = 2131230732;
+			
+			// aapt resource value: 0x7f08000a
+			public const int requestDescription = 2131230730;
+			
+			// aapt resource value: 0x7f08000b
+			public const int requestId = 2131230731;
 			
 			// aapt resource value: 0x7f080006
 			public const int textView1 = 2131230726;

@@ -48,10 +48,7 @@ namespace CollectingMobile
 		{
 			
 			// aapt resource value: 0x7f040001
-			public const int accent2 = 2130968577;
-			
-			// aapt resource value: 0x7f040005
-			public const int backgroundBright = 2130968581;
+			public const int button = 2130968577;
 			
 			// aapt resource value: 0x7f040004
 			public const int listSelector = 2130968580;
@@ -59,11 +56,11 @@ namespace CollectingMobile
 			// aapt resource value: 0x7f040000
 			public const int primary = 2130968576;
 			
+			// aapt resource value: 0x7f040002
+			public const int textColor = 2130968578;
+			
 			// aapt resource value: 0x7f040003
 			public const int textInAccent = 2130968579;
-			
-			// aapt resource value: 0x7f040002
-			public const int white = 2130968578;
 			
 			static Color()
 			{

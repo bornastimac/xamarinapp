@@ -3,7 +3,8 @@
     android:id="@+id/RootRequestsActivity"
     android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent"
+  >
 <!--
   <android.support.v4.widget.SwipeRefreshLayout
       android:id="@+id/SwipeRefresh"
@@ -13,7 +14,7 @@
         android:id="@+id/RequestsListView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="@color/backgroundBright"
+        android:background="@drawable/gradient"
         android:listSelector="@color/listSelector" />
 <!--</android.support.v4.widget.SwipeRefreshLayout>-->
 </LinearLayout>

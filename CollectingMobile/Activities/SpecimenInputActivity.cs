@@ -131,13 +131,13 @@ namespace CollectingMobile
             };
 
             //get geolocation
-            FindViewById<ImageButton>(Resource.Id.LocationButton).Click += (object sender, EventArgs args) =>
+            FindViewById<Button>(Resource.Id.LocationButton).Click += (object sender, EventArgs args) =>
             {
                 StartLocationSearch();
             };
 
             //QR scan
-            FindViewById<ImageButton>(Resource.Id.QRButton).Click += (object sender, EventArgs args) =>
+            FindViewById<Button>(Resource.Id.QRButton).Click += (object sender, EventArgs args) =>
             {
                 ScanQR();
             };

@@ -96,7 +96,7 @@ namespace CollectingMobile
                 searchingLocationAnimationTimer.Elapsed += AnimateLocationText;
                 locMan.RequestLocationUpdates(LocationManager.GpsProvider, 1000, 1, this);
                 Toast.MakeText(this, Resources.GetText(Resource.String.SearchingLocation), ToastLength.Short).Show();
-                FindViewById<ImageButton>(Resource.Id.LocationButton).Enabled = false;
+                FindViewById<Button>(Resource.Id.LocationButton).Enabled = false;
                 searchingLocationAnimationTimer.Start();
             }
             else
@@ -216,18 +216,18 @@ namespace CollectingMobile
                 Specimen specimenSelected = ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).Specimens.Find(spec => spec.ID == Intent.GetIntExtra("SelectedSpecimenId", -1));
                 Java.IO.File toDelete = new Java.IO.File(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + "/CollectingMobile/Pictures/", specimenSelected.ID + ".jpeg");
                 specimenSelected.PhotoFileName = specimenSelected.ID + ".jpeg";
+                SerializationHelper.SerializeRequests(this, ActiveRequests.Requests);
                 var bmp = BitmapFactory.DecodeFile(toDelete.AbsolutePath);
                 using (var ms = new MemoryStream())
-                {                  
+                {
                     bmp.Compress(Bitmap.CompressFormat.Jpeg, 75, ms);
-                    bitmapBytes= ms.ToArray();
+                    bitmapBytes = ms.ToArray();
                 }
-                  var resizedBitmap = (Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + "/CollectingMobile/Pictures/" + specimenSelected.PhotoFileName).LoadAndResizeBitmap(400,300);
-                 FindViewById<ImageView>(Resource.Id.PhotoView).SetImageBitmap(resizedBitmap); 
+                var resizedBitmap = (Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + "/CollectingMobile/Pictures/" + specimenSelected.PhotoFileName).LoadAndResizeBitmap(400, 300);
+                FindViewById<ImageView>(Resource.Id.PhotoView).SetImageBitmap(resizedBitmap);
                 toDelete.Delete();
 
                 SaveImage(toDelete.AbsolutePath, bitmapBytes);
-                
             }
         }
 
@@ -242,7 +242,7 @@ namespace CollectingMobile
 
         public void OnLocationChanged(Location location)
         {
-            FindViewById<ImageButton>(Resource.Id.LocationButton).Enabled = true;
+            FindViewById<Button>(Resource.Id.LocationButton).Enabled = true;
             searchingLocationAnimationTimer.Stop();
             FindViewById<EditText>(Resource.Id.LocationText).Text = location.Latitude + ", " + location.Longitude;
             locMan.RemoveUpdates(this);
@@ -250,14 +250,14 @@ namespace CollectingMobile
 
         public void OnProviderDisabled(string provider)
         {
-            FindViewById<ImageButton>(Resource.Id.LocationButton).Enabled = true;
+            FindViewById<Button>(Resource.Id.LocationButton).Enabled = true;
             Toast.MakeText(this, Resources.GetText(Resource.String.NoLocationService), ToastLength.Long).Show();
 
         }
 
         public void OnProviderEnabled(string provider)
         {
-            FindViewById<ImageButton>(Resource.Id.LocationButton).Enabled = true;
+            FindViewById<Button>(Resource.Id.LocationButton).Enabled = true;
         }
 
         public void OnStatusChanged(string provider, [GeneratedEnum] Availability status, Bundle extras)

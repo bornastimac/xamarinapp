@@ -183,7 +183,7 @@ namespace CollectingMobile
                 byte[] bitmapBytes;
                 using (MemoryStream stream = new MemoryStream())
                 {
-                    bitmap.Compress(Bitmap.CompressFormat.Png, 100, stream);
+                    bitmap.Compress(Bitmap.CompressFormat.Jpeg, 100, stream);
                     bitmapBytes = stream.ToArray();
                 }
 

@@ -15,6 +15,7 @@ using Android.Provider;
 using Android.Net;
 using System.IO;
 using CollectingMobile.Model;
+using Android.Media;
 
 namespace CollectingMobile
 {
@@ -41,11 +42,18 @@ namespace CollectingMobile
         protected override void OnResume()
         {
             base.OnResume();
+
+            //var cm = (ConnectivityManager)GetSystemService(ConnectivityService);
+            //NetworkInfo activeConnection = cm.ActiveNetworkInfo;
+            //if ((activeConnection != null) && activeConnection.IsConnected)
+            //    LogoutHandler.LogMeOut(this);
+
+
             if (Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop)
             {
                 if (!RestClient.AmIOnline((ConnectivityManager)GetSystemService(ConnectivityService)))
                 {
-                    FindViewById<ImageButton>(Resource.Id.NoConnectionButton).SetImageResource(Resource.Drawable.ic_signal_wifi_off_white_18dp);
+                    FindViewById<ImageButton>(Resource.Id.NoConnectionButton).SetImageResource(Resource.Drawable.ic_signal_wifi_off_white_24dp);
                 }
                 else
                 {
@@ -59,7 +67,9 @@ namespace CollectingMobile
                 var resizedBitmap = (Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + "/CollectingMobile/Pictures/" + specimenSelected.ID.ToString() + ".jpeg").LoadAndResizeBitmap(400, 300);
                 FindViewById<ImageView>(Resource.Id.PhotoView).SetImageBitmap(resizedBitmap);
             }
+            
         }
+
 
         private void InitViewValues()
         {
@@ -68,13 +78,6 @@ namespace CollectingMobile
             FindViewById<EditText>(Resource.Id.LocationText).Text = specimenSelected.Location == "" || specimenSelected.Location == null ? "-----, -----" : specimenSelected.Location;
             FindViewById<EditText>(Resource.Id.SamplingPositionText).Text = specimenSelected.SamplingPosition;
             FindViewById<EditText>(Resource.Id.QRText).Text = specimenSelected.Qrcode == "" || specimenSelected.Qrcode == null ? "----" : specimenSelected.Qrcode;
-
-            Java.IO.File photoSpecimen = new Java.IO.File(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + "/CollectingMobile/Pictures/" + specimenSelected.ID + ".jpeg");
-            if (photoSpecimen.Exists())
-            {
-                var resizedBitmap = (Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + "/CollectingMobile/Pictures/" + specimenSelected.ID.ToString() + ".jpeg").LoadAndResizeBitmap(400, 300);
-                FindViewById<ImageView>(Resource.Id.PhotoView).SetImageBitmap(resizedBitmap);
-            }
         }
 
         private void StartLocationSearch()
@@ -96,7 +99,7 @@ namespace CollectingMobile
                 searchingLocationAnimationTimer.Elapsed += AnimateLocationText;
                 locMan.RequestLocationUpdates(LocationManager.GpsProvider, 1000, 1, this);
                 Toast.MakeText(this, Resources.GetText(Resource.String.SearchingLocation), ToastLength.Short).Show();
-                FindViewById<Button>(Resource.Id.LocationButton).Enabled = false;
+                FindViewById<ImageButton>(Resource.Id.LocationButton).Enabled = false;
                 searchingLocationAnimationTimer.Start();
             }
             else
@@ -126,8 +129,10 @@ namespace CollectingMobile
         private void InitButtons()
         {
             //save specimen
-            FindViewById<ImageButton>(Resource.Id.SaveButton1).Click += (object sender, EventArgs args) =>
+
+            FindViewById<ImageButton>(Resource.Id.SaveButton).Click += (object sender, EventArgs args) =>
             {
+                ((Vibrator)GetSystemService(VibratorService)).Vibrate(50);
                 Specimen specimenSelected = ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).Specimens.Find(spec => spec.ID == Intent.GetIntExtra("SelectedSpecimenId", -1));
                 specimenSelected.Location = FindViewById<EditText>(Resource.Id.LocationText).Text;
                 specimenSelected.SamplingPosition = FindViewById<EditText>(Resource.Id.SamplingPositionText).Text;
@@ -138,36 +143,44 @@ namespace CollectingMobile
             };
 
             //get geolocation
-            FindViewById<Button>(Resource.Id.LocationButton).Click += (object sender, EventArgs args) =>
+            FindViewById<ImageButton>(Resource.Id.LocationButton).Click += (object sender, EventArgs args) =>
             {
+                ((Vibrator)GetSystemService(VibratorService)).Vibrate(50);
                 StartLocationSearch();
             };
 
             //QR scan
-            FindViewById<Button>(Resource.Id.QRButton).Click += (object sender, EventArgs args) =>
+            FindViewById<ImageButton>(Resource.Id.QRButton).Click += (object sender, EventArgs args) =>
             {
+                ((Vibrator)GetSystemService(VibratorService)).Vibrate(50);
                 ScanQR();
             };
 
             //add image
-            FindViewById<ImageView>(Resource.Id.PhotoView).Click += (object sender, EventArgs args) =>
+            FindViewById<ImageButton>(Resource.Id.TakePhoto).Click += (object sender, EventArgs args) =>
             {
+                ((Vibrator)GetSystemService(VibratorService)).Vibrate(50);
                 Specimen specimenSelected = ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).Specimens.Find(spec => spec.ID == Intent.GetIntExtra("SelectedSpecimenId", -1));
                 Java.IO.File photoSpecimen = new Java.IO.File(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + "/CollectingMobile/Pictures/" + specimenSelected.ID + ".jpeg");
-                if (!photoSpecimen.Exists())
-                {
-                    Intent intent = new Intent(MediaStore.ActionImageCapture);
-                    Java.IO.File file = new Java.IO.File(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + "/CollectingMobile/Pictures/", specimenSelected.ID + ".jpeg");
-                    intent.PutExtra(MediaStore.ExtraOutput, Android.Net.Uri.FromFile(file));
-                    StartActivityForResult(intent, 1777);
-                }
-                else
-                {
-                    Intent viewPhoto = new Intent(this, typeof(ViewPhotoActivity));
-                    viewPhoto.PutExtra("photoPath", photoSpecimen.AbsolutePath);
-                    StartActivity(viewPhoto);
-                }
+
+                Intent intent = new Intent(MediaStore.ActionImageCapture);
+                Java.IO.File file = new Java.IO.File(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + "/CollectingMobile/Pictures/", specimenSelected.ID + ".jpeg");
+                intent.PutExtra(MediaStore.ExtraOutput, Android.Net.Uri.FromFile(file));
+                StartActivityForResult(intent, 1777);
             };
+
+            FindViewById<ImageView>(Resource.Id.PhotoView).Click += (object sender, EventArgs args) =>
+             {
+                 Specimen specimenSelected = ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).Specimens.Find(spec => spec.ID == Intent.GetIntExtra("SelectedSpecimenId", -1));
+                 Java.IO.File photoSpecimen = new Java.IO.File(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + "/CollectingMobile/Pictures/" + specimenSelected.ID + ".jpeg");
+                 if (photoSpecimen.Exists())
+                 {
+                     ((Vibrator)GetSystemService(VibratorService)).Vibrate(50);
+                     Intent viewPhoto = new Intent(this, typeof(ViewPhotoActivity));
+                     viewPhoto.PutExtra("photoPath", photoSpecimen.AbsolutePath);
+                     StartActivity(viewPhoto);
+                 }
+             };
         }
 
         private async void ScanQR()
@@ -181,27 +194,14 @@ namespace CollectingMobile
             }
         }
 
-
         private void SetToolbar()
         {
             if (Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop)
             {
                 Toolbar toolbar = (Toolbar)LayoutInflater.Inflate(Resource.Layout.toolbar, null);
-                FindViewById<LinearLayout>(Resource.Id.RootSpecimenInputActivity).AddView(toolbar, 0);
+                FindViewById<LinearLayout>(Resource.Id.toolbar).AddView(toolbar, 0);
                 SetActionBar(toolbar);
                 FindViewById<TextView>(Resource.Id.ToolbarText).Text = Resources.GetText(Resource.String.SpecimenInput);
-                FindViewById<ImageButton>(Resource.Id.NoConnectionButton).Click += delegate
-                {
-                    if (RestClient.AmIOnline((ConnectivityManager)GetSystemService(ConnectivityService)))
-                    {
-                        FindViewById<ImageButton>(Resource.Id.NoConnectionButton).SetImageResource(0);
-                        Toast.MakeText(this, Resources.GetText(Resource.String.Connected), ToastLength.Short).Show();
-                    }
-                    else
-                    {
-                        Toast.MakeText(this, Resources.GetText(Resource.String.CheckNetwork), ToastLength.Long).Show();
-                    }
-                };
             }
         }
 
@@ -223,11 +223,11 @@ namespace CollectingMobile
                     bmp.Compress(Bitmap.CompressFormat.Jpeg, 75, ms);
                     bitmapBytes = ms.ToArray();
                 }
-                var resizedBitmap = (Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + "/CollectingMobile/Pictures/" + specimenSelected.PhotoFileName).LoadAndResizeBitmap(400, 300);
+                var resizedBitmap = (Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + "/CollectingMobile/Pictures/" + specimenSelected.PhotoFileName).LoadAndResizeBitmap(400,300);
                 FindViewById<ImageView>(Resource.Id.PhotoView).SetImageBitmap(resizedBitmap);
                 toDelete.Delete();
 
-                SaveImage(toDelete.AbsolutePath, bitmapBytes);
+                SaveImage(toDelete.AbsolutePath, bitmapBytes);     
             }
         }
 
@@ -242,7 +242,7 @@ namespace CollectingMobile
 
         public void OnLocationChanged(Location location)
         {
-            FindViewById<Button>(Resource.Id.LocationButton).Enabled = true;
+            FindViewById<ImageButton>(Resource.Id.LocationButton).Enabled = true;
             searchingLocationAnimationTimer.Stop();
             FindViewById<EditText>(Resource.Id.LocationText).Text = location.Latitude + ", " + location.Longitude;
             locMan.RemoveUpdates(this);
@@ -250,14 +250,14 @@ namespace CollectingMobile
 
         public void OnProviderDisabled(string provider)
         {
-            FindViewById<Button>(Resource.Id.LocationButton).Enabled = true;
+            FindViewById<ImageButton>(Resource.Id.LocationButton).Enabled = true;
             Toast.MakeText(this, Resources.GetText(Resource.String.NoLocationService), ToastLength.Long).Show();
 
         }
 
         public void OnProviderEnabled(string provider)
         {
-            FindViewById<Button>(Resource.Id.LocationButton).Enabled = true;
+            FindViewById<ImageButton>(Resource.Id.LocationButton).Enabled = true;
         }
 
         public void OnStatusChanged(string provider, [GeneratedEnum] Availability status, Bundle extras)

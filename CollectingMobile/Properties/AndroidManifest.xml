@@ -9,5 +9,7 @@
 	<uses-permission android:name="android.permission.CAMERA" />
 	<uses-permission android:name="android.permission.CAPTURE_VIDEO_OUTPUT" />
 	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-	<application android:label="CollectingMobile" android:theme="@style/CustomTheme" android:icon="@drawable/Icon"></application>
+	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+	<uses-permission android:name="android.permission.VIBRATE" />
+	<application android:label="CollectingMobile" android:theme="@style/CustomTheme" android:icon="@drawable/inRebus"></application>
 </manifest>

@@ -7,15 +7,15 @@
   <string name="SpecimenInput">Unesi uzorak</string>
   <string name="OK">U redu</string>
   <string name="WebException">Provjerite domenu servera u konfiguracijskoj datoteci.</string>
-  <string name="Login">Sign in</string>
-  <string name="Logout">Log out</string>
+  <string name="Login">Prijava</string>
+  <string name="Logout">Odjava</string>
   <string name="Saved">Pohranjeno</string>
   <string name="CheckNetwork">Provjerite jeste li spojeni na internet</string>
   <string name="Connected">Spojeni ste na internet</string>
   <string name="ServerProblem">Nema konekcije sa serverom</string>
   <string name="Uploading">Upload u tijeku...</string>
   <string name="UploadSuccess">Upload OK</string>
-  <string name="QR">QR</string>
+  <string name="QR">QR:</string>
   <string name="Geolocation">Geolokacija:</string>
   <string name="SamplingPosition">Pozicija uzorkovanja:</string>
   <string name="NoLocationService">Nema servisa za lokaciju</string>
@@ -26,5 +26,6 @@
   <string name="LoadingRequests">Dohvat naloga u tijeku...</string>
   <string name="Authenticating">Autentificiranje u tijeku...</string>
   <string name="Test">Test</string>
+  <string name="PleaseRelog">Online prijava je potrebna za ovu funkcionalnost</string>
   <string name="copyright">© 2016 In Rebus. All Rights Reserved.</string>
 </resources>

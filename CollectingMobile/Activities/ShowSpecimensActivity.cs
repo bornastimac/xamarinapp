@@ -24,7 +24,6 @@ namespace CollectingMobile
             }
 
             InitSpecimensView(FindViewById<ListView>(Resource.Id.SpecimenslistView));
-            LoadSpecimensList();
         }
 
         protected override void OnResume()
@@ -34,13 +33,14 @@ namespace CollectingMobile
             {
                 if (!RestClient.AmIOnline((ConnectivityManager)GetSystemService(ConnectivityService)))
                 {
-                    FindViewById<ImageButton>(Resource.Id.NoConnectionButton).SetImageResource(Resource.Drawable.ic_signal_wifi_off_white_18dp);
+                    FindViewById<ImageButton>(Resource.Id.NoConnectionButton).SetImageResource(Resource.Drawable.ic_signal_wifi_off_white_24dp);
                 }
                 else
                 {
                     FindViewById<ImageButton>(Resource.Id.NoConnectionButton).SetImageResource(0);
                 }
             }
+            LoadSpecimensList();
         }
 
         private void InitSpecimensView(ListView specimensView)
@@ -55,14 +55,14 @@ namespace CollectingMobile
 
             specimensView.ItemLongClick += delegate (object sender, AdapterView.ItemLongClickEventArgs e)
             {
-                if (RestClient.AmIOnline((ConnectivityManager)GetSystemService(ConnectivityService)))
+                if (ActiveUser.cookies.Count != 0 && RestClient.AmIOnline((ConnectivityManager)GetSystemService(ConnectivityService)))
                 {
                     PopupMenu menu = new PopupMenu(this, e.View);
                     menu.Inflate(Resource.Menu.popupRequest);
                     menu.MenuItemClick += (s, arg) =>
                     {
                         ProgressDialog progressDialog = ProgressDialog.Show(this, "", Resources.GetText(Resource.String.Uploading), true);
-                        
+
                         new Thread(new ThreadStart(delegate
                         {
                             if (RestClient.UploadSpecimen(this, ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).Specimens[e.Position]))
@@ -82,16 +82,20 @@ namespace CollectingMobile
                     };
                     menu.Show();
                 }
+                else
+                {
+                    Toast.MakeText(this, Resources.GetText(Resource.String.PleaseRelog), ToastLength.Long).Show();
+                }
             };
         }
-       
+
         private void LoadSpecimensList()
         {
             List<string> specimenNames = new List<string>();
             int i = 0;
             foreach (Specimen specimen in ActiveRequests.GetRequestByID(Intent.GetIntExtra("SelectedRequestId", -1)).Specimens ?? new List<Specimen>())
             {
-                string uploaded =  ((specimen.Uploaded) ? " | UP" : "");
+                string uploaded = ((specimen.Uploaded) ? " | UP" : "");
                 specimenNames.Add(++i + "  " + ((specimen.Material != null) ? specimen.Material.ToString() : "?") + "  " + ((specimen.SamplingPosition != null) ? "\n(" + specimen.SamplingPosition + ")" : ""));
             }
 
@@ -108,18 +112,6 @@ namespace CollectingMobile
                 FindViewById<LinearLayout>(Resource.Id.RootSpecimensActivity).AddView(toolbar, 0);
                 SetActionBar(toolbar);
                 FindViewById<TextView>(Resource.Id.ToolbarText).Text = Resources.GetText(Resource.String.Specimens);
-                FindViewById<ImageButton>(Resource.Id.NoConnectionButton).Click += delegate
-                {
-                    if (RestClient.AmIOnline((ConnectivityManager)GetSystemService(ConnectivityService)))
-                    {
-                        FindViewById<ImageButton>(Resource.Id.NoConnectionButton).SetImageResource(0);
-                        Toast.MakeText(this, Resources.GetText(Resource.String.Connected), ToastLength.Short).Show();
-                    }
-                    else
-                    {
-                        Toast.MakeText(this, Resources.GetText(Resource.String.CheckNetwork), ToastLength.Long).Show();
-                    }
-                };
             }
         }
 

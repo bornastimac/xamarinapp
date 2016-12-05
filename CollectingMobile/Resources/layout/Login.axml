@@ -7,7 +7,7 @@
     <EditText
         android:textSize="25dp"
         android:hint="Username"
-        android:textColor="@color/textColor"
+        android:textColor="@color/toolbarTextColor"
         android:layout_marginTop="200dp"
         android:gravity="center_horizontal"
         android:height="50dp"
@@ -18,7 +18,7 @@
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp" />
     <EditText
-        android:textColor="@color/textColor"
+        android:textColor="@color/toolbarTextColor"
         android:hint="Password"
         android:height="50dp"
         android:textSize="25dp"

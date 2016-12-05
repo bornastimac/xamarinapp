@@ -48,6 +48,7 @@ namespace CollectingMobile
 
             btnLogin.Click += delegate
             {
+                ((Vibrator)GetSystemService(VibratorService)).Vibrate(50);                
                 ProgressDialog progressDialog = ProgressDialog.Show(this, "", Resources.GetText(Resource.String.Authenticating), true);
 
                 if (RestClient.AmIOnline((ConnectivityManager)GetSystemService(ConnectivityService)))

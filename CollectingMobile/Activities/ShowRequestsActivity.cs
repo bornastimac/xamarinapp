@@ -6,6 +6,7 @@ using Android.Util;
 using Android.Views;
 using Android.Widget;
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -25,13 +26,14 @@ namespace CollectingMobile
                 SetToolbar();
             }
 
+
             InitRequestsView(FindViewById<ListView>(Resource.Id.RequestsListView));
         }
 
         protected override void OnStart()
         {
             base.OnStart();
-            if (FindViewById<ListView>(Resource.Id.RequestsListView).Adapter == null)//only happens once at first load. Not in onCreate() so it doesnt block UI thread
+            if (FindViewById<ListView>(Resource.Id.RequestsListView).Adapter == null)
             {
                 LoadRequests(FindViewById<ListView>(Resource.Id.RequestsListView));
             }
@@ -44,7 +46,7 @@ namespace CollectingMobile
             {
                 if (!RestClient.AmIOnline((ConnectivityManager)GetSystemService(ConnectivityService)))
                 {
-                    FindViewById<ImageButton>(Resource.Id.NoConnectionButton).SetImageResource(Resource.Drawable.ic_signal_wifi_off_white_18dp);
+                    FindViewById<ImageButton>(Resource.Id.NoConnectionButton).SetImageResource(Resource.Drawable.ic_signal_wifi_off_white_24dp);
                 }
                 else
                 {
@@ -61,19 +63,6 @@ namespace CollectingMobile
                 FindViewById<LinearLayout>(Resource.Id.RootRequestsActivity).AddView(toolbar, 0);
                 SetActionBar(toolbar);
                 FindViewById<TextView>(Resource.Id.ToolbarText).Text = Resources.GetText(Resource.String.Requests);
-                FindViewById<ImageButton>(Resource.Id.NoConnectionButton).Click += delegate
-                {
-                    if (RestClient.AmIOnline((ConnectivityManager)GetSystemService(ConnectivityService)))
-                    {
-                        FindViewById<ImageButton>(Resource.Id.NoConnectionButton).SetImageResource(0);
-                        Toast.MakeText(this, Resources.GetText(Resource.String.Connected), ToastLength.Short).Show();
-                    }
-                    else
-                    {
-                        Toast.MakeText(this, Resources.GetText(Resource.String.CheckNetwork), ToastLength.Long).Show();
-                    }
-
-                };
             }
         }
 
@@ -81,7 +70,7 @@ namespace CollectingMobile
         {
             requestsView.ItemClick += delegate (object sender, AdapterView.ItemClickEventArgs e)
             {
-                
+
                 if (requestsView.Adapter.GetType() == typeof(RequestsListAdapter))
                 {
                     Intent showSpecimensActivity = new Intent(this, typeof(ShowSpecimensActivity));
@@ -92,7 +81,7 @@ namespace CollectingMobile
 
             requestsView.ItemLongClick += delegate (object sender, AdapterView.ItemLongClickEventArgs e)
             {
-                if (RestClient.AmIOnline((ConnectivityManager)GetSystemService(ConnectivityService)))
+                if (ActiveUser.cookies.Count != 0 && RestClient.AmIOnline((ConnectivityManager)GetSystemService(ConnectivityService)))
                 {
                     if (requestsView.Adapter.GetType() == typeof(RequestsListAdapter))
                     {
@@ -126,6 +115,10 @@ namespace CollectingMobile
                         menu.Show();
                     }
                 }
+                else
+                {
+                    Toast.MakeText(this, Resources.GetText(Resource.String.PleaseRelog), ToastLength.Long).Show();
+                }
             };
         }
 
@@ -135,7 +128,8 @@ namespace CollectingMobile
             Dialog dialog = new AlertDialog.Builder(this)
                         .SetMessage(Resources.GetText(Resource.String.WebException))
                         .SetCancelable(false)
-                        .SetNeutralButton(Resources.GetText(Resource.String.OK), (senderAlert, args) => {
+                        .SetNeutralButton(Resources.GetText(Resource.String.OK), (senderAlert, args) =>
+                        {
                             Finish();
                         }).Create();
 
@@ -145,13 +139,20 @@ namespace CollectingMobile
                 {
                     try
                     {
-                        ActiveRequests.Requests = RestClient.GetRequestsFromServer();
+                        UpdateForNewRequests();
+                        foreach (var request in ActiveRequests.Requests)
+                        {
+                            foreach (var specimen in request.Specimens)
+                            {
+                                specimen.PhotoFileName = specimen.ID + ".jpeg";
+                            }
+                        }
                         SerializationHelper.SerializeRequests(this, ActiveRequests.Requests);
                         RunOnUiThread(() => requestsView.Adapter = new RequestsListAdapter(this, ActiveRequests.Requests));
                         RunOnUiThread(() => progressDialog.Hide());
                     }
                     catch (Exception ex) when (ex is WebException || ex is UriFormatException)
-                    {                     
+                    {
                         RunOnUiThread(() => progressDialog.Hide());
                         RunOnUiThread(() => dialog.Show());
                     }
@@ -163,6 +164,36 @@ namespace CollectingMobile
                 ActiveRequests.Requests = SerializationHelper.DeserializeRequests(this);
                 requestsView.Adapter = new RequestsListAdapter(this, ActiveRequests.Requests);
                 progressDialog.Hide();
+            }
+        }
+
+        private void UpdateForNewRequests()
+        {
+            ActiveRequests.Requests = SerializationHelper.DeserializeRequests(this);
+            List<Request> serverRequests = RestClient.GetRequestsFromServer();
+
+            foreach (Request serverRequest in serverRequests)
+            {
+                if (ActiveRequests.Requests.Exists(x => x.ID == serverRequest.ID))
+                {
+                    Request serializedRequest = ActiveRequests.Requests.Find(x => x.ID == serverRequest.ID);
+                    //check for new specimens
+                    if (serializedRequest.Specimens.Count < serverRequest.Specimens.Count)
+                    {
+                        //add new specimens
+                        foreach (Specimen serverSpecimen in serverRequest.Specimens)
+                        {
+                            if (!serializedRequest.Specimens.Exists(x => x.ID == serverSpecimen.ID))
+                            {
+                                serializedRequest.Specimens.Add(serverSpecimen);
+                            }
+                        }
+                    }
+                }
+                else//new request
+                {
+                    ActiveRequests.Requests.Add(serverRequest);
+                }
             }
         }
 

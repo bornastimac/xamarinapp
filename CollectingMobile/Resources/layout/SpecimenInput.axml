@@ -1,155 +1,170 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:id="@+id/RootSpecimenInputActivity"
-    android:orientation="vertical"
-    android:background="@drawable/gradient">
-    <RelativeLayout
-        android:minWidth="25px"
-        android:minHeight="25px"
-        android:layout_width="match_parent"
+    android:background="@color/toolbarTextColor"
+    android:id="@+id/RootSpecimenInputActivity">
+  
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:id="@+id/toolbar"/>
+    
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="5dp"
+      android:layout_below="@id/toolbar"
+      android:id="@+id/relativeLayout1">
+    <TextView
+        android:text="@string/SamplingPosition"
+        android:textColor="@color/textColor"
+        android:textSize="20dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/relativeLayout1"
+        android:id="@+id/SamplingPosition"
+        android:layout_centerHorizontal="true" />
+    <EditText
+        android:id="@+id/SamplingPositionText"
+        android:inputType="textMultiLine"
+        android:maxLines="2"
+        android:textColor="@color/textColor"
+        android:layout_width="230dp"
+        android:gravity="center_horizontal"
+        android:textSize="25dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/SamplingPosition"
+        android:layout_centerHorizontal="true" />
+  </RelativeLayout>
+  
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:id="@+id/relativeLayout2"
+      android:layout_below="@id/relativeLayout1">
+    <TextView
+        android:text="@string/Geolocation"
+        android:textColor="@color/textColor"
+        android:textSize="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/Location"
+        android:layout_centerHorizontal="true" />
+    <EditText
+        android:id="@+id/LocationText"
+        android:layout_width="230dp"
+        android:inputType="textMultiLine"
+        android:gravity="center_horizontal"
+        android:textColor="@color/textColor"
+        android:textSize="16dp"
+        android:layout_height="wrap_content"
+        android:focusable="false"
+        android:editable="false"
+        android:maxLines="2"
+        android:layout_marginLeft="25dp"
+        android:layout_below="@id/Location"
+        android:textStyle="italic"
+        android:layout_centerHorizontal="true" />
+  </RelativeLayout>
+  
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:id="@+id/relativeLayout3"
+      android:layout_below="@id/relativeLayout2">
+    <TextView
+        android:text="@string/QR"
+        android:textSize="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/textColor"
+        android:id="@+id/QR"
+        android:layout_centerHorizontal="true" />
+    <EditText
+        android:id="@+id/QRText"
+        android:layout_width="230dp"
+        android:textSize="20dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/textColor"
+        android:layout_marginRight="20dp"
+        android:focusable="false"
+        android:editable="false"
+        android:layout_marginLeft="25dp"
+        android:height="50dp"
+        android:layout_below="@id/QR"
+        android:gravity="center_horizontal"
+        android:textStyle="italic"
+        android:layout_centerHorizontal="true" />   
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:id="@+id/PhotoView"
+        android:layout_below="@id/QRText"
+        android:layout_centerHorizontal="true" />
+  </RelativeLayout>
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="10dp"
+      android:id="@+id/relativeLayout4"
+      android:layout_alignParentBottom="true">
+    <LinearLayout
+       android:layout_height="wrap_content"
+       android:layout_width="match_parent"
+       android:orientation="horizontal">
+      <RelativeLayout
+         android:gravity="center"
+         android:layout_weight="1"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent">
+        <ImageButton
+           android:id="@+id/LocationButton"
+           android:src="@drawable/ic_location_searching_white_24dp"       
+           android:background="@drawable/circleButton"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content" />
+      </RelativeLayout>
+
+      <RelativeLayout
         android:layout_weight="1"
-        android:layout_marginTop="20dp">
-        <TextView
-            android:text="@string/SamplingPosition"
-            android:textColor="@color/textColor"
-            android:textSize="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/SamplingPosition"
-            android:layout_centerHorizontal="true" />
-        <EditText
-            android:id="@+id/SamplingPositionText"
-            android:inputType="textMultiLine"
-            android:textColor="@color/textColor"
-            android:layout_width="250dp"
-            android:gravity="center_horizontal"
-            android:textSize="25dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
-            android:layout_marginLeft="25dp"
-            android:height="50dp"
-            android:layout_below="@id/SamplingPosition"
-            android:layout_centerHorizontal="true" />
-    </RelativeLayout>
-    <RelativeLayout
-        android:minWidth="25px"
-        android:minHeight="25px"
+        android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/relativeLayout2"
-        android:layout_weight="1">
-        <TextView
-            android:text="@string/Geolocation"
-            android:textColor="@color/textColor"
-            android:textSize="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/Location"
-            android:layout_centerHorizontal="true" />
-        <EditText
-            android:id="@+id/LocationText"
-            android:layout_width="230dp"
-            android:inputType="textMultiLine"
-            android:gravity="center_horizontal"
-            android:textColor="@color/textColor"
-            android:textSize="16dp"
-            android:layout_height="wrap_content"
-            android:focusable="false"
-            android:editable="false"
-            android:lines="2"
-            android:layout_marginRight="20dp"
-            android:layout_marginLeft="25dp"
-            android:height="50dp"
-            android:layout_below="@id/Location"
-            android:textStyle="italic"
-            android:layout_centerHorizontal="true" />
-        <Button
-            android:id="@+id/LocationButton"
-            android:drawableLeft="@drawable/ic_location_searching_white_24dp"
-            android:paddingLeft="7dp"
-            android:background="@color/button"
-            android:fadingEdge="vertical"
-            android:typeface="normal"
-            android:layout_toRightOf="@id/LocationText"
-            android:layout_width="50dp"
-            android:layout_height="50dp" />
-    </RelativeLayout>
-    <RelativeLayout
-        android:minWidth="25px"
-        android:minHeight="25px"
+        android:layout_height="match_parent">
+        <ImageButton
+           android:id="@+id/QRButton"
+           android:src="@drawable/ic_border_outer_white_24dp"
+           android:background="@drawable/circleButton"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"/>
+      </RelativeLayout>
+      
+      <RelativeLayout
+          android:layout_weight="1"
+          android:gravity="center"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent">
+        <ImageButton
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:id="@+id/TakePhoto"
+           android:background="@drawable/circleButton"
+           android:src="@drawable/ic_add_a_photo_white_24dp" />
+      </RelativeLayout>
+      
+      <RelativeLayout
+        android:gravity="center"
+        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/relativeLayout3"
-        android:layout_weight="1">
-        <TextView
-            android:text="@string/QR"
-            android:textSize="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/textColor"
-            android:id="@+id/QR"
-            android:layout_centerHorizontal="true" />
-        <EditText
-            android:id="@+id/QRText"
-            android:layout_width="230dp"
-            android:textSize="20dp"
-            android:layout_height="wrap_content"
-            android:textColor="@color/textColor"
-            android:layout_marginRight="20dp"
-            android:focusable="false"
-            android:editable="false"
-            android:layout_marginLeft="25dp"
-            android:height="50dp"
-            android:layout_below="@id/QR"
-            android:gravity="center_horizontal"
-            android:textStyle="italic"
-            android:layout_centerHorizontal="true" />
-        <Button
-            android:id="@+id/QRButton"
-            android:drawableLeft="@drawable/ic_border_outer_white_24dp"
-            android:paddingLeft="7dp"
-            android:background="@color/button"
-            android:fadingEdge="vertical"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_toRightOf="@id/QRText" />
-    </RelativeLayout>
-    <RelativeLayout
-        android:minWidth="50px"
-        android:minHeight="50px"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/relativeLayout4"
-        android:layout_weight="1">
-        <ImageView
-            android:src="@drawable/ic_add_a_photo_white_18dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:maxHeight="800dp"
-            android:maxWidth="600dp"
-            android:id="@+id/PhotoView"
-            android:layout_centerHorizontal="true" />
-    </RelativeLayout>
-    <RelativeLayout
-        android:minWidth="25px"
-        android:minHeight="25px"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/relativeLayout5"
-        android:layout_weight="1">
+        android:layout_height="match_parent">
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/SaveButton1"
-            android:background="@android:color/transparent"
-            android:layout_alignParentRight="true"
-            android:maxHeight="150dp"
-            android:maxWidth="150dp"
-            android:src="@drawable/ic_done_black_24dp"
-            android:layout_marginRight="20.0dp" />
-    </RelativeLayout>
-</LinearLayout>
+            android:soundEffectsEnabled="true"
+            android:id="@+id/SaveButton"
+            android:background="@drawable/circleButton"
+            android:src="@drawable/ic_done_white_24dp" />
+      </RelativeLayout>
+    </LinearLayout>
+  </RelativeLayout>
+</RelativeLayout>

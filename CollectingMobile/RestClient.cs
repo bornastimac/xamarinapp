@@ -210,7 +210,7 @@ namespace CollectingMobile
             }
             else
             {
-                Console.WriteLine("RestClient.AmIOnline: NOT INTERNET CONNECTION");
+                Console.WriteLine("RestClient.AmIOnline: NO INTERNET CONNECTION");
                 return false;
             }
         }

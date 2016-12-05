@@ -15,7 +15,7 @@
   <string name="ServerProblem">Cannot communicate with server</string>
   <string name="OfflineMode">Working in offline mode</string>
   <string name="SearchingLocation">Searching for location...</string>
-  <string name="QR">QR</string>
+  <string name="QR">QR:</string>
   <string name="NoLocationService">No location service</string>
   <string name="Geolocation">Geolocation:</string>
   <string name="SamplingPosition">Sampling position:</string>
@@ -27,5 +27,6 @@
   <string name="Authenticating">Authenticating...</string>
   <string name="Test">Test</string>
   <string name="OpenCamera">Open camera</string>
+  <string name="PleaseRelog">Online login is needed for this functionality</string>
   <string name="copyright">© 2016 In Rebus. All Rights Reserved.</string>
 </resources>

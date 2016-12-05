@@ -12,10 +12,11 @@ using Android.Net;
 using CollectingMobile.Model;
 using System.Net.Http;
 using System.IO;
+using Android.Util;
 
 namespace CollectingMobile
 {
-    [Activity(ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
+    [Activity]
     public class ViewPhotoActivity : Activity
     {
         public  Java.IO.File photoSpecimen;
@@ -23,41 +24,15 @@ namespace CollectingMobile
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.PhotoLayout);
-            Java.IO.File photoSpecimen = new Java.IO.File(Intent.GetStringExtra("photoPath"));
-            FindViewById<ImageView>(Resource.Id.photoRetakeImageView).SetImageBitmap(BitmapFactory.DecodeFile(photoSpecimen.AbsolutePath));
-            FindViewById<Button>(Resource.Id.photoRetakeButton).Click += (object sender, EventArgs args) =>
-            {
-                Intent intent = new Intent(MediaStore.ActionImageCapture);               
-                intent.PutExtra(MediaStore.ExtraOutput, Android.Net.Uri.FromFile(photoSpecimen));
-                StartActivityForResult(intent, 1777);
-
-            };
+            var photoContainer = FindViewById<RelativeLayout>(Resource.Id.PhotoLayout);
+            var photoSpecimen = new Java.IO.File(Intent.GetStringExtra("photoPath"));
+            var opts = new BitmapFactory.Options();
+            opts.InSampleSize = 4;
+            FindViewById<ImageView>(Resource.Id.photoRetakeImageView).SetImageBitmap(BitmapFactory.DecodeFile(photoSpecimen.AbsolutePath,opts));
         }
 
-        protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
-        {
-            base.OnActivityResult(requestCode, resultCode, data);
-
-            if (resultCode == Result.Ok)
-            {
-
-                byte[] bitmapBytes;
-                photoSpecimen = new Java.IO.File(Intent.GetStringExtra("photoPath"));
-                var bmp = BitmapFactory.DecodeFile(photoSpecimen.AbsolutePath);
-                using (var ms = new MemoryStream())
-                {
-                    bmp.Compress(Bitmap.CompressFormat.Jpeg, 75, ms);
-                    bitmapBytes = ms.ToArray();
-                }
-                var resizedBitmap = (photoSpecimen.AbsolutePath).LoadAndResizeBitmap(400, 300);
-                
-                photoSpecimen.Delete();
-                SpecimenInputActivity.SaveImage(photoSpecimen.AbsolutePath, bitmapBytes);
-                FindViewById<ImageView>(Resource.Id.photoRetakeImageView).SetImageBitmap(BitmapFactory.DecodeFile(photoSpecimen.AbsolutePath));
-
-            }
 
 
-        }
+        
     }
 }
